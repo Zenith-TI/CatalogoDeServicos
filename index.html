@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: Zenith TI - Catálogo de Serviços Avançados
-ÚLTIMA MUDANÇA: Redução do tamanho da logo (para 280px), diminuição do padding do cabeçalho e aplicação de mix-blend-mode para remover o fundo preto da imagem e integrá-la ao site.
-DATA E HORA: 08 de Setembro de 2026, 00:05
-VERSÃO: 6.0
+ÚLTIMA MUDANÇA: Criação de um cabeçalho escuro sólido com borda inferior para delimitar o topo da página. Remoção do "mix-blend-mode" da imagem para restaurar as cores originais da logo e mesclar seu fundo natural com a nova barra de navegação.
+DATA E HORA: 08 de Setembro de 2026, 00:09
+VERSÃO: 7.0
 =========================================================
 -->
 <!DOCTYPE html>
@@ -71,17 +71,20 @@ VERSÃO: 6.0
            ========================================= */
         header {
             text-align: center;
-            padding: 30px 20px 10px 20px;
-            background: linear-gradient(180deg, rgba(0, 25, 53, 0.8) 0%, rgba(0, 25, 53, 0) 100%);
+            padding: 15px 20px;
+            background-color: #000000; /* Fundo preto para mesclar com a logo */
+            border-bottom: 2px solid var(--blue-mid); /* Linha de delimitação */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            position: relative;
+            z-index: 10;
         }
 
         .logo-empresa {
-            max-width: 280px;
+            max-width: 260px;
             width: 100%;
             height: auto;
-            margin-bottom: 5px;
-            mix-blend-mode: screen; /* Remove o fundo preto e mescla com o site */
-            filter: brightness(1.1); /* Realça levemente a logo */
+            display: block;
+            margin: 0 auto;
         }
 
         /* =========================================
@@ -89,7 +92,7 @@ VERSÃO: 6.0
            ========================================= */
         .filtros {
             text-align: center;
-            margin: 20px 0 40px 0;
+            margin: 30px 0 40px 0;
             display: flex;
             justify-content: center;
             gap: 10px;
