@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Atualização completa de serviços - 23 serviços adicionados
-DATA E HORA: 08 de Setembro de 2026, 15:50
-VERSÃO: 12.0
+ÚLTIMA MUDANÇA: Adicionado detalhes técnicos específicos para cada serviço
+DATA E HORA: 08 de Setembro de 2026, 16:00
+VERSÃO: 12.1
 =========================================================
 -->
 <!DOCTYPE html>
@@ -313,8 +313,6 @@ VERSÃO: 12.0
         }
         
         .tag-categoria { background: var(--blue-mid); color: var(--white-ice); }
-        .tag-sla { background: rgba(244, 247, 250, 0.1); color: var(--white-ice); border: 1px solid rgba(244, 247, 250, 0.2); }
-        .tag-promo { background: rgba(255, 107, 0, 0.1); color: var(--orange-neon); border: 1px solid var(--orange-neon); }
 
         .cartao h3 {
             font-size: 1.5rem;
@@ -327,7 +325,38 @@ VERSÃO: 12.0
             color: rgba(244, 247, 250, 0.7);
             margin-bottom: 20px;
             line-height: 1.5;
+        }
+
+        .detalhes-tecnicos {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
             flex-grow: 1;
+        }
+
+        .detalhes-tecnicos ul {
+            list-style: none;
+        }
+
+        .detalhes-tecnicos li {
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            color: rgba(244, 247, 250, 0.9);
+        }
+
+        .detalhes-tecnicos li::before {
+            content: '✓';
+            color: var(--orange-neon);
+            margin-right: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .detalhes-tecnicos li:last-child {
+            margin-bottom: 0;
         }
 
         .rodape-cartao {
@@ -538,7 +567,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Suporte & Diagnóstico</span>
                 </div>
                 <h3>Acesso Remoto (Suporte Técnico)</h3>
-                <p class="desc-curta">Suporte técnico remoto via acesso remoto seguro para resolução de problemas.</p>
+                <p class="desc-curta">Suporte técnico remoto via acesso seguro para resolução de problemas sem deslocamento.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Atendimento rápido e remoto 24/7</li>
+                        <li>Resolução de problemas em tempo real</li>
+                        <li>Sem necessidade de deslocamento</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 50,00</span>
                     <button class="btn-acao" onclick="abrirModal('Acesso Remoto (Suporte Técnico)')">Solicitar</button>
@@ -550,7 +586,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Suporte & Diagnóstico</span>
                 </div>
                 <h3>Diagnóstico de Hardware</h3>
-                <p class="desc-curta">Análise completa de componentes para identificar problemas e falhas.</p>
+                <p class="desc-curta">Análise completa e profissional de componentes para identificar falhas e problemas.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Teste de todos os componentes</li>
+                        <li>Relatório detalhado de problemas</li>
+                        <li>Recomendações de reparo/upgrade</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 40,00</span>
                     <button class="btn-acao" onclick="abrirModal('Diagnóstico de Hardware')">Solicitar</button>
@@ -562,7 +605,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Suporte & Diagnóstico</span>
                 </div>
                 <h3>Remoção de Vírus e Malwares</h3>
-                <p class="desc-curta">Remoção completa de ameaças, vírus e malwares com proteção reforçada.</p>
+                <p class="desc-curta">Remoção completa de ameaças, vírus, trojans e malwares com proteção reforçada.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Análise heurística profunda completa</li>
+                        <li>Remoção de rootkits e trojans</li>
+                        <li>Implementação de proteção antivírus</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 55,00</span>
                     <button class="btn-acao" onclick="abrirModal('Remoção de Vírus e Malwares')">Solicitar</button>
@@ -575,7 +625,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Software</span>
                 </div>
                 <h3>Formatação com Backup e Instalação de SO</h3>
-                <p class="desc-curta">Formatação com backup de dados e instalação completa do sistema operacional.</p>
+                <p class="desc-curta">Formatação segura com backup de dados e instalação completa do sistema operacional.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Backup de dados em mídia externa</li>
+                        <li>Formatação de baixo nível</li>
+                        <li>Instalação SO + drivers WHQL</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 70,00</span>
                     <button class="btn-acao" onclick="abrirModal('Formatação com Backup e Instalação de SO')">Solicitar</button>
@@ -587,7 +644,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Software</span>
                 </div>
                 <h3>Formatação sem Backup (Apenas SO e Drivers)</h3>
-                <p class="desc-curta">Formatação rápida com instalação de SO e drivers essenciais.</p>
+                <p class="desc-curta">Formatação rápida e eficiente com instalação de SO e drivers essenciais.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Formatação acelerada do disco</li>
+                        <li>Instalação SO + drivers básicos</li>
+                        <li>Sistema pronto para uso imediato</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 70,00</span>
                     <button class="btn-acao" onclick="abrirModal('Formatação sem Backup')">Solicitar</button>
@@ -599,7 +663,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Software</span>
                 </div>
                 <h3>Instalação de Softwares</h3>
-                <p class="desc-curta">Instalação e configuração de aplicativos e programas necessários.</p>
+                <p class="desc-curta">Instalação e configuração profissional de aplicativos e programas necessários.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Instalação de aplicativos diversos</li>
+                        <li>Configuração de preferências</li>
+                        <li>Teste de funcionamento completo</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 40,00</span>
                     <button class="btn-acao" onclick="abrirModal('Instalação de Softwares')">Solicitar</button>
@@ -611,7 +682,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Software</span>
                 </div>
                 <h3>Instalação do Pacote Office</h3>
-                <p class="desc-curta">Instalação completa e configuração da suite Microsoft Office.</p>
+                <p class="desc-curta">Instalação completa e configuração da suite Microsoft Office com ativação.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Instalação de toda suite Office</li>
+                        <li>Ativação e configuração</li>
+                        <li>Teste de funcionamento de todos apps</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 40,00</span>
                     <button class="btn-acao" onclick="abrirModal('Instalação do Pacote Office')">Solicitar</button>
@@ -623,7 +701,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Software</span>
                 </div>
                 <h3>Otimização de Sistema</h3>
-                <p class="desc-curta">Otimização de performance, limpeza de arquivos temporários e gerenciamento de inicialização.</p>
+                <p class="desc-curta">Otimização avançada de performance, limpeza de arquivos temporários e gerenciamento de inicialização.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Limpeza de arquivos temporários</li>
+                        <li>Otimização de inicialização</li>
+                        <li>Desfragmentação e limpeza de registro</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 50,00</span>
                     <button class="btn-acao" onclick="abrirModal('Otimização de Sistema')">Solicitar</button>
@@ -636,7 +721,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Hardware</span>
                 </div>
                 <h3>Manutenção Preventiva</h3>
-                <p class="desc-curta">Limpeza física completa + aplicação de pasta térmica de qualidade.</p>
+                <p class="desc-curta">Limpeza física completa interna e aplicação de pasta térmica de qualidade premium.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Limpeza física completa interna</li>
+                        <li>Pasta térmica de alta condutividade</li>
+                        <li>Teste de temperatura e performance</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 95,00</span>
                     <button class="btn-acao" onclick="abrirModal('Manutenção Preventiva')">Solicitar</button>
@@ -648,7 +740,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Hardware</span>
                 </div>
                 <h3>Montagem de Computador Completa</h3>
-                <p class="desc-curta">Montagem completa de PC com testes e instalação de SO inclusos.</p>
+                <p class="desc-curta">Montagem profissional de PC com testes de funcionamento e instalação de SO incluso.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Montagem completa de todos componentes</li>
+                        <li>Testes de funcionamento rigorosos</li>
+                        <li>Instalação SO e drivers WHQL</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 120,00</span>
                     <button class="btn-acao" onclick="abrirModal('Montagem de Computador Completa')">Solicitar</button>
@@ -660,7 +759,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Hardware</span>
                 </div>
                 <h3>Recuperação de Dados (HD/SSD/Pendrive)</h3>
-                <p class="desc-curta">Recuperação de dados em discos rígidos, SSDs e pendrives danificados.</p>
+                <p class="desc-curta">Recuperação profissional de dados em discos rígidos, SSDs e pendrives danificados.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Extração de dados em modo RAW</li>
+                        <li>Recuperação de partições perdidas</li>
+                        <li>Entrega em mídia ou nuvem</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 150,00</span>
                     <button class="btn-acao" onclick="abrirModal('Recuperação de Dados')">Solicitar</button>
@@ -672,7 +778,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Hardware</span>
                 </div>
                 <h3>Troca de Bateria da BIOS</h3>
-                <p class="desc-curta">Substituição da bateria CMOS para restaurar configurações.</p>
+                <p class="desc-curta">Substituição profissional da bateria CMOS para restaurar configurações do BIOS.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Substituição bateria CMOS original</li>
+                        <li>Restauração de configurações BIOS</li>
+                        <li>Teste de funcionamento completo</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 50,00</span>
                     <button class="btn-acao" onclick="abrirModal('Troca de Bateria da BIOS')">Solicitar</button>
@@ -684,7 +797,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Hardware</span>
                 </div>
                 <h3>Troca de Bateria de Notebook</h3>
-                <p class="desc-curta">Substituição de bateria de notebook com testes de autonomia.</p>
+                <p class="desc-curta">Substituição profissional de bateria de notebook com testes de autonomia e carregamento.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Substituição bateria original OEM</li>
+                        <li>Testes de autonomia e carregamento</li>
+                        <li>Calibração de bateria</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 70,00</span>
                     <button class="btn-acao" onclick="abrirModal('Troca de Bateria de Notebook')">Solicitar</button>
@@ -696,7 +816,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Hardware</span>
                 </div>
                 <h3>Troca de Fonte de Alimentação</h3>
-                <p class="desc-curta">Substituição de fonte de alimentação com compatibilidade verificada.</p>
+                <p class="desc-curta">Substituição de fonte de alimentação com compatibilidade verificada e testes.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Substituição fonte compatível</li>
+                        <li>Testes de voltagem e potência</li>
+                        <li>Instalação e segurança verificadas</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 50,00</span>
                     <button class="btn-acao" onclick="abrirModal('Troca de Fonte de Alimentação')">Solicitar</button>
@@ -708,7 +835,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Hardware</span>
                 </div>
                 <h3>Upgrade HD</h3>
-                <p class="desc-curta">Instalação e configuração de novo disco rígido com transferência de dados.</p>
+                <p class="desc-curta">Instalação e configuração de novo disco rígido com transferência segura de dados.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Instalação físico novo HD</li>
+                        <li>Transferência de dados completa</li>
+                        <li>Particionamento e formatação</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 50,00</span>
                     <button class="btn-acao" onclick="abrirModal('Upgrade HD')">Solicitar</button>
@@ -720,7 +854,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Hardware</span>
                 </div>
                 <h3>Upgrade Memória RAM</h3>
-                <p class="desc-curta">Instalação de módulos RAM adicionais com configuração otimizada.</p>
+                <p class="desc-curta">Instalação de módulos RAM adicionais com configuração otimizada para dual channel.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Instalação de módulos RAM compatíveis</li>
+                        <li>Configuração Dual Channel</li>
+                        <li>Testes de estabilidade e velocidade</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 40,00</span>
                     <button class="btn-acao" onclick="abrirModal('Upgrade Memória RAM')">Solicitar</button>
@@ -732,7 +873,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Hardware</span>
                 </div>
                 <h3>Upgrade Placa de Vídeo</h3>
-                <p class="desc-curta">Instalação de placa de vídeo com drivers e otimização de performance.</p>
+                <p class="desc-curta">Instalação de placa de vídeo com drivers atualizados e otimização de performance.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Instalação placa vídeo nova</li>
+                        <li>Drivers NVIDIA/AMD atualizados</li>
+                        <li>Testes de performance e temperatura</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 40,00</span>
                     <button class="btn-acao" onclick="abrirModal('Upgrade Placa de Vídeo')">Solicitar</button>
@@ -744,7 +892,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Hardware</span>
                 </div>
                 <h3>Upgrade SSD</h3>
-                <p class="desc-curta">Instalação de SSD com migração de SO e dados para performance superior.</p>
+                <p class="desc-curta">Instalação de SSD NVMe com migração completa do SO e dados para performance superior.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Instalação SSD NVMe M.2</li>
+                        <li>Migração SO e dados completa</li>
+                        <li>Otimização AHCI e NVMe driver</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 50,00</span>
                     <button class="btn-acao" onclick="abrirModal('Upgrade SSD')">Solicitar</button>
@@ -757,7 +912,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Redes & Infraestrutura</span>
                 </div>
                 <h3>Configuração de Roteador / Repetidor Wi-Fi</h3>
-                <p class="desc-curta">Configuração, otimização e segurança de roteadores e repetidores wireless.</p>
+                <p class="desc-curta">Configuração profissional, otimização e segurança de roteadores e repetidores wireless.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Configuração otimizada de canais</li>
+                        <li>Proteção WPA3 e firewall</li>
+                        <li>Teste de velocidade e cobertura</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 50,00</span>
                     <button class="btn-acao" onclick="abrirModal('Configuração de Roteador / Repetidor Wi-Fi')">Solicitar</button>
@@ -769,7 +931,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Redes & Infraestrutura</span>
                 </div>
                 <h3>Crimpagem de Cabo UTP - M.O</h3>
-                <p class="desc-curta">Crimpagem profissional de cabos UTP Cat5/Cat6 (mão de obra).</p>
+                <p class="desc-curta">Crimpagem profissional de cabos UTP Cat5/Cat6 com conectores de qualidade (mão de obra).</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Crimpagem Cat5/Cat6 profissional</li>
+                        <li>Conectores RJ45 de qualidade</li>
+                        <li>Teste de continuidade garantido</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 12,00</span>
                     <button class="btn-acao" onclick="abrirModal('Crimpagem de Cabo UTP')">Solicitar</button>
@@ -781,7 +950,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Redes & Infraestrutura</span>
                 </div>
                 <h3>Lançamento de Cabo UTP (por metro)</h3>
-                <p class="desc-curta">Passagem de cabo UTP em canaletas, paredes e infraestrutura (por metro).</p>
+                <p class="desc-curta">Passagem profissional de cabo UTP em canaletas, paredes e infraestrutura por metro.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Passagem em canaletas discretas</li>
+                        <li>Fixação segura e organizada</li>
+                        <li>Cobrado por metro instalado</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 4,00/m</span>
                     <button class="btn-acao" onclick="abrirModal('Lançamento de Cabo UTP')">Solicitar</button>
@@ -793,7 +969,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Redes & Infraestrutura</span>
                 </div>
                 <h3>Mapeamento de Impressora em Rede</h3>
-                <p class="desc-curta">Configuração de impressoras em rede para computadores e dispositivos.</p>
+                <p class="desc-curta">Configuração profissional de impressoras em rede para computadores e dispositivos diversos.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Configuração impressora em rede</li>
+                        <li>Drivers instalados em máquinas</li>
+                        <li>Testes de impressão em todos PCs</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 40,00</span>
                     <button class="btn-acao" onclick="abrirModal('Mapeamento de Impressora em Rede')">Solicitar</button>
@@ -806,7 +989,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Deslocamento</span>
                 </div>
                 <h3>Visita Técnica</h3>
-                <p class="desc-curta">Taxa de deslocamento para visitas técnicas e atendimentos presenciais.</p>
+                <p class="desc-curta">Taxa de deslocamento e hora técnica para visitas técnicas e atendimentos presenciais no local.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Deslocamento até o local</li>
+                        <li>Diagnóstico inicial no local</li>
+                        <li>Orçamento personalizado</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 30,00</span>
                     <button class="btn-acao" onclick="abrirModal('Visita Técnica')">Solicitar</button>
@@ -818,7 +1008,14 @@ VERSÃO: 12.0
                     <span class="tag tag-categoria">Deslocamento</span>
                 </div>
                 <h3>Deslocamento</h3>
-                <p class="desc-curta">Taxa adicional de deslocamento para locais fora da rota principal.</p>
+                <p class="desc-curta">Taxa adicional de deslocamento para atendimentos em locais fora da rota principal.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Deslocamento adicional cobrado</li>
+                        <li>Fora da rota principal ZNT</li>
+                        <li>Pode ser combinado com outros serviços</li>
+                    </ul>
+                </div>
                 <div class="rodape-cartao">
                     <span class="preco">R$ 15,00</span>
                     <button class="btn-acao" onclick="abrirModal('Deslocamento')">Solicitar</button>
