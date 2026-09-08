@@ -1,10 +1,8 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Cabeçalho redesenhado no estilo de referência
-(logo + nome da marca lado a lado, sem "chip" com moldura laranja;
-menu hambúrguer para mobile que abre um painel com os links).
-DATA E HORA: 08 de Setembro de 2026, 12:14 (repaginação v10.0)
+ÚLTIMA MUDANÇA: Restauração estrita da paleta de cores original (--bg-dark, --blue-mid, --orange-neon, --white-ice). Aplicação do azul médio (--blue-mid) no cabeçalho para gerar contraste com a logo escura. Manutenção do layout de alta conversão (Hero Section) inspirado na referência.
+DATA E HORA: 08 de Setembro de 2026, 14:58
 VERSÃO: 10.0
 =========================================================
 -->
@@ -14,25 +12,15 @@ VERSÃO: 10.0
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZNT - Catálogo de Serviços</title>
-
-    <!-- SEO / Compartilhamento -->
-    <meta name="description" content="ZNT (Zenith TI) - Catálogo de serviços de manutenção de hardware, software e redes/dados.">
-    <meta property="og:title" content="ZNT - Catálogo de Serviços">
-    <meta property="og:description" content="Manutenção de hardware, software, redes e recuperação de dados.">
-    <meta property="og:type" content="website">
-    <!-- Se tiver uma imagem de capa (1200x630px), descomente e ajuste o caminho abaixo -->
-    <!-- <meta property="og:image" content="capa-og.jpg"> -->
-
+    
     <!-- Ícones para Navegador e Mobile (App) -->
     <link rel="icon" type="image/jpeg" href="3 - Logo Simples (Losango) 2 - 10-07-26.jpg">
-    <!-- Recomendado: gerar também um favicon.ico (32x32) para máxima compatibilidade -->
-    <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
     <link rel="apple-touch-icon" href="3 - Logo Simples (Losango) 2 - 10-07-26.jpg">
-    <meta name="apple-mobile-web-app-title" content="ZNT Serviços">
+    <meta name="apple-mobile-web-app-title" content="ZNT">
 
     <style>
         /* =========================================
-           PALETA DE CORES OFICIAL (enviada pelo cliente)
+           PALETA DE CORES OFICIAL ZNT
            ========================================= */
         :root {
             --bg-dark: #001935;
@@ -56,7 +44,6 @@ VERSÃO: 10.0
             color: var(--white-ice);
             overflow-x: hidden;
             min-height: 100vh;
-            position: relative;
         }
 
         /* =========================================
@@ -79,172 +66,154 @@ VERSÃO: 10.0
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 25, 53, 0.75);
+            background: rgba(0, 25, 53, 0.85); /* Fundo escuro com base no --bg-dark */
             z-index: -1;
         }
 
         /* =========================================
-           CABEÇALHO — ESTILO REFERÊNCIA
-           Logo + nome da marca lado a lado, links à direita
-           em telas grandes, e menu hambúrguer em mobile.
+           CABEÇALHO / NAVBAR ESTILO APP
            ========================================= */
         header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            gap: 16px;
-            padding: 16px 24px;
-            background: var(--bg-dark);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        /* Logo + nome da marca, sem moldura — igual à referência */
-        .logo-chip {
-            display: inline-flex;
             align-items: center;
-            gap: 12px;
+            padding: 15px 5%;
+            background-color: var(--blue-mid); /* Fundo azul claro para destacar a logo escura */
+            border-bottom: 3px solid var(--orange-neon); /* Linha de destaque */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 10;
         }
 
         .logo-empresa {
-            height: 40px;
-            width: auto;
-            display: block;
+            max-width: 180px;
+            height: auto;
+            /* Filtro de sombra para criar profundidade e separar a logo do fundo */
+            filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.5));
         }
 
-        /* Navegação (links) — visível em telas grandes */
-        .header-nav {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .header-nav a {
-            color: rgba(244, 247, 250, 0.85);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: color 0.2s ease;
-        }
-
-        .header-nav a:hover {
-            color: var(--orange-neon);
-        }
-
-        .header-nav a.destaque {
-            background: var(--orange-neon);
+        .menu-icon {
             color: var(--white-ice);
-            padding: 9px 20px;
-            border-radius: 8px;
-        }
-
-        .header-nav a.destaque:hover {
-            background: #e56000;
-            color: var(--white-ice);
-        }
-
-        /* Botão hambúrguer — só aparece em mobile */
-        .btn-menu-mobile {
-            display: none;
-            background: transparent;
-            border: none;
+            font-size: 1.8rem;
             cursor: pointer;
-            padding: 6px;
-            color: var(--white-ice);
+            transition: color 0.3s ease;
         }
 
-        .btn-menu-mobile svg {
-            width: 28px;
-            height: 28px;
-            display: block;
-        }
-
-        @media (max-width: 720px) {
-            .btn-menu-mobile {
-                display: block;
-            }
-
-            .header-nav {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--bg-dark);
-                flex-direction: column;
-                align-items: stretch;
-                gap: 0;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.3s ease;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            }
-
-            .header-nav.aberto {
-                max-height: 220px;
-            }
-
-            .header-nav a {
-                padding: 16px 24px;
-                border-top: 1px solid rgba(255, 255, 255, 0.06);
-            }
-
-            .header-nav a.destaque {
-                margin: 12px 24px;
-                text-align: center;
-                border-radius: 8px;
-            }
+        .menu-icon:hover {
+            color: var(--orange-neon);
         }
 
         /* =========================================
-           FAIXA DE TÍTULO / SOBRE
+           HERO SECTION (ÁREA DE DESTAQUE)
            ========================================= */
-        .faixa-titulo {
-            text-align: center;
-            padding: 50px 20px 30px 20px;
+        .hero {
+            padding: 60px 5% 40px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
             position: relative;
-            z-index: 1;
         }
 
-        .faixa-titulo h1 {
-            font-size: 2.2rem;
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(30, 89, 156, 0.15); /* Fundo translúcido --blue-mid */
+            border: 1px solid rgba(30, 89, 156, 0.4);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
             color: var(--white-ice);
-            margin-bottom: 12px;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
         }
 
-        .faixa-titulo h1 span {
+        .hero-tag span {
+            color: var(--orange-neon);
+            font-size: 1.2rem;
+            line-height: 0;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            color: var(--white-ice);
+        }
+
+        .hero h1 .highlight {
             color: var(--orange-neon);
         }
 
-        .faixa-titulo p {
-            max-width: 600px;
-            margin: 0 auto;
-            color: rgba(244, 247, 250, 0.65);
-            font-size: 1rem;
+        .hero p {
+            font-size: 1.1rem;
+            color: rgba(244, 247, 250, 0.8); /* --white-ice com opacidade */
             line-height: 1.6;
+            max-width: 700px;
+            margin-bottom: 35px;
+        }
+
+        .hero-botoes {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primario {
+            background: var(--orange-neon);
+            color: var(--white-ice);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primario:hover { 
+            transform: scale(1.05); 
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .btn-secundario {
+            background: rgba(30, 89, 156, 0.2);
+            color: var(--white-ice);
+            border: 1px solid var(--blue-mid);
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secundario:hover { 
+            background: var(--blue-mid); 
         }
 
         /* =========================================
            FILTROS
            ========================================= */
         .filtros {
-            text-align: center;
-            margin: 30px 0 40px 0;
+            text-align: left;
+            margin: 20px 0 40px 0;
             display: flex;
-            justify-content: center;
             gap: 10px;
             flex-wrap: wrap;
-            padding: 0 20px;
-            position: relative;
-            z-index: 1;
+            padding: 0 5%;
+            max-width: 1300px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .btn-filtro {
-            background: rgba(244, 247, 250, 0.06);
-            border: 2px solid rgba(244, 247, 250, 0.18);
+            background: rgba(244, 247, 250, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(244, 247, 250, 0.2);
             color: var(--white-ice);
-            padding: 9px 24px;
+            padding: 10px 25px;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -252,98 +221,83 @@ VERSÃO: 10.0
         }
 
         .btn-filtro:hover, .btn-filtro.ativo {
-            background: var(--orange-neon);
-            border-color: var(--orange-neon);
-            color: var(--white-ice);
-            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+            background: var(--blue-mid);
+            border-color: var(--blue-mid);
+            box-shadow: 0 4px 15px rgba(30, 89, 156, 0.4);
         }
 
         /* =========================================
-           GRID DE CATÁLOGO — CARDS SÓLIDOS E CLAROS
+           GRID DE CATÁLOGO (Glassmorphism)
            ========================================= */
         .container {
             max-width: 1300px;
             margin: 0 auto 60px auto;
-            padding: 0 20px;
-            position: relative;
-            z-index: 1;
+            padding: 0 5%;
         }
 
         .catalogo {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
 
         .cartao {
-            background: #052c53;
-            color: var(--white-ice);
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid rgba(244, 247, 250, 0.08);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .cartao:hover {
             transform: translateY(-8px);
-            box-shadow: 0 16px 34px rgba(0, 0, 0, 0.35);
+            border-color: rgba(255, 107, 0, 0.5);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
-        /* Faixa colorida no topo do card — a cor identifica a categoria,
-           usando só as 3 cores de destaque da paleta oficial */
-        .cartao-topo {
-            padding: 20px 24px;
+        .cartao::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--orange-neon);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
         }
 
-        .cartao[data-categoria="hardware"] .cartao-topo { background: var(--blue-mid); }
-        .cartao[data-categoria="software"] .cartao-topo { background: var(--orange-neon); }
-        .cartao[data-categoria="dados"] .cartao-topo { background: var(--bg-dark); border-bottom: 1px solid rgba(244, 247, 250, 0.1); }
+        .cartao:hover::before {
+            transform: scaleX(1);
+        }
 
-        .cartao-topo .tags {
+        .tags {
             display: flex;
             gap: 8px;
-            margin-bottom: 12px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
-        .cartao-topo .tag-sla {
+        .tag {
             font-size: 0.75rem;
             padding: 4px 10px;
             border-radius: 20px;
             font-weight: bold;
             letter-spacing: 0.5px;
-            background: rgba(244, 247, 250, 0.25);
-            color: var(--white-ice);
-            border: 1px solid rgba(244, 247, 250, 0.4);
         }
+        
+        .tag-categoria { background: var(--blue-mid); color: var(--white-ice); }
+        .tag-sla { background: rgba(244, 247, 250, 0.1); color: var(--white-ice); border: 1px solid rgba(244, 247, 250, 0.2); }
+        .tag-garantia { background: rgba(255, 107, 0, 0.1); color: var(--orange-neon); border: 1px solid var(--orange-neon); }
 
-        .cartao-topo h3 {
+        .cartao h3 {
             font-size: 1.5rem;
+            margin-bottom: 12px;
             color: var(--white-ice);
-        }
-
-        .cartao-corpo {
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .tag-garantia {
-            display: inline-block;
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-            background: rgba(255, 107, 0, 0.08);
-            color: var(--orange-neon);
-            border: 1px solid var(--orange-neon);
-            margin-bottom: 16px;
-            align-self: flex-start;
         }
 
         .desc-curta {
@@ -351,10 +305,11 @@ VERSÃO: 10.0
             color: rgba(244, 247, 250, 0.7);
             margin-bottom: 20px;
             line-height: 1.5;
+            flex-grow: 1;
         }
 
         .detalhes-tecnicos {
-            background: rgba(244, 247, 250, 0.05);
+            background: rgba(0, 0, 0, 0.2);
             padding: 15px 20px;
             border-radius: 10px;
             margin-bottom: 25px;
@@ -369,7 +324,7 @@ VERSÃO: 10.0
             margin-bottom: 8px;
             display: flex;
             align-items: flex-start;
-            color: rgba(244, 247, 250, 0.85);
+            color: rgba(244, 247, 250, 0.9);
         }
 
         .detalhes-tecnicos li::before {
@@ -384,73 +339,44 @@ VERSÃO: 10.0
         }
 
         .rodape-cartao {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-top: auto;
+        }
+
+        .preco {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--white-ice);
         }
 
         .btn-acao {
             background: var(--orange-neon);
             color: var(--white-ice);
             border: none;
-            padding: 13px 20px;
-            border-radius: 8px;
+            padding: 10px 18px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.95rem;
-            width: 100%;
+            font-size: 0.9rem;
             transition: all 0.2s ease;
         }
 
         .btn-acao:hover {
             background: #e56000;
-            transform: scale(1.02);
+            transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
         }
 
         /* =========================================
-           FAIXA FINAL DE CONTATO
-           ========================================= */
-        .faixa-contato {
-            background: var(--orange-neon);
-            text-align: center;
-            padding: 50px 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .faixa-contato h2 {
-            color: var(--bg-dark);
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-
-        .faixa-contato p {
-            color: rgba(0, 25, 53, 0.8);
-            margin-bottom: 24px;
-        }
-
-        .btn-contato-final {
-            display: inline-block;
-            background: var(--bg-dark);
-            color: var(--white-ice);
-            padding: 14px 32px;
-            border-radius: 30px;
-            font-weight: bold;
-            text-decoration: none;
-            transition: transform 0.2s ease;
-        }
-
-        .btn-contato-final:hover {
-            transform: scale(1.05);
-        }
-
-        /* =========================================
-           MODAL MODERNO E AGRADÁVEL
+           MODAL MODERNO
            ========================================= */
         .modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 25, 53, 0.6);
+            background: rgba(0, 25, 53, 0.8);
             backdrop-filter: blur(8px);
             z-index: 1000;
             justify-content: center;
@@ -472,7 +398,6 @@ VERSÃO: 10.0
             padding: 40px 30px;
             text-align: center;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            position: relative;
             transform: translateY(20px);
             transition: transform 0.3s ease;
         }
@@ -541,269 +466,182 @@ VERSÃO: 10.0
             color: var(--white-ice);
         }
 
-        @keyframes fadein {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadein { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
         }
     </style>
 </head>
 <body>
 
-    <!-- Vídeo de Fundo: desativado nesta versão clara, porque a camada escura
-         necessária pra dar legibilidade ao texto tingiria o fundo branco de
-         azulado. Se quiser reativar, descomente as duas linhas abaixo e
-         considere trocar o vídeo por um clipe mais claro. -->
-    <!--
+    <!-- Vídeo de Fundo -->
     <video class="video-fundo" autoplay loop muted playsinline>
         <source src="VideoDeFundo.mp4" type="video/mp4">
     </video>
     <div class="overlay-video"></div>
-    -->
 
     <header>
-        <div class="logo-chip">
-            <img src="Logo-Cabecalho-Site.png" alt="Zenith TI" class="logo-empresa">
-        </div>
-
-        <nav class="header-nav" id="headerNav">
-            <a href="#sobre">Sobre Nós</a>
-            <a href="#contato" class="destaque">Contato</a>
-        </nav>
-
-        <button class="btn-menu-mobile" id="btnMenuMobile" onclick="toggleMenu()" aria-label="Abrir menu" aria-expanded="false">
-            <svg id="iconeMenu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-        </button>
+        <img src="Logo-Cabecalho-Site.png" alt="ZNT" class="logo-empresa">
+        <!-- Ícone simulando um menu hambúrguer de navegação -->
+        <div class="menu-icon">☰</div>
     </header>
 
-    <section class="faixa-titulo" id="sobre">
-        <h1>Catálogo de <span>Serviços</span></h1>
-        <!-- Texto opcional: edite à vontade -->
-        <p>Manutenção especializada em hardware, software e redes/dados, com prazos claros e garantia em cada serviço.</p>
+    <section class="hero">
+        <div class="hero-tag">
+            <span>•</span> EXCELÊNCIA EM TECNOLOGIA
+        </div>
+        <h1>
+            Hardware & Software <br>
+            <span class="highlight">de alto desempenho</span>
+        </h1>
+        <p>
+            Somos especialistas em manutenção avançada, otimização térmica, recuperação de dados e setups de alta performance. Profissionais prontos para entregar a melhor solução para sua necessidade.
+        </p>
+        <div class="hero-botoes">
+            <button class="btn-primario">Solicitar proposta</button>
+            <button class="btn-secundario">Falar com especialista</button>
+        </div>
     </section>
 
-    <div class="filtros" role="group" aria-label="Filtrar serviços por categoria">
-        <button class="btn-filtro ativo" aria-pressed="true" onclick="filtrar('todos', event)">Todos os Serviços</button>
-        <button class="btn-filtro" aria-pressed="false" onclick="filtrar('hardware', event)">Hardware</button>
-        <button class="btn-filtro" aria-pressed="false" onclick="filtrar('software', event)">Software</button>
-        <button class="btn-filtro" aria-pressed="false" onclick="filtrar('dados', event)">Rede & Dados</button>
+    <div class="filtros">
+        <button class="btn-filtro ativo" onclick="filtrar('todos')">Todos os Serviços</button>
+        <button class="btn-filtro" onclick="filtrar('hardware')">Hardware</button>
+        <button class="btn-filtro" onclick="filtrar('software')">Software</button>
+        <button class="btn-filtro" onclick="filtrar('dados')">Rede & Dados</button>
     </div>
 
     <div class="container">
         <main class="catalogo">
-
+            
             <!-- SERVIÇO 1 -->
             <div class="cartao" data-categoria="software">
-                <div class="cartao-topo">
-                    <div class="tags"><span class="tag-sla">SLA: 4H</span></div>
-                    <h3>Instalação Limpa + BIOS</h3>
+                <div class="tags">
+                    <span class="tag tag-categoria">Software</span>
+                    <span class="tag tag-sla">SLA: 4H</span>
                 </div>
-                <div class="cartao-corpo">
-                    <p class="desc-curta">Formatação de baixo nível, instalação de sistema operacional e atualização segura de firmware.</p>
-                    <div class="detalhes-tecnicos">
-                        <ul>
-                            <li>Backup preventivo de até 50GB</li>
-                            <li>Update seguro de BIOS/UEFI</li>
-                            <li>Instalação de Drivers WHQL</li>
-                            <li>Configuração de perfil XMP na RAM</li>
-                        </ul>
-                    </div>
-                    <div class="rodape-cartao">
-                        <button class="btn-acao" onclick="abrirModal('Instalação Limpa + BIOS')">Solicitar</button>
-                    </div>
+                <h3>Instalação Limpa + BIOS</h3>
+                <p class="desc-curta">Formatação de baixo nível, instalação de sistema operacional e atualização segura de firmware.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Backup preventivo de até 50GB</li>
+                        <li>Update seguro de BIOS/UEFI</li>
+                        <li>Instalação de Drivers WHQL</li>
+                    </ul>
+                </div>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 120</span>
+                    <button class="btn-acao" onclick="abrirModal('Instalação Limpa + BIOS')">Solicitar</button>
                 </div>
             </div>
 
             <!-- SERVIÇO 2 -->
             <div class="cartao" data-categoria="hardware">
-                <div class="cartao-topo">
-                    <div class="tags"><span class="tag-sla">SLA: 2H</span></div>
-                    <h3>Limpeza e Refrigeração</h3>
+                <div class="tags">
+                    <span class="tag tag-categoria">Hardware</span>
+                    <span class="tag tag-sla">SLA: 2H</span>
+                    <span class="tag tag-garantia">90D Garantia</span>
                 </div>
-                <div class="cartao-corpo">
-                    <span class="tag-garantia">90D Garantia</span>
-                    <p class="desc-curta">Higienização interna completa e substituição de interface térmica para redução de temperatura.</p>
-                    <div class="detalhes-tecnicos">
-                        <ul>
-                            <li>Banho químico com Álcool Isopropílico</li>
-                            <li>Pasta Térmica de Prata de alta condutividade</li>
-                            <li>Troca de Thermal Pads (VRMs/VRAM)</li>
-                            <li>Teste de estresse de temperatura</li>
-                        </ul>
-                    </div>
-                    <div class="rodape-cartao">
-                        <button class="btn-acao" onclick="abrirModal('Limpeza e Refrigeração')">Solicitar</button>
-                    </div>
+                <h3>Limpeza e Refrigeração</h3>
+                <p class="desc-curta">Higienização interna completa e substituição de interface térmica para redução de temperatura.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Banho químico com Álcool Isopropílico</li>
+                        <li>Pasta Térmica de Prata de alta condutividade</li>
+                        <li>Troca de Thermal Pads</li>
+                    </ul>
+                </div>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 150</span>
+                    <button class="btn-acao" onclick="abrirModal('Limpeza e Refrigeração')">Solicitar</button>
                 </div>
             </div>
 
             <!-- SERVIÇO 3 -->
             <div class="cartao" data-categoria="software">
-                <div class="cartao-topo">
-                    <div class="tags"><span class="tag-sla">SLA: 6H</span></div>
-                    <h3>Protocolo Anti-Malware</h3>
+                <div class="tags">
+                    <span class="tag tag-categoria">Software</span>
+                    <span class="tag tag-sla">SLA: 6H</span>
                 </div>
-                <div class="cartao-corpo">
-                    <p class="desc-curta">Remoção de ameaças persistentes, rootkits, ransomwares e reparo de registro do sistema.</p>
-                    <div class="detalhes-tecnicos">
-                        <ul>
-                            <li>Análise heurística profunda</li>
-                            <li>Remoção de Rootkits e Keyloggers</li>
-                            <li>Reconstrução de arquivos corrompidos</li>
-                            <li>Implementação de Firewall configurado</li>
-                        </ul>
-                    </div>
-                    <div class="rodape-cartao">
-                        <button class="btn-acao" onclick="abrirModal('Protocolo Anti-Malware')">Solicitar</button>
-                    </div>
+                <h3>Protocolo Anti-Malware</h3>
+                <p class="desc-curta">Remoção de ameaças persistentes, rootkits, ransomwares e reparo de registro do sistema.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Análise heurística profunda</li>
+                        <li>Remoção de Rootkits e Keyloggers</li>
+                        <li>Implementação de Firewall configurado</li>
+                    </ul>
+                </div>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 180</span>
+                    <button class="btn-acao" onclick="abrirModal('Protocolo Anti-Malware')">Solicitar</button>
                 </div>
             </div>
 
             <!-- SERVIÇO 4 -->
             <div class="cartao" data-categoria="hardware">
-                <div class="cartao-topo">
-                    <div class="tags"><span class="tag-sla">SLA: 12H</span></div>
-                    <h3>Reparo de Placa-Mãe</h3>
+                <div class="tags">
+                    <span class="tag tag-categoria">Hardware</span>
+                    <span class="tag tag-garantia">180D Garantia</span>
                 </div>
-                <div class="cartao-corpo">
-                    <span class="tag-garantia">180D Garantia</span>
-                    <p class="desc-curta">Análise microscópica e soldagem de componentes na placa de circuito impresso (PCB).</p>
-                    <div class="detalhes-tecnicos">
-                        <ul>
-                            <li>Mapeamento de curto-circuito</li>
-                            <li>Troca de capacitores, Mosfets e CIs</li>
-                            <li>Regravação de CI de BIOS</li>
-                            <li>Ressolda de conectores danificados</li>
-                        </ul>
-                    </div>
-                    <div class="rodape-cartao">
-                        <button class="btn-acao" onclick="abrirModal('Reparo de Placa-Mãe')">Solicitar</button>
-                    </div>
+                <h3>Reparo de Placa-Mãe</h3>
+                <p class="desc-curta">Análise microscópica e soldagem de componentes na placa de circuito impresso (PCB).</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Mapeamento de curto-circuito</li>
+                        <li>Troca de capacitores e CIs</li>
+                        <li>Ressolda de conectores danificados</li>
+                    </ul>
+                </div>
+                <div class="rodape-cartao">
+                    <span class="preco">Sob Análise</span>
+                    <button class="btn-acao" onclick="abrirModal('Reparo de Placa-Mãe')">Solicitar</button>
                 </div>
             </div>
 
             <!-- SERVIÇO 5 -->
             <div class="cartao" data-categoria="hardware">
-                <div class="cartao-topo">
-                    <div class="tags"><span class="tag-sla">SLA: 3H</span></div>
-                    <h3>Upgrade NVMe e RAM</h3>
+                <div class="tags">
+                    <span class="tag tag-categoria">Hardware</span>
+                    <span class="tag tag-sla">SLA: 3H</span>
                 </div>
-                <div class="cartao-corpo">
-                    <p class="desc-curta">Substituição de armazenamento mecânico por estado sólido e expansão de memória.</p>
-                    <div class="detalhes-tecnicos">
-                        <ul>
-                            <li>Clonagem de sistema operacional intacto</li>
-                            <li>Instalação física de SSD NVMe</li>
-                            <li>Configuração de RAM em Dual Channel</li>
-                            <li>Benchmark de performance</li>
-                        </ul>
-                    </div>
-                    <div class="rodape-cartao">
-                        <button class="btn-acao" onclick="abrirModal('Upgrade NVMe e RAM')">Solicitar</button>
-                    </div>
+                <h3>Upgrade NVMe e RAM</h3>
+                <p class="desc-curta">Substituição de armazenamento mecânico por estado sólido e expansão de memória.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Clonagem de sistema operacional intacto</li>
+                        <li>Instalação física de SSD NVMe</li>
+                        <li>Configuração de RAM em Dual Channel</li>
+                    </ul>
+                </div>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 90 + Peça</span>
+                    <button class="btn-acao" onclick="abrirModal('Upgrade NVMe e RAM')">Solicitar</button>
                 </div>
             </div>
 
             <!-- SERVIÇO 6 -->
             <div class="cartao" data-categoria="dados">
-                <div class="cartao-topo">
-                    <div class="tags"><span class="tag-sla">SLA: 48H</span></div>
-                    <h3>Recuperação de Dados</h3>
+                <div class="tags">
+                    <span class="tag tag-categoria">Rede & Dados</span>
+                    <span class="tag tag-sla">SLA: 48H</span>
                 </div>
-                <div class="cartao-corpo">
-                    <p class="desc-curta">Recuperação em discos particionados acidentalmente, corrompidos ou com setores defeituosos.</p>
-                    <div class="detalhes-tecnicos">
-                        <ul>
-                            <li>Extração em modo RAW de leitura</li>
-                            <li>Recuperação de tabela MBR/GPT</li>
-                            <li>Análise via software forense</li>
-                            <li>Entrega dos dados criptografados</li>
-                        </ul>
-                    </div>
-                    <div class="rodape-cartao">
-                        <button class="btn-acao" onclick="abrirModal('Recuperação de Dados')">Solicitar</button>
-                    </div>
+                <h3>Recuperação de Dados</h3>
+                <p class="desc-curta">Recuperação em discos particionados acidentalmente, corrompidos ou com setores defeituosos.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Extração em modo RAW de leitura</li>
+                        <li>Recuperação de tabela MBR/GPT</li>
+                        <li>Entrega dos dados criptografados</li>
+                    </ul>
                 </div>
-            </div>
-
-            <!-- SERVIÇO 7 -->
-            <div class="cartao" data-categoria="dados">
-                <div class="cartao-topo">
-                    <div class="tags"><span class="tag-sla">SLA: 24H</span></div>
-                    <h3>Setup de Servidor NAS</h3>
-                </div>
-                <div class="cartao-corpo">
-                    <p class="desc-curta">Configuração de nuvem local para armazenamento corporativo e roteamento avançado.</p>
-                    <div class="detalhes-tecnicos">
-                        <ul>
-                            <li>Configuração de Matrizes RAID</li>
-                            <li>Políticas de Backup Automatizado</li>
-                            <li>Configuração de Roteadores Mesh</li>
-                            <li>Controle de acesso e DNS</li>
-                        </ul>
-                    </div>
-                    <div class="rodape-cartao">
-                        <button class="btn-acao" onclick="abrirModal('Setup de Servidor NAS')">Solicitar</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SERVIÇO 8 -->
-            <div class="cartao" data-categoria="software">
-                <div class="cartao-topo">
-                    <div class="tags"><span class="tag-sla">SLA: 1H</span></div>
-                    <h3>Otimização e Undervolt</h3>
-                </div>
-                <div class="cartao-corpo">
-                    <p class="desc-curta">Ajuste fino de voltagem do processador e placa de vídeo para máxima eficiência térmica e FPS.</p>
-                    <div class="detalhes-tecnicos">
-                        <ul>
-                            <li>Redução térmica sem perda de clock</li>
-                            <li>Remoção de processos em segundo plano</li>
-                            <li>Ajuste da curva de ventoinhas</li>
-                            <li>Testes de estabilidade (Cinebench)</li>
-                        </ul>
-                    </div>
-                    <div class="rodape-cartao">
-                        <button class="btn-acao" onclick="abrirModal('Otimização e Undervolt')">Solicitar</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SERVIÇO 9 -->
-            <div class="cartao" data-categoria="hardware">
-                <div class="cartao-topo">
-                    <div class="tags"><span class="tag-sla">SLA: 4H</span></div>
-                    <h3>Montagem Premium</h3>
-                </div>
-                <div class="cartao-corpo">
-                    <p class="desc-curta">Organização impecável de cabos, montagem de setups complexos e otimização de fluxo de ar.</p>
-                    <div class="detalhes-tecnicos">
-                        <ul>
-                            <li>Roteamento oculto de cabos (Cable Management)</li>
-                            <li>Instalação de Water Coolers e AIO</li>
-                            <li>Sincronização de controladoras RGB</li>
-                            <li>Estudo de pressão positiva de ar</li>
-                        </ul>
-                    </div>
-                    <div class="rodape-cartao">
-                        <button class="btn-acao" onclick="abrirModal('Montagem Premium')">Solicitar</button>
-                    </div>
+                <div class="rodape-cartao">
+                    <span class="preco">A partir R$ 350</span>
+                    <button class="btn-acao" onclick="abrirModal('Recuperação de Dados')">Solicitar</button>
                 </div>
             </div>
 
         </main>
     </div>
-
-    <!-- FAIXA FINAL DE CONTATO -->
-    <section class="faixa-contato" id="contato">
-        <h2>Precisa de atendimento agora?</h2>
-        <p>Fale direto com a gente pelo WhatsApp e resolva rápido.</p>
-        <a class="btn-contato-final" href="https://wa.me/5531995896050" target="_blank">Chamar no WhatsApp</a>
-    </section>
 
     <!-- MODAL MODERNO -->
     <div class="modal-overlay" id="modalOverlay">
@@ -812,45 +650,18 @@ VERSÃO: 10.0
             <h2>Excelente escolha!</h2>
             <p>Você selecionou o serviço de <br><strong id="nomeServicoSelecionado">Serviço</strong>.</p>
             <p style="font-size: 0.9rem;">Para garantir um atendimento rápido e personalizado, finalizaremos os detalhes e dúvidas diretamente com você.</p>
-            <button class="btn-modal" id="btnWhatsapp">Avançar para o WhatsApp</button>
+            <button class="btn-modal">Avançar para o WhatsApp</button>
             <button class="btn-fechar-modal" onclick="fecharModal()">Cancelar e voltar ao catálogo</button>
         </div>
     </div>
 
     <script>
-        // =========================================
-        // CONFIGURAÇÃO — SEU NÚMERO DE WHATSAPP
-        // Formato: código do país + DDD + número, sem espaços/símbolos
-        // =========================================
-        const NUMERO_WHATSAPP = "5531995896050";
-
-        // Menu hambúrguer (mobile)
-        function toggleMenu() {
-            const nav = document.getElementById('headerNav');
-            const btn = document.getElementById('btnMenuMobile');
-            const aberto = nav.classList.toggle('aberto');
-            btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
-        }
-
-        // Fecha o menu mobile ao clicar em um link
-        document.querySelectorAll('.header-nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('headerNav').classList.remove('aberto');
-                document.getElementById('btnMenuMobile').setAttribute('aria-expanded', 'false');
-            });
-        });
-
-        // Sistema de Filtros
-        function filtrar(categoria, event) {
+        function filtrar(categoria) {
             const cartoes = document.querySelectorAll('.cartao');
             const botoes = document.querySelectorAll('.btn-filtro');
-
-            botoes.forEach(btn => {
-                btn.classList.remove('ativo');
-                btn.setAttribute('aria-pressed', 'false');
-            });
+            
+            botoes.forEach(btn => btn.classList.remove('ativo'));
             event.target.classList.add('ativo');
-            event.target.setAttribute('aria-pressed', 'true');
 
             cartoes.forEach(cartao => {
                 if (categoria === 'todos' || cartao.getAttribute('data-categoria') === categoria) {
@@ -862,14 +673,10 @@ VERSÃO: 10.0
             });
         }
 
-        // Sistema de Modal
         const modal = document.getElementById('modalOverlay');
         const spanServico = document.getElementById('nomeServicoSelecionado');
-        const btnWhatsapp = document.getElementById('btnWhatsapp');
-        let servicoAtual = '';
 
         function abrirModal(nomeServico) {
-            servicoAtual = nomeServico;
             spanServico.textContent = nomeServico;
             modal.style.display = 'flex';
             setTimeout(() => {
@@ -884,14 +691,8 @@ VERSÃO: 10.0
             }, 300);
         }
 
-        btnWhatsapp.addEventListener('click', function() {
-            const mensagem = encodeURIComponent(`Olá! Tenho interesse no serviço: ${servicoAtual}`);
-            window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${mensagem}`, '_blank');
-            fecharModal();
-        });
-
         modal.addEventListener('click', function(e) {
-            if (e.target === this) {
+            if(e.target === this) {
                 fecharModal();
             }
         });
