@@ -14,7 +14,7 @@ const TEXTOS = {
 
     // Hero (Seção Principal)
     hero_tag: { texto: "EXCELÊNCIA EM TECNOLOGIA", tamanho: "12px" },
-    hero_titulo: { texto: "Hardware & Software", tamanho: "64px" },
+    hero_titulo: { texto: "Conectando você à solução!", tamanho: "64px" },
     hero_destaque: { texto: "de alto desempenho", tamanho: "64px" },
     hero_descricao: { texto: "Somos especialistas em manutenção avançada, otimização térmica, recuperação de dados e setups de alta performance. Profissionais prontos para entregar a melhor solução para sua necessidade.", tamanho: "18px" },
     btn_proposta: { texto: "Solicitar proposta", tamanho: "16px" },
