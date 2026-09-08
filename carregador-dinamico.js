@@ -1,38 +1,20 @@
-/**
- * =========================================================
- * CARREGADOR DINÂMICO - ZNT Catálogo de Serviços
- * =========================================================
- * DESCRIÇÃO: Script que carrega textos e serviços de arquivos .txt
- * DATA: 08 de Setembro de 2026
- * VERSÃO: 1.0
- * =========================================================
- */
-
-// ====== CONFIGURAÇÃO DE CARREGAMENTO ======
 const CONFIG = {
   textosUrl: './textos-site.txt',
   servicosUrl: './servicos-site.txt',
-  debug: true // Mude para false em produção
+  debug: true 
 };
 
-// ====== OBJETO GLOBAL DE CONTEÚDO ======
 let CONTEUDO = {
   textos: {},
   servicos: []
 };
 
-/**
- * Função de Log Debugger
- */
 function debug(titulo, dados) {
   if (CONFIG.debug) {
     console.log(`[ZNT DEBUG] ${titulo}:`, dados);
   }
 }
 
-/**
- * Carrega e parseia o arquivo de textos
- */
 async function carregarTextos() {
   try {
     const response = await fetch(CONFIG.textosUrl);
@@ -41,7 +23,6 @@ async function carregarTextos() {
     const texto = await response.text();
     const linhas = texto.split('\n');
     
-    // Parser: busca por padrão CHAVE: VALOR
     linhas.forEach(linha => {
       const match = linha.match(/^([A-Z_]+):\s*(.+)$/);
       if (match) {
@@ -59,38 +40,31 @@ async function carregarTextos() {
   }
 }
 
-/**
- * Carrega e parseia o arquivo de serviços
- */
 async function carregarServicos() {
   try {
     const response = await fetch(CONFIG.servicosUrl);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     
     const texto = await response.text();
-    const blocos = texto.split('---').filter(b => b.trim());
+    // Separa os blocos usando [SERVIÇO] como delimitador, já que é assim no seu arquivo
+    const blocos = texto.split('[SERVIÇO]').filter(b => b.trim());
     
-    // Parser: cada bloco é um serviço
-    blocos.forEach((bloco, index) => {
+    blocos.forEach((bloco) => {
       const linhas = bloco.trim().split('\n');
-      const servico = { id: index + 1 };
+      const servico = {};
       
       linhas.forEach(linha => {
         const match = linha.match(/^([A-Z_]+):\s*(.+)$/);
         if (match) {
           const chave = match[1].toLowerCase();
           const valor = match[2].trim();
-          
-          // Converter listas em array
-          if (chave.includes('lista') || chave.includes('requisitos') || chave.includes('etapas')) {
-            servico[chave] = valor.split(';').map(item => item.trim()).filter(item => item);
-          } else {
-            servico[chave] = valor;
-          }
+          servico[chave] = valor;
         }
       });
       
-      if (servico.titulo) {
+      if (servico.nome) {
+        // Converte ID para número para garantir ordenação/busca correta
+        if(servico.id) servico.id = parseInt(servico.id); 
         CONTEUDO.servicos.push(servico);
       }
     });
@@ -103,185 +77,100 @@ async function carregarServicos() {
   }
 }
 
-/**
- * Renderiza os textos no HTML
- */
 function renderizarTextos() {
   const t = CONTEUDO.textos;
   
   // Header
-  const headerTitle = document.querySelector('header .logo-titulo');
-  if (headerTitle && t.header_titulo) {
-    headerTitle.textContent = t.header_titulo;
-  }
+  if (t.logo_alt) document.querySelector('.logo-titulo').textContent = t.logo_alt;
+  if (t.nav_sobre) document.getElementById('nav-sobre').textContent = t.nav_sobre;
+  if (t.nav_contato) document.getElementById('nav-contato').textContent = t.nav_contato;
   
   // Hero Section
-  const heroTitle = document.querySelector('.hero-content h1');
-  if (heroTitle && t.hero_titulo) heroTitle.textContent = t.hero_titulo;
-  
-  const heroSubtitle = document.querySelector('.hero-content p');
-  if (heroSubtitle && t.hero_subtitulo) heroSubtitle.textContent = t.hero_subtitulo;
-  
-  const searchPlaceholder = document.querySelector('.search-bar input');
-  if (searchPlaceholder && t.filtro_placeholder) {
-    searchPlaceholder.placeholder = t.filtro_placeholder;
-  }
-  
-  // Botões de Filtro
-  const btnTodos = document.querySelector('.botoes-filtro .btn:nth-child(1)');
-  if (btnTodos && t.filtro_todos) btnTodos.textContent = t.filtro_todos;
+  if (t.tag) document.getElementById('hero-tag').textContent = t.tag;
+  if (t.titulo) document.getElementById('hero-titulo').textContent = t.titulo;
+  if (t.titulo_destaque) document.getElementById('hero-titulo-destaque').textContent = t.titulo_destaque;
+  if (t.descricao) document.getElementById('hero-descricao').textContent = t.descricao;
   
   // Rodapé
-  const footerTexto = document.querySelector('footer p');
-  if (footerTexto && t.rodape_texto) footerTexto.textContent = t.rodape_texto;
-  
-  debug('Textos Renderizados', 'HTML atualizado com sucesso');
+  if (t.texto_rodape) document.getElementById('footer-texto').textContent = t.texto_rodape;
 }
 
-/**
- * Renderiza os serviços no catálogo
- */
 function renderizarServicos() {
-  const container = document.querySelector('.servicos-grid') || document.querySelector('.grid-catalogo');
+  const container = document.querySelector('.servicos-grid');
   
-  if (!container) {
-    console.error('[ZNT ERRO] Container de serviços não encontrado');
-    return;
-  }
-  
-  container.innerHTML = ''; // Limpa conteúdo anterior
+  if (!container) return;
+  container.innerHTML = ''; 
   
   CONTEUDO.servicos.forEach(servico => {
     const card = document.createElement('div');
     card.className = 'servico-card';
-    card.setAttribute('data-categoria', servico.categoria || 'geral');
-    card.setAttribute('data-id', servico.id);
+    card.setAttribute('data-categoria', servico.categoria);
     
     card.innerHTML = `
-      <div class="card-header">
-        <h3>${servico.titulo || 'Serviço'}</h3>
-        <span class="categoria-badge">${servico.categoria || 'N/A'}</span>
-      </div>
-      <div class="card-body">
-        <p class="descricao">${servico.descricao || ''}</p>
-        <div class="card-meta">
-          <span class="tempo">⏱️ ${servico.tempo_medio || 'Sob demanda'}</span>
-          <span class="valor">💰 ${servico.valor || 'Consultar'}</span>
-        </div>
-      </div>
-      <div class="card-footer">
+      <div class="servico-icon">⚙️</div>
+      <div class="servico-info">
+        <h3>${servico.nome}</h3>
+        <p>${servico.descricao}</p>
+        <div class="preco">${servico.preco}</div>
         <button class="btn-detalhes" onclick="abrirDetalhesServico(${servico.id})">
-          Ver Detalhes →
+          Ver Detalhes
         </button>
       </div>
     `;
-    
     container.appendChild(card);
   });
-  
-  debug(`Serviços Renderizados (Total: ${CONTEUDO.servicos.length})`, 'Cards criados no HTML');
 }
 
-/**
- * Abre modal com detalhes do serviço
- */
-function abrirDetalhesServico(id) {
+window.abrirDetalhesServico = function(id) {
   const servico = CONTEUDO.servicos.find(s => s.id === id);
+  if (!servico) return;
   
-  if (!servico) {
-    console.error(`[ZNT ERRO] Serviço ${id} não encontrado`);
-    return;
-  }
-  
-  const modal = document.querySelector('.modal-detalhes') || criarModal();
+  const modal = document.querySelector('.modal-detalhes');
   const conteudo = modal.querySelector('.modal-content');
+  const t = CONTEUDO.textos;
   
   conteudo.innerHTML = `
-    <div class="modal-header">
-      <h2>${servico.titulo}</h2>
-      <button class="btn-fechar" onclick="fecharModal()">✕</button>
+    <h2>${t.titulo || 'Detalhes do Serviço'}</h2>
+    <p><strong>${t.subtitulo || 'Você selecionou o serviço de'}:</strong> ${servico.nome}</p>
+    <p>${servico.descricao}</p>
+    
+    <div style="text-align: left; margin: 20px 0; padding: 15px; background: #f9f9f9; border-radius: 8px;">
+        <h4 style="margin-bottom: 10px;">O que está incluso:</h4>
+        <ul style="margin-left: 20px; line-height: 1.8;">
+            ${servico.detalhe_1 ? `<li>${servico.detalhe_1}</li>` : ''}
+            ${servico.detalhe_2 ? `<li>${servico.detalhe_2}</li>` : ''}
+            ${servico.detalhe_3 ? `<li>${servico.detalhe_3}</li>` : ''}
+        </ul>
     </div>
-    <div class="modal-body">
-      <p class="descricao">${servico.descricao}</p>
-      
-      ${servico.requisitos ? `
-        <div class="secao">
-          <h4>📋 Requisitos:</h4>
-          <ul>
-            ${servico.requisitos.map(r => `<li>${r}</li>`).join('')}
-          </ul>
-        </div>
-      ` : ''}
-      
-      ${servico.etapas ? `
-        <div class="secao">
-          <h4>🔄 Etapas do Processo:</h4>
-          <ol>
-            ${servico.etapas.map(e => `<li>${e}</li>`).join('')}
-          </ol>
-        </div>
-      ` : ''}
-      
-      ${servico.tecnologias ? `
-        <div class="secao">
-          <h4>💻 Tecnologias:</h4>
-          <div class="tags">
-            ${servico.tecnologias.map(t => `<span class="tag">${t}</span>`).join('')}
-          </div>
-        </div>
-      ` : ''}
-      
-      <div class="secao-meta">
-        <p><strong>Tempo Médio:</strong> ${servico.tempo_medio}</p>
-        <p><strong>Valor:</strong> ${servico.valor}</p>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-primario" onclick="solicitarServico(${servico.id})">Solicitar Serviço</button>
-      <button class="btn-secundario" onclick="fecharModal()">Fechar</button>
+    
+    <h3 style="color: #667eea; margin-bottom: 20px;">Valor: ${servico.preco}</h3>
+    
+    <p style="font-size: 14px;">${t.mensagem || ''}</p>
+    
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 20px;">
+        <button class="btn" style="background: #25D366; color: white; border-color: #25D366;">
+            ${t.botao_avancar || 'WhatsApp'}
+        </button>
+        <button class="btn-fechar" onclick="fecharModal()">
+            ${t.botao_cancelar || 'Voltar'}
+        </button>
     </div>
   `;
   
   modal.style.display = 'flex';
-  debug('Modal Aberto', servico.titulo);
 }
 
-/**
- * Cria modal se não existir
- */
-function criarModal() {
-  const modal = document.createElement('div');
-  modal.className = 'modal-detalhes';
-  modal.innerHTML = `
-    <div class="modal-content"></div>
-  `;
-  document.body.appendChild(modal);
-  return modal;
+window.fecharModal = function() {
+  document.querySelector('.modal-detalhes').style.display = 'none';
 }
 
-/**
- * Fecha modal
- */
-function fecharModal() {
-  const modal = document.querySelector('.modal-detalhes');
-  if (modal) modal.style.display = 'none';
-}
+window.filtrarServicos = function(categoria, btnElement) {
+  // Atualiza classe ativa dos botões
+  document.querySelectorAll('.botoes-filtro .btn').forEach(btn => btn.classList.remove('btn-ativo'));
+  if(btnElement) btnElement.classList.add('btn-ativo');
 
-/**
- * Solicita um serviço (placeholder para integração futura)
- */
-function solicitarServico(id) {
-  const servico = CONTEUDO.servicos.find(s => s.id === id);
-  alert(`✅ Solicitação de "${servico.titulo}" será processada.\nEm breve você receberá um contato!`);
-  fecharModal();
-}
-
-/**
- * Filtra serviços por categoria
- */
-function filtrarServicos(categoria) {
+  // Filtra cards
   const cards = document.querySelectorAll('.servico-card');
-  
   cards.forEach(card => {
     if (categoria === 'todos' || card.getAttribute('data-categoria') === categoria) {
       card.style.display = 'block';
@@ -289,20 +178,15 @@ function filtrarServicos(categoria) {
       card.style.display = 'none';
     }
   });
-  
-  debug('Filtro Aplicado', categoria);
 }
 
-/**
- * Busca serviços por palavra-chave
- */
 function buscarServicos(palavra) {
   const cards = document.querySelectorAll('.servico-card');
   const termo = palavra.toLowerCase();
   
   cards.forEach(card => {
     const titulo = card.querySelector('h3').textContent.toLowerCase();
-    const descricao = card.querySelector('.descricao').textContent.toLowerCase();
+    const descricao = card.querySelector('p').textContent.toLowerCase();
     
     if (titulo.includes(termo) || descricao.includes(termo)) {
       card.style.display = 'block';
@@ -310,39 +194,21 @@ function buscarServicos(palavra) {
       card.style.display = 'none';
     }
   });
-  
-  debug('Busca Realizada', termo);
 }
 
-/**
- * Inicializa tudo ao carregar a página
- */
 async function inicializar() {
-  console.log('[ZNT] Iniciando carregador dinâmico...');
-  
-  // Carrega os arquivos
   const textosOk = await carregarTextos();
   const servicosOk = await carregarServicos();
   
   if (textosOk && servicosOk) {
-    // Renderiza no HTML
     renderizarTextos();
     renderizarServicos();
-    console.log('[ZNT] ✅ Carregamento completo!');
-  } else {
-    console.error('[ZNT] ❌ Falha no carregamento de dados');
   }
 }
 
-// Executa ao carregar o DOM
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', inicializar);
-} else {
-  inicializar();
-}
-
-// Event Listeners para barra de busca
 document.addEventListener('DOMContentLoaded', () => {
+  inicializar();
+  
   const searchInput = document.querySelector('.search-bar input');
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
