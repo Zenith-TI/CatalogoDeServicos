@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: Zenith TI - Catálogo de Serviços Avançados
-ÚLTIMA MUDANÇA: Atualização da extensão do arquivo da imagem da logo para ".png" (Logo-Cabecalho-Site.png) para corresponder ao formato correto do arquivo hospedado.
-DATA E HORA: 08 de Setembro de 2026, 00:01
-VERSÃO: 5.0
+ÚLTIMA MUDANÇA: Redução do tamanho da logo (para 280px), diminuição do padding do cabeçalho e aplicação de mix-blend-mode para remover o fundo preto da imagem e integrá-la ao site.
+DATA E HORA: 08 de Setembro de 2026, 00:05
+VERSÃO: 6.0
 =========================================================
 -->
 <!DOCTYPE html>
@@ -71,16 +71,17 @@ VERSÃO: 5.0
            ========================================= */
         header {
             text-align: center;
-            padding: 60px 20px;
+            padding: 30px 20px 10px 20px;
             background: linear-gradient(180deg, rgba(0, 25, 53, 0.8) 0%, rgba(0, 25, 53, 0) 100%);
         }
 
         .logo-empresa {
-            max-width: 450px;
+            max-width: 280px;
             width: 100%;
             height: auto;
-            margin-bottom: 15px;
-            filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.5));
+            margin-bottom: 5px;
+            mix-blend-mode: screen; /* Remove o fundo preto e mescla com o site */
+            filter: brightness(1.1); /* Realça levemente a logo */
         }
 
         /* =========================================
