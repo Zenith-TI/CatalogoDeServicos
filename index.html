@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Header ajustado - Logo com borda branca, Sobre nós e Contatos como botões
-DATA E HORA: 08 de Setembro de 2026, 15:45
-VERSÃO: 11.1
+ÚLTIMA MUDANÇA: Atualização completa de serviços - 23 serviços adicionados
+DATA E HORA: 08 de Setembro de 2026, 15:50
+VERSÃO: 12.0
 =========================================================
 -->
 <!DOCTYPE html>
@@ -314,7 +314,7 @@ VERSÃO: 11.1
         
         .tag-categoria { background: var(--blue-mid); color: var(--white-ice); }
         .tag-sla { background: rgba(244, 247, 250, 0.1); color: var(--white-ice); border: 1px solid rgba(244, 247, 250, 0.2); }
-        .tag-garantia { background: rgba(255, 107, 0, 0.1); color: var(--orange-neon); border: 1px solid var(--orange-neon); }
+        .tag-promo { background: rgba(255, 107, 0, 0.1); color: var(--orange-neon); border: 1px solid var(--orange-neon); }
 
         .cartao h3 {
             font-size: 1.5rem;
@@ -330,36 +330,6 @@ VERSÃO: 11.1
             flex-grow: 1;
         }
 
-        .detalhes-tecnicos {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-        }
-
-        .detalhes-tecnicos ul {
-            list-style: none;
-        }
-
-        .detalhes-tecnicos li {
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: flex-start;
-            color: rgba(244, 247, 250, 0.9);
-        }
-
-        .detalhes-tecnicos li::before {
-            content: '✓';
-            color: var(--orange-neon);
-            margin-right: 10px;
-            font-weight: bold;
-        }
-
-        .detalhes-tecnicos li:last-child {
-            margin-bottom: 0;
-        }
-
         .rodape-cartao {
             display: flex;
             justify-content: space-between;
@@ -370,7 +340,7 @@ VERSÃO: 11.1
         .preco {
             font-size: 1.4rem;
             font-weight: bold;
-            color: var(--white-ice);
+            color: var(--orange-neon);
         }
 
         .btn-acao {
@@ -542,7 +512,7 @@ VERSÃO: 11.1
             <span class="highlight">de alto desempenho</span>
         </h1>
         <p>
-            Somos especialistas em manutenção avançada, otimização térmica, recuperação de dados e setups de alta performance. Profissionais prontos para entregar a melhor solução para sua n[...]
+            Somos especialistas em suporte técnico, manutenção preventiva, instalações e upgrades de componentes. Profissionais prontos para entregar a melhor solução para sua empresa ou computador pessoal.
         </p>
         <div class="hero-botoes">
             <button class="btn-primario">Solicitar proposta</button>
@@ -552,138 +522,306 @@ VERSÃO: 11.1
 
     <div class="filtros">
         <button class="btn-filtro ativo" onclick="filtrar('todos')">Todos os Serviços</button>
-        <button class="btn-filtro" onclick="filtrar('hardware')">Hardware</button>
+        <button class="btn-filtro" onclick="filtrar('suporte')">Suporte & Diagnóstico</button>
         <button class="btn-filtro" onclick="filtrar('software')">Software</button>
-        <button class="btn-filtro" onclick="filtrar('dados')">Rede & Dados</button>
+        <button class="btn-filtro" onclick="filtrar('hardware')">Hardware</button>
+        <button class="btn-filtro" onclick="filtrar('redes')">Redes & Infraestrutura</button>
+        <button class="btn-filtro" onclick="filtrar('deslocamento')">Deslocamento</button>
     </div>
 
     <div class="container">
         <main class="catalogo">
             
-            <!-- SERVIÇO 1 -->
+            <!-- SUPORTE & DIAGNÓSTICO -->
+            <div class="cartao" data-categoria="suporte">
+                <div class="tags">
+                    <span class="tag tag-categoria">Suporte & Diagnóstico</span>
+                </div>
+                <h3>Acesso Remoto (Suporte Técnico)</h3>
+                <p class="desc-curta">Suporte técnico remoto via acesso remoto seguro para resolução de problemas.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 50,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Acesso Remoto (Suporte Técnico)')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="suporte">
+                <div class="tags">
+                    <span class="tag tag-categoria">Suporte & Diagnóstico</span>
+                </div>
+                <h3>Diagnóstico de Hardware</h3>
+                <p class="desc-curta">Análise completa de componentes para identificar problemas e falhas.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 40,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Diagnóstico de Hardware')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="suporte">
+                <div class="tags">
+                    <span class="tag tag-categoria">Suporte & Diagnóstico</span>
+                </div>
+                <h3>Remoção de Vírus e Malwares</h3>
+                <p class="desc-curta">Remoção completa de ameaças, vírus e malwares com proteção reforçada.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 55,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Remoção de Vírus e Malwares')">Solicitar</button>
+                </div>
+            </div>
+
+            <!-- SOFTWARE -->
             <div class="cartao" data-categoria="software">
                 <div class="tags">
                     <span class="tag tag-categoria">Software</span>
-                    <span class="tag tag-sla">SLA: 4H</span>
                 </div>
-                <h3>Instalação Limpa + BIOS</h3>
-                <p class="desc-curta">Formatação de baixo nível, instalação de sistema operacional e atualização segura de firmware.</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Backup preventivo de até 50GB</li>
-                        <li>Update seguro de BIOS/UEFI</li>
-                        <li>Instalação de Drivers WHQL</li>
-                    </ul>
-                </div>
+                <h3>Formatação com Backup e Instalação de SO</h3>
+                <p class="desc-curta">Formatação com backup de dados e instalação completa do sistema operacional.</p>
                 <div class="rodape-cartao">
-                    <span class="preco">R$ 120</span>
-                    <button class="btn-acao" onclick="abrirModal('Instalação Limpa + BIOS')">Solicitar</button>
+                    <span class="preco">R$ 70,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Formatação com Backup e Instalação de SO')">Solicitar</button>
                 </div>
             </div>
 
-            <!-- SERVIÇO 2 -->
-            <div class="cartao" data-categoria="hardware">
-                <div class="tags">
-                    <span class="tag tag-categoria">Hardware</span>
-                    <span class="tag tag-sla">SLA: 2H</span>
-                    <span class="tag tag-garantia">90D Garantia</span>
-                </div>
-                <h3>Limpeza e Refrigeração</h3>
-                <p class="desc-curta">Higienização interna completa e substituição de interface térmica para redução de temperatura.</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Banho químico com Álcool Isopropílico</li>
-                        <li>Pasta Térmica de Prata de alta condutividade</li>
-                        <li>Troca de Thermal Pads</li>
-                    </ul>
-                </div>
-                <div class="rodape-cartao">
-                    <span class="preco">R$ 150</span>
-                    <button class="btn-acao" onclick="abrirModal('Limpeza e Refrigeração')">Solicitar</button>
-                </div>
-            </div>
-
-            <!-- SERVIÇO 3 -->
             <div class="cartao" data-categoria="software">
                 <div class="tags">
                     <span class="tag tag-categoria">Software</span>
-                    <span class="tag tag-sla">SLA: 6H</span>
                 </div>
-                <h3>Protocolo Anti-Malware</h3>
-                <p class="desc-curta">Remoção de ameaças persistentes, rootkits, ransomwares e reparo de registro do sistema.</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Análise heurística profunda</li>
-                        <li>Remoção de Rootkits e Keyloggers</li>
-                        <li>Implementação de Firewall configurado</li>
-                    </ul>
-                </div>
+                <h3>Formatação sem Backup (Apenas SO e Drivers)</h3>
+                <p class="desc-curta">Formatação rápida com instalação de SO e drivers essenciais.</p>
                 <div class="rodape-cartao">
-                    <span class="preco">R$ 180</span>
-                    <button class="btn-acao" onclick="abrirModal('Protocolo Anti-Malware')">Solicitar</button>
+                    <span class="preco">R$ 70,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Formatação sem Backup')">Solicitar</button>
                 </div>
             </div>
 
-            <!-- SERVIÇO 4 -->
+            <div class="cartao" data-categoria="software">
+                <div class="tags">
+                    <span class="tag tag-categoria">Software</span>
+                </div>
+                <h3>Instalação de Softwares</h3>
+                <p class="desc-curta">Instalação e configuração de aplicativos e programas necessários.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 40,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Instalação de Softwares')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="software">
+                <div class="tags">
+                    <span class="tag tag-categoria">Software</span>
+                </div>
+                <h3>Instalação do Pacote Office</h3>
+                <p class="desc-curta">Instalação completa e configuração da suite Microsoft Office.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 40,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Instalação do Pacote Office')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="software">
+                <div class="tags">
+                    <span class="tag tag-categoria">Software</span>
+                </div>
+                <h3>Otimização de Sistema</h3>
+                <p class="desc-curta">Otimização de performance, limpeza de arquivos temporários e gerenciamento de inicialização.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 50,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Otimização de Sistema')">Solicitar</button>
+                </div>
+            </div>
+
+            <!-- HARDWARE -->
             <div class="cartao" data-categoria="hardware">
                 <div class="tags">
                     <span class="tag tag-categoria">Hardware</span>
-                    <span class="tag tag-garantia">180D Garantia</span>
                 </div>
-                <h3>Reparo de Placa-Mãe</h3>
-                <p class="desc-curta">Análise microscópica e soldagem de componentes na placa de circuito impresso (PCB).</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Mapeamento de curto-circuito</li>
-                        <li>Troca de capacitores e CIs</li>
-                        <li>Ressolda de conectores danificados</li>
-                    </ul>
-                </div>
+                <h3>Manutenção Preventiva</h3>
+                <p class="desc-curta">Limpeza física completa + aplicação de pasta térmica de qualidade.</p>
                 <div class="rodape-cartao">
-                    <span class="preco">Sob Análise</span>
-                    <button class="btn-acao" onclick="abrirModal('Reparo de Placa-Mãe')">Solicitar</button>
+                    <span class="preco">R$ 95,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Manutenção Preventiva')">Solicitar</button>
                 </div>
             </div>
 
-            <!-- SERVIÇO 5 -->
             <div class="cartao" data-categoria="hardware">
                 <div class="tags">
                     <span class="tag tag-categoria">Hardware</span>
-                    <span class="tag tag-sla">SLA: 3H</span>
                 </div>
-                <h3>Upgrade NVMe e RAM</h3>
-                <p class="desc-curta">Substituição de armazenamento mecânico por estado sólido e expansão de memória.</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Clonagem de sistema operacional intacto</li>
-                        <li>Instalação física de SSD NVMe</li>
-                        <li>Configuração de RAM em Dual Channel</li>
-                    </ul>
-                </div>
+                <h3>Montagem de Computador Completa</h3>
+                <p class="desc-curta">Montagem completa de PC com testes e instalação de SO inclusos.</p>
                 <div class="rodape-cartao">
-                    <span class="preco">R$ 90 + Peça</span>
-                    <button class="btn-acao" onclick="abrirModal('Upgrade NVMe e RAM')">Solicitar</button>
+                    <span class="preco">R$ 120,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Montagem de Computador Completa')">Solicitar</button>
                 </div>
             </div>
 
-            <!-- SERVIÇO 6 -->
-            <div class="cartao" data-categoria="dados">
+            <div class="cartao" data-categoria="hardware">
                 <div class="tags">
-                    <span class="tag tag-categoria">Rede & Dados</span>
-                    <span class="tag tag-sla">SLA: 48H</span>
+                    <span class="tag tag-categoria">Hardware</span>
                 </div>
-                <h3>Recuperação de Dados</h3>
-                <p class="desc-curta">Recuperação em discos particionados acidentalmente, corrompidos ou com setores defeituosos.</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Extração em modo RAW de leitura</li>
-                        <li>Recuperação de tabela MBR/GPT</li>
-                        <li>Entrega dos dados criptografados</li>
-                    </ul>
-                </div>
+                <h3>Recuperação de Dados (HD/SSD/Pendrive)</h3>
+                <p class="desc-curta">Recuperação de dados em discos rígidos, SSDs e pendrives danificados.</p>
                 <div class="rodape-cartao">
-                    <span class="preco">A partir R$ 350</span>
+                    <span class="preco">R$ 150,00</span>
                     <button class="btn-acao" onclick="abrirModal('Recuperação de Dados')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="hardware">
+                <div class="tags">
+                    <span class="tag tag-categoria">Hardware</span>
+                </div>
+                <h3>Troca de Bateria da BIOS</h3>
+                <p class="desc-curta">Substituição da bateria CMOS para restaurar configurações.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 50,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Troca de Bateria da BIOS')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="hardware">
+                <div class="tags">
+                    <span class="tag tag-categoria">Hardware</span>
+                </div>
+                <h3>Troca de Bateria de Notebook</h3>
+                <p class="desc-curta">Substituição de bateria de notebook com testes de autonomia.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 70,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Troca de Bateria de Notebook')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="hardware">
+                <div class="tags">
+                    <span class="tag tag-categoria">Hardware</span>
+                </div>
+                <h3>Troca de Fonte de Alimentação</h3>
+                <p class="desc-curta">Substituição de fonte de alimentação com compatibilidade verificada.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 50,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Troca de Fonte de Alimentação')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="hardware">
+                <div class="tags">
+                    <span class="tag tag-categoria">Hardware</span>
+                </div>
+                <h3>Upgrade HD</h3>
+                <p class="desc-curta">Instalação e configuração de novo disco rígido com transferência de dados.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 50,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Upgrade HD')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="hardware">
+                <div class="tags">
+                    <span class="tag tag-categoria">Hardware</span>
+                </div>
+                <h3>Upgrade Memória RAM</h3>
+                <p class="desc-curta">Instalação de módulos RAM adicionais com configuração otimizada.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 40,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Upgrade Memória RAM')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="hardware">
+                <div class="tags">
+                    <span class="tag tag-categoria">Hardware</span>
+                </div>
+                <h3>Upgrade Placa de Vídeo</h3>
+                <p class="desc-curta">Instalação de placa de vídeo com drivers e otimização de performance.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 40,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Upgrade Placa de Vídeo')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="hardware">
+                <div class="tags">
+                    <span class="tag tag-categoria">Hardware</span>
+                </div>
+                <h3>Upgrade SSD</h3>
+                <p class="desc-curta">Instalação de SSD com migração de SO e dados para performance superior.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 50,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Upgrade SSD')">Solicitar</button>
+                </div>
+            </div>
+
+            <!-- REDES & INFRAESTRUTURA -->
+            <div class="cartao" data-categoria="redes">
+                <div class="tags">
+                    <span class="tag tag-categoria">Redes & Infraestrutura</span>
+                </div>
+                <h3>Configuração de Roteador / Repetidor Wi-Fi</h3>
+                <p class="desc-curta">Configuração, otimização e segurança de roteadores e repetidores wireless.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 50,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Configuração de Roteador / Repetidor Wi-Fi')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="redes">
+                <div class="tags">
+                    <span class="tag tag-categoria">Redes & Infraestrutura</span>
+                </div>
+                <h3>Crimpagem de Cabo UTP - M.O</h3>
+                <p class="desc-curta">Crimpagem profissional de cabos UTP Cat5/Cat6 (mão de obra).</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 12,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Crimpagem de Cabo UTP')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="redes">
+                <div class="tags">
+                    <span class="tag tag-categoria">Redes & Infraestrutura</span>
+                </div>
+                <h3>Lançamento de Cabo UTP (por metro)</h3>
+                <p class="desc-curta">Passagem de cabo UTP em canaletas, paredes e infraestrutura (por metro).</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 4,00/m</span>
+                    <button class="btn-acao" onclick="abrirModal('Lançamento de Cabo UTP')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="redes">
+                <div class="tags">
+                    <span class="tag tag-categoria">Redes & Infraestrutura</span>
+                </div>
+                <h3>Mapeamento de Impressora em Rede</h3>
+                <p class="desc-curta">Configuração de impressoras em rede para computadores e dispositivos.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 40,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Mapeamento de Impressora em Rede')">Solicitar</button>
+                </div>
+            </div>
+
+            <!-- DESLOCAMENTO -->
+            <div class="cartao" data-categoria="deslocamento">
+                <div class="tags">
+                    <span class="tag tag-categoria">Deslocamento</span>
+                </div>
+                <h3>Visita Técnica</h3>
+                <p class="desc-curta">Taxa de deslocamento para visitas técnicas e atendimentos presenciais.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 30,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Visita Técnica')">Solicitar</button>
+                </div>
+            </div>
+
+            <div class="cartao" data-categoria="deslocamento">
+                <div class="tags">
+                    <span class="tag tag-categoria">Deslocamento</span>
+                </div>
+                <h3>Deslocamento</h3>
+                <p class="desc-curta">Taxa adicional de deslocamento para locais fora da rota principal.</p>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 15,00</span>
+                    <button class="btn-acao" onclick="abrirModal('Deslocamento')">Solicitar</button>
                 </div>
             </div>
 
