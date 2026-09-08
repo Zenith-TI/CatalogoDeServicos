@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Restauração estrita da paleta de cores original (--bg-dark, --blue-mid, --orange-neon, --white-ice). Aplicação do azul médio (--blue-mid) no cabeçalho para gerar contraste com a logo escura. Manutenção do layout de alta conversão (Hero Section) inspirado na referência.
-DATA E HORA: 08 de Setembro de 2026, 14:58
-VERSÃO: 10.0
+ÚLTIMA MUDANÇA: Redesign do cabeçalho - estilo minimalista com apenas Sobre e Contatos
+DATA E HORA: 08 de Setembro de 2026, 15:30
+VERSÃO: 11.0
 =========================================================
 -->
 <!DOCTYPE html>
@@ -71,36 +71,91 @@ VERSÃO: 10.0
         }
 
         /* =========================================
-           CABEÇALHO / NAVBAR ESTILO APP
+           CABEÇALHO / NAVBAR MINIMALISTA
            ========================================= */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
-            background-color: var(--blue-mid); /* Fundo azul claro para destacar a logo escura */
-            border-bottom: 3px solid var(--orange-neon); /* Linha de destaque */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            padding: 20px 5%;
+            background-color: var(--bg-dark);
+            border-bottom: 2px solid var(--blue-mid);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             position: relative;
             z-index: 10;
+        }
+
+        .header-esquerda {
+            display: flex;
+            align-items: center;
+            gap: 30px;
         }
 
         .logo-empresa {
             max-width: 180px;
             height: auto;
-            /* Filtro de sombra para criar profundidade e separar a logo do fundo */
             filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.5));
         }
 
-        .menu-icon {
-            color: var(--white-ice);
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: color 0.3s ease;
+        .nav-minima {
+            display: flex;
+            gap: 25px;
+            list-style: none;
         }
 
-        .menu-icon:hover {
+        .nav-minima a {
+            color: var(--white-ice);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+            padding-bottom: 5px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-minima a:hover {
             color: var(--orange-neon);
+            border-bottom: 2px solid var(--orange-neon);
+        }
+
+        .header-direita {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-cta {
+            background: var(--orange-neon);
+            color: var(--white-ice);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .seletor-idioma {
+            background: rgba(30, 89, 156, 0.2);
+            border: 1px solid var(--blue-mid);
+            color: var(--white-ice);
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .seletor-idioma:hover {
+            background: var(--blue-mid);
         }
 
         /* =========================================
@@ -470,6 +525,35 @@ VERSÃO: 10.0
             from { opacity: 0; transform: translateY(20px); } 
             to { opacity: 1; transform: translateY(0); } 
         }
+
+        /* =========================================
+           RESPONSIVIDADE MOBILE
+           ========================================= */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 5%;
+            }
+
+            .header-esquerda {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .nav-minima {
+                gap: 15px;
+            }
+
+            .nav-minima a {
+                font-size: 0.85rem;
+            }
+
+            .header-direita {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
     </style>
 </head>
 <body>
@@ -480,10 +564,23 @@ VERSÃO: 10.0
     </video>
     <div class="overlay-video"></div>
 
+    <!-- CABEÇALHO MINIMALISTA -->
     <header>
-        <img src="Logo-Cabecalho-Site.png" alt="ZNT" class="logo-empresa">
-        <!-- Ícone simulando um menu hambúrguer de navegação -->
-        <div class="menu-icon">☰</div>
+        <div class="header-esquerda">
+            <img src="Logo-Cabecalho-Site.png" alt="ZNT" class="logo-empresa">
+            <nav class="nav-minima">
+                <li><a href="#sobre">Sobre nós</a></li>
+                <li><a href="#contato">Contatos</a></li>
+            </nav>
+        </div>
+        <div class="header-direita">
+            <button class="btn-cta">Para empresas</button>
+            <select class="seletor-idioma">
+                <option value="pt">PT</option>
+                <option value="en">EN</option>
+                <option value="es">ES</option>
+            </select>
+        </div>
     </header>
 
     <section class="hero">
@@ -495,7 +592,7 @@ VERSÃO: 10.0
             <span class="highlight">de alto desempenho</span>
         </h1>
         <p>
-            Somos especialistas em manutenção avançada, otimização térmica, recuperação de dados e setups de alta performance. Profissionais prontos para entregar a melhor solução para sua necessidade.
+            Somos especialistas em manutenção avançada, otimização térmica, recuperação de dados e setups de alta performance. Profissionais prontos para entregar a melhor solução para sua n[...]
         </p>
         <div class="hero-botoes">
             <button class="btn-primario">Solicitar proposta</button>
