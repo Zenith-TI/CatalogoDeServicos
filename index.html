@@ -11,26 +11,33 @@
     <header class="header">
         <div class="container">
             <div class="logo-section">
-                <span class="logo-icon">⚙️</span>
-                <h1 class="logo-titulo">Zenith TI - Catálogo de Serviços</h1>
+                <img src="./Logo-Cabecalho-Site.png" alt="Logo Zenith TI" class="logo-icon" style="height: 40px; object-fit: contain;">
+                <h1 class="logo-titulo">ZNT</h1>
             </div>
             <nav class="navbar">
-                <a href="#home">Início</a>
-                <a href="#servicos">Serviços</a>
-                <a href="#contato">Contato</a>
+                <a href="#home" id="nav-sobre">Sobre nós</a>
+                <a href="#contato" id="nav-contato">Contatos</a>
             </nav>
         </div>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
+    <!-- HERO SECTION (COM VÍDEO DE FUNDO) -->
+    <section class="hero" id="home">
+        <!-- Vídeo em loop -->
+        <video class="video-bg" autoplay loop muted playsinline>
+            <source src="./VideoDeFundo.mp4" type="video/mp4">
+        </video>
+        <!-- Camada escura/gradiente por cima do vídeo para dar leitura ao texto -->
+        <div class="hero-overlay"></div>
+
         <div class="hero-content">
-            <h1>Serviços de Tecnologia & Desenvolvimento</h1>
-            <p>Soluções completas para sua empresa digital</p>
+            <p id="hero-tag" class="tag-destaque"></p>
+            <h1 id="hero-titulo">Carregando...</h1>
+            <h2 id="hero-titulo-destaque" style="font-size: 32px; margin-bottom: 20px; font-weight: 300;"></h2>
+            <p id="hero-descricao"></p>
             
             <div class="search-bar">
                 <input type="text" placeholder="Busque um serviço...">
-                <button>🔍</button>
             </div>
         </div>
     </section>
@@ -40,11 +47,13 @@
         <div class="container">
             <h2>Filtrar por Categoria</h2>
             <div class="botoes-filtro">
-                <button class="btn btn-ativo" onclick="filtrarServicos('todos')">Todos</button>
-                <button class="btn" onclick="filtrarServicos('desenvolvimento')">Desenvolvimento</button>
-                <button class="btn" onclick="filtrarServicos('design')">Design</button>
-                <button class="btn" onclick="filtrarServicos('consultoria')">Consultoria</button>
-                <button class="btn" onclick="filtrarServicos('infraestrutura')">Infraestrutura</button>
+                <!-- As categorias agora batem exatamente com as do seu servicos-site.txt -->
+                <button class="btn btn-ativo" onclick="filtrarServicos('todos', this)">Todos</button>
+                <button class="btn" onclick="filtrarServicos('suporte', this)">Suporte</button>
+                <button class="btn" onclick="filtrarServicos('software', this)">Software</button>
+                <button class="btn" onclick="filtrarServicos('hardware', this)">Hardware</button>
+                <button class="btn" onclick="filtrarServicos('redes', this)">Redes</button>
+                <button class="btn" onclick="filtrarServicos('deslocamento', this)">Deslocamento</button>
             </div>
         </div>
     </section>
@@ -54,7 +63,7 @@
         <div class="container">
             <h2>Nossos Serviços</h2>
             <div class="servicos-grid">
-                <!-- Serviços serão carregados dinamicamente aqui -->
+                <!-- Serviços serão injetados aqui -->
             </div>
         </div>
     </section>
@@ -65,14 +74,9 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="footer">
+    <footer class="footer" id="contato">
         <div class="container">
-            <p>&copy; 2026 Zenith TI. Todos os direitos reservados.</p>
-            <div class="social-links">
-                <a href="#">LinkedIn</a>
-                <a href="#">GitHub</a>
-                <a href="#">Email</a>
-            </div>
+            <p id="footer-texto">&copy; 2026 Zenith TI. Todos os direitos reservados.</p>
         </div>
     </footer>
 
