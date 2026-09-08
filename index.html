@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Redesign do cabeçalho - estilo minimalista com apenas Sobre e Contatos
-DATA E HORA: 08 de Setembro de 2026, 15:30
-VERSÃO: 11.0
+ÚLTIMA MUDANÇA: Header ajustado - Logo com borda branca, Sobre nós e Contatos como botões
+DATA E HORA: 08 de Setembro de 2026, 15:45
+VERSÃO: 11.1
 =========================================================
 -->
 <!DOCTYPE html>
@@ -85,77 +85,44 @@ VERSÃO: 11.0
             z-index: 10;
         }
 
-        .header-esquerda {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
         .logo-empresa {
             max-width: 180px;
             height: auto;
             filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.5));
+            border: 2px solid var(--white-ice);
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
 
-        .nav-minima {
+        .logo-empresa:hover {
+            border-color: var(--orange-neon);
+            filter: drop-shadow(0px 4px 12px rgba(255, 107, 0, 0.3));
+        }
+
+        .nav-botoes {
             display: flex;
-            gap: 25px;
+            gap: 15px;
             list-style: none;
         }
 
-        .nav-minima a {
+        .nav-botoes a {
             color: var(--white-ice);
             text-decoration: none;
             font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.3s ease, border-bottom 0.3s ease;
-            padding-bottom: 5px;
-            border-bottom: 2px solid transparent;
-        }
-
-        .nav-minima a:hover {
-            color: var(--orange-neon);
-            border-bottom: 2px solid var(--orange-neon);
-        }
-
-        .header-direita {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .btn-cta {
-            background: var(--orange-neon);
-            color: var(--white-ice);
-            border: none;
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .btn-cta:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
-        }
-
-        .seletor-idioma {
-            background: rgba(30, 89, 156, 0.2);
-            border: 1px solid var(--blue-mid);
-            color: var(--white-ice);
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.85rem;
             font-weight: 600;
+            padding: 12px 24px;
+            border: 2px solid var(--white-ice);
+            border-radius: 6px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .seletor-idioma:hover {
-            background: var(--blue-mid);
+        .nav-botoes a:hover {
+            background-color: var(--orange-neon);
+            border-color: var(--orange-neon);
+            color: var(--white-ice);
+            transform: translateY(-2px);
         }
 
         /* =========================================
@@ -536,22 +503,15 @@ VERSÃO: 11.0
                 padding: 15px 5%;
             }
 
-            .header-esquerda {
+            .nav-botoes {
                 width: 100%;
-                justify-content: space-between;
+                justify-content: center;
+                gap: 10px;
             }
 
-            .nav-minima {
-                gap: 15px;
-            }
-
-            .nav-minima a {
+            .nav-botoes a {
                 font-size: 0.85rem;
-            }
-
-            .header-direita {
-                width: 100%;
-                justify-content: flex-end;
+                padding: 10px 20px;
             }
         }
     </style>
@@ -566,21 +526,11 @@ VERSÃO: 11.0
 
     <!-- CABEÇALHO MINIMALISTA -->
     <header>
-        <div class="header-esquerda">
-            <img src="Logo-Cabecalho-Site.png" alt="ZNT" class="logo-empresa">
-            <nav class="nav-minima">
-                <li><a href="#sobre">Sobre nós</a></li>
-                <li><a href="#contato">Contatos</a></li>
-            </nav>
-        </div>
-        <div class="header-direita">
-            <button class="btn-cta">Para empresas</button>
-            <select class="seletor-idioma">
-                <option value="pt">PT</option>
-                <option value="en">EN</option>
-                <option value="es">ES</option>
-            </select>
-        </div>
+        <img src="Logo-Cabecalho-Site.png" alt="ZNT" class="logo-empresa">
+        <nav class="nav-botoes">
+            <a href="#sobre">Sobre nós</a>
+            <a href="#contato">Contatos</a>
+        </nav>
     </header>
 
     <section class="hero">
