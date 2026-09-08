@@ -71,7 +71,7 @@ VERSÃO: 8.1
             min-height: 100vh;
             z-index: -2;
             object-fit: cover;
-            opacity: 0.25;
+            opacity: 0.35;
         }
 
         /* Camada escura por cima do vídeo para manter o contraste do texto */
@@ -81,7 +81,7 @@ VERSÃO: 8.1
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 25, 53, 0.75);
+            background: rgba(0, 25, 53, 0.55);
             z-index: -1;
         }
 
@@ -90,12 +90,28 @@ VERSÃO: 8.1
            ========================================= */
         header {
             text-align: center;
-            padding: 40px 20px 20px 20px;
+            padding: 65px 20px 40px 20px;
             /* Gradiente que começa de um azul-marinho super escuro e desce pro azul da paleta */
             background: linear-gradient(180deg, #00060d 0%, var(--bg-dark) 100%);
-            border-bottom: 1px solid rgba(30, 89, 156, 0.2);
+            border-bottom: 2px solid transparent;
+            border-image: linear-gradient(90deg, transparent, var(--orange-neon), transparent) 1;
             position: relative;
             z-index: 10;
+            overflow: hidden;
+        }
+
+        /* Brilho radial atrás da logo, pra ela "flutuar" com destaque */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 480px;
+            height: 480px;
+            max-width: 90vw;
+            background: radial-gradient(circle, rgba(255, 107, 0, 0.16) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
         }
 
         .logo-empresa {
@@ -106,6 +122,20 @@ VERSÃO: 8.1
             margin: 0 auto;
             /* Remove o quadrado preto da imagem preservando as cores originais */
             mix-blend-mode: lighten;
+            /* Brilho laranja sutil pra logo se destacar do fundo escuro */
+            filter: drop-shadow(0 0 22px rgba(255, 107, 0, 0.35));
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-tagline {
+            position: relative;
+            z-index: 1;
+            margin-top: 18px;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(244, 247, 250, 0.55);
         }
 
         /* =========================================
@@ -395,6 +425,8 @@ VERSÃO: 8.1
 
     <header>
         <img src="Logo-Cabecalho-Site.png" alt="Zenith TI" class="logo-empresa">
+        <!-- Texto opcional: edite ou apague esta linha se não quiser a assinatura -->
+        <p class="header-tagline">Manutenção especializada em hardware & software</p>
     </header>
 
     <div class="container">
