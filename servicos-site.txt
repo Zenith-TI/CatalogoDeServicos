@@ -1,0 +1,239 @@
+[SERVIÇO]
+ID: 1
+NOME: Acesso Remoto (Suporte Técnico)
+CATEGORIA: suporte
+DESCRICAO: Suporte técnico remoto via acesso seguro para resolução de problemas sem deslocamento.
+DETALHE_1: Atendimento rápido e remoto 24/7
+DETALHE_2: Resolução de problemas em tempo real
+DETALHE_3: Sem necessidade de deslocamento
+PRECO: R$ 50,00
+
+[SERVIÇO]
+ID: 2
+NOME: Diagnóstico de Hardware
+CATEGORIA: suporte
+DESCRICAO: Análise completa e profissional de componentes para identificar falhas e problemas.
+DETALHE_1: Teste de todos os componentes
+DETALHE_2: Relatório detalhado de problemas
+DETALHE_3: Recomendações de reparo/upgrade
+PRECO: R$ 40,00
+
+[SERVIÇO]
+ID: 3
+NOME: Remoção de Vírus e Malwares
+CATEGORIA: suporte
+DESCRICAO: Remoção completa de ameaças, vírus, trojans e malwares com proteção reforçada.
+DETALHE_1: Análise heurística profunda completa
+DETALHE_2: Remoção de rootkits e trojans
+DETALHE_3: Implementação de proteção antivírus
+PRECO: R$ 55,00
+
+[SERVIÇO]
+ID: 4
+NOME: Formatação com Backup e Instalação de SO
+CATEGORIA: software
+DESCRICAO: Formatação segura com backup de dados e instalação completa do sistema operacional.
+DETALHE_1: Backup de dados em mídia externa
+DETALHE_2: Formatação de baixo nível
+DETALHE_3: Instalação SO + drivers WHQL
+PRECO: R$ 70,00
+
+[SERVIÇO]
+ID: 5
+NOME: Formatação sem Backup (Apenas SO e Drivers)
+CATEGORIA: software
+DESCRICAO: Formatação rápida e eficiente com instalação de SO e drivers essenciais.
+DETALHE_1: Formatação acelerada do disco
+DETALHE_2: Instalação SO + drivers básicos
+DETALHE_3: Sistema pronto para uso imediato
+PRECO: R$ 70,00
+
+[SERVIÇO]
+ID: 6
+NOME: Instalação de Softwares
+CATEGORIA: software
+DESCRICAO: Instalação e configuração profissional de aplicativos e programas necessários.
+DETALHE_1: Instalação de aplicativos diversos
+DETALHE_2: Configuração de preferências
+DETALHE_3: Teste de funcionamento completo
+PRECO: R$ 40,00
+
+[SERVIÇO]
+ID: 7
+NOME: Instalação do Pacote Office
+CATEGORIA: software
+DESCRICAO: Instalação completa e configuração da suite Microsoft Office com ativação.
+DETALHE_1: Instalação de toda suite Office
+DETALHE_2: Ativação e configuração
+DETALHE_3: Teste de funcionamento de todos apps
+PRECO: R$ 40,00
+
+[SERVIÇO]
+ID: 8
+NOME: Otimização de Sistema
+CATEGORIA: software
+DESCRICAO: Otimização avançada de performance, limpeza de arquivos temporários e gerenciamento de inicialização.
+DETALHE_1: Limpeza de arquivos temporários
+DETALHE_2: Otimização de inicialização
+DETALHE_3: Desfragmentação e limpeza de registro
+PRECO: R$ 50,00
+
+[SERVIÇO]
+ID: 9
+NOME: Manutenção Preventiva
+CATEGORIA: hardware
+DESCRICAO: Limpeza física completa interna e aplicação de pasta térmica de qualidade premium.
+DETALHE_1: Limpeza física completa interna
+DETALHE_2: Pasta térmica de alta condutividade
+DETALHE_3: Teste de temperatura e performance
+PRECO: R$ 95,00
+
+[SERVIÇO]
+ID: 10
+NOME: Montagem de Computador Completa
+CATEGORIA: hardware
+DESCRICAO: Montagem profissional de PC com testes de funcionamento e instalação de SO incluso.
+DETALHE_1: Montagem completa de todos componentes
+DETALHE_2: Testes de funcionamento rigorosos
+DETALHE_3: Instalação SO e drivers WHQL
+PRECO: R$ 120,00
+
+[SERVIÇO]
+ID: 11
+NOME: Recuperação de Dados (HD/SSD/Pendrive)
+CATEGORIA: hardware
+DESCRICAO: Recuperação profissional de dados em discos rígidos, SSDs e pendrives danificados.
+DETALHE_1: Extração de dados em modo RAW
+DETALHE_2: Recuperação de partições perdidas
+DETALHE_3: Entrega em mídia ou nuvem
+PRECO: R$ 150,00
+
+[SERVIÇO]
+ID: 12
+NOME: Troca de Bateria da BIOS
+CATEGORIA: hardware
+DESCRICAO: Substituição profissional da bateria CMOS para restaurar configurações do BIOS.
+DETALHE_1: Substituição bateria CMOS original
+DETALHE_2: Restauração de configurações BIOS
+DETALHE_3: Teste de funcionamento completo
+PRECO: R$ 50,00
+
+[SERVIÇO]
+ID: 13
+NOME: Troca de Bateria de Notebook
+CATEGORIA: hardware
+DESCRICAO: Substituição profissional de bateria de notebook com testes de autonomia e carregamento.
+DETALHE_1: Substituição bateria original OEM
+DETALHE_2: Testes de autonomia e carregamento
+DETALHE_3: Calibração de bateria
+PRECO: R$ 70,00
+
+[SERVIÇO]
+ID: 14
+NOME: Troca de Fonte de Alimentação
+CATEGORIA: hardware
+DESCRICAO: Substituição de fonte de alimentação com compatibilidade verificada e testes.
+DETALHE_1: Substituição fonte compatível
+DETALHE_2: Testes de voltagem e potência
+DETALHE_3: Instalação e segurança verificadas
+PRECO: R$ 50,00
+
+[SERVIÇO]
+ID: 15
+NOME: Upgrade HD
+CATEGORIA: hardware
+DESCRICAO: Instalação e configuração de novo disco rígido com transferência segura de dados.
+DETALHE_1: Instalação físico novo HD
+DETALHE_2: Transferência de dados completa
+DETALHE_3: Particionamento e formatação
+PRECO: R$ 50,00
+
+[SERVIÇO]
+ID: 16
+NOME: Upgrade Memória RAM
+CATEGORIA: hardware
+DESCRICAO: Instalação de módulos RAM adicionais com configuração otimizada para dual channel.
+DETALHE_1: Instalação de módulos RAM compatíveis
+DETALHE_2: Configuração Dual Channel
+DETALHE_3: Testes de estabilidade e velocidade
+PRECO: R$ 40,00
+
+[SERVIÇO]
+ID: 17
+NOME: Upgrade Placa de Vídeo
+CATEGORIA: hardware
+DESCRICAO: Instalação de placa de vídeo com drivers atualizados e otimização de performance.
+DETALHE_1: Instalação placa vídeo nova
+DETALHE_2: Drivers NVIDIA/AMD atualizados
+DETALHE_3: Testes de performance e temperatura
+PRECO: R$ 40,00
+
+[SERVIÇO]
+ID: 18
+NOME: Upgrade SSD
+CATEGORIA: hardware
+DESCRICAO: Instalação de SSD NVMe com migração completa do SO e dados para performance superior.
+DETALHE_1: Instalação SSD NVMe M.2
+DETALHE_2: Migração SO e dados completa
+DETALHE_3: Otimização AHCI e NVMe driver
+PRECO: R$ 50,00
+
+[SERVIÇO]
+ID: 19
+NOME: Configuração de Roteador / Repetidor Wi-Fi
+CATEGORIA: redes
+DESCRICAO: Configuração profissional, otimização e segurança de roteadores e repetidores wireless.
+DETALHE_1: Configuração otimizada de canais
+DETALHE_2: Proteção WPA3 e firewall
+DETALHE_3: Teste de velocidade e cobertura
+PRECO: R$ 50,00
+
+[SERVIÇO]
+ID: 20
+NOME: Crimpagem de Cabo UTP - M.O
+CATEGORIA: redes
+DESCRICAO: Crimpagem profissional de cabos UTP Cat5/Cat6 com conectores de qualidade (mão de obra).
+DETALHE_1: Crimpagem Cat5/Cat6 profissional
+DETALHE_2: Conectores RJ45 de qualidade
+DETALHE_3: Teste de continuidade garantido
+PRECO: R$ 12,00
+
+[SERVIÇO]
+ID: 21
+NOME: Lançamento de Cabo UTP (por metro)
+CATEGORIA: redes
+DESCRICAO: Passagem profissional de cabo UTP em canaletas, paredes e infraestrutura por metro.
+DETALHE_1: Passagem em canaletas discretas
+DETALHE_2: Fixação segura e organizada
+DETALHE_3: Cobrado por metro instalado
+PRECO: R$ 4,00/m
+
+[SERVIÇO]
+ID: 22
+NOME: Mapeamento de Impressora em Rede
+CATEGORIA: redes
+DESCRICAO: Configuração profissional de impressoras em rede para computadores e dispositivos diversos.
+DETALHE_1: Configuração impressora em rede
+DETALHE_2: Drivers instalados em máquinas
+DETALHE_3: Testes de impressão em todos PCs
+PRECO: R$ 40,00
+
+[SERVIÇO]
+ID: 23
+NOME: Visita Técnica
+CATEGORIA: deslocamento
+DESCRICAO: Taxa de deslocamento e hora técnica para visitas técnicas e atendimentos presenciais no local.
+DETALHE_1: Deslocamento até o local
+DETALHE_2: Diagnóstico inicial no local
+DETALHE_3: Orçamento personalizado
+PRECO: R$ 30,00
+
+[SERVIÇO]
+ID: 24
+NOME: Deslocamento
+CATEGORIA: deslocamento
+DESCRICAO: Taxa adicional de deslocamento para atendimentos em locais fora da rota principal.
+DETALHE_1: Deslocamento adicional cobrado
+DETALHE_2: Fora da rota principal ZNT
+DETALHE_3: Pode ser combinado com outros serviços
+PRECO: R$ 15,00
