@@ -1,84 +1,701 @@
+<!--
+=========================================================
+TÍTULO: ZNT - Catálogo de Serviços
+ÚLTIMA MUDANÇA: Restauração estrita da paleta de cores original (--bg-dark, --blue-mid, --orange-neon, --white-ice). Aplicação do azul médio (--blue-mid) no cabeçalho para gerar contraste com a logo escura. Manutenção do layout de alta conversão (Hero Section) inspirado na referência.
+DATA E HORA: 08 de Setembro de 2026, 14:58
+VERSÃO: 10.0
+=========================================================
+-->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Serviços - ZNT</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>ZNT - Catálogo de Serviços</title>
+    
+    <!-- Ícones para Navegador e Mobile (App) -->
+    <link rel="icon" type="image/jpeg" href="3 - Logo Simples (Losango) 2 - 10-07-26.jpg">
+    <link rel="apple-touch-icon" href="3 - Logo Simples (Losango) 2 - 10-07-26.jpg">
+    <meta name="apple-mobile-web-app-title" content="ZNT">
+
+    <style>
+        /* =========================================
+           PALETA DE CORES OFICIAL ZNT
+           ========================================= */
+        :root {
+            --bg-dark: #001935;
+            --blue-mid: #1E599C;
+            --orange-neon: #FF6B00;
+            --white-ice: #F4F7FA;
+        }
+
+        /* =========================================
+           CONFIGURAÇÕES GLOBAIS
+           ========================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--white-ice);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* =========================================
+           FUNDO DE VÍDEO
+           ========================================= */
+        .video-fundo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 100vw;
+            min-height: 100vh;
+            z-index: -2;
+            object-fit: cover;
+            opacity: 0.25;
+        }
+
+        .overlay-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 25, 53, 0.85); /* Fundo escuro com base no --bg-dark */
+            z-index: -1;
+        }
+
+        /* =========================================
+           CABEÇALHO / NAVBAR ESTILO APP
+           ========================================= */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: var(--blue-mid); /* Fundo azul claro para destacar a logo escura */
+            border-bottom: 3px solid var(--orange-neon); /* Linha de destaque */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo-empresa {
+            max-width: 180px;
+            height: auto;
+            /* Filtro de sombra para criar profundidade e separar a logo do fundo */
+            filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.5));
+        }
+
+        .menu-icon {
+            color: var(--white-ice);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .menu-icon:hover {
+            color: var(--orange-neon);
+        }
+
+        /* =========================================
+           HERO SECTION (ÁREA DE DESTAQUE)
+           ========================================= */
+        .hero {
+            padding: 60px 5% 40px 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(30, 89, 156, 0.15); /* Fundo translúcido --blue-mid */
+            border: 1px solid rgba(30, 89, 156, 0.4);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--white-ice);
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .hero-tag span {
+            color: var(--orange-neon);
+            font-size: 1.2rem;
+            line-height: 0;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            color: var(--white-ice);
+        }
+
+        .hero h1 .highlight {
+            color: var(--orange-neon);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: rgba(244, 247, 250, 0.8); /* --white-ice com opacidade */
+            line-height: 1.6;
+            max-width: 700px;
+            margin-bottom: 35px;
+        }
+
+        .hero-botoes {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primario {
+            background: var(--orange-neon);
+            color: var(--white-ice);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primario:hover { 
+            transform: scale(1.05); 
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        .btn-secundario {
+            background: rgba(30, 89, 156, 0.2);
+            color: var(--white-ice);
+            border: 1px solid var(--blue-mid);
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secundario:hover { 
+            background: var(--blue-mid); 
+        }
+
+        /* =========================================
+           FILTROS
+           ========================================= */
+        .filtros {
+            text-align: left;
+            margin: 20px 0 40px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 0 5%;
+            max-width: 1300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-filtro {
+            background: rgba(244, 247, 250, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(244, 247, 250, 0.2);
+            color: var(--white-ice);
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-filtro:hover, .btn-filtro.ativo {
+            background: var(--blue-mid);
+            border-color: var(--blue-mid);
+            box-shadow: 0 4px 15px rgba(30, 89, 156, 0.4);
+        }
+
+        /* =========================================
+           GRID DE CATÁLOGO (Glassmorphism)
+           ========================================= */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto 60px auto;
+            padding: 0 5%;
+        }
+
+        .catalogo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .cartao {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cartao:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 107, 0, 0.5);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .cartao::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--orange-neon);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .cartao:hover::before {
+            transform: scaleX(1);
+        }
+
+        .tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        
+        .tag-categoria { background: var(--blue-mid); color: var(--white-ice); }
+        .tag-sla { background: rgba(244, 247, 250, 0.1); color: var(--white-ice); border: 1px solid rgba(244, 247, 250, 0.2); }
+        .tag-garantia { background: rgba(255, 107, 0, 0.1); color: var(--orange-neon); border: 1px solid var(--orange-neon); }
+
+        .cartao h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: var(--white-ice);
+        }
+
+        .desc-curta {
+            font-size: 0.95rem;
+            color: rgba(244, 247, 250, 0.7);
+            margin-bottom: 20px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .detalhes-tecnicos {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .detalhes-tecnicos ul {
+            list-style: none;
+        }
+
+        .detalhes-tecnicos li {
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+            color: rgba(244, 247, 250, 0.9);
+        }
+
+        .detalhes-tecnicos li::before {
+            content: '✓';
+            color: var(--orange-neon);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .detalhes-tecnicos li:last-child {
+            margin-bottom: 0;
+        }
+
+        .rodape-cartao {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .preco {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--white-ice);
+        }
+
+        .btn-acao {
+            background: var(--orange-neon);
+            color: var(--white-ice);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-acao:hover {
+            background: #e56000;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        /* =========================================
+           MODAL MODERNO
+           ========================================= */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 25, 53, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.ativo {
+            opacity: 1;
+        }
+
+        .modal-box {
+            background: var(--bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 450px;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.ativo .modal-box {
+            transform: translateY(0);
+        }
+
+        .icone-sucesso {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 107, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px auto;
+            color: var(--orange-neon);
+            font-size: 2rem;
+        }
+
+        .modal-box h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--white-ice);
+        }
+
+        .modal-box p {
+            color: rgba(244, 247, 250, 0.7);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .modal-box strong {
+            color: var(--orange-neon);
+        }
+
+        .btn-modal {
+            background: var(--blue-mid);
+            color: var(--white-ice);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .btn-modal:hover {
+            background: #15457a;
+        }
+
+        .btn-fechar-modal {
+            background: transparent;
+            color: rgba(244, 247, 250, 0.5);
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .btn-fechar-modal:hover {
+            color: var(--white-ice);
+        }
+
+        @keyframes fadein { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+    </style>
 </head>
 <body>
-    <!-- HEADER -->
-    <header class="header">
-        <div class="container">
-            <div class="logo-section">
-                <!-- Imagem da logo em .jpg conforme seus arquivos -->
-                <img src="Logo-Cabecalho-Site.jpg" alt="Logo Zenith TI" class="logo-icon" style="height: 40px; object-fit: contain;">
-                <h1 class="logo-titulo">ZNT</h1>
-            </div>
-            <nav class="navbar">
-                <a href="#home" id="nav-sobre">Sobre nós</a>
-                <a href="#contato" id="nav-contato">Contatos</a>
-            </nav>
-        </div>
+
+    <!-- Vídeo de Fundo -->
+    <video class="video-fundo" autoplay loop muted playsinline>
+        <source src="VideoDeFundo.mp4" type="video/mp4">
+    </video>
+    <div class="overlay-video"></div>
+
+    <header>
+        <img src="Logo-Cabecalho-Site.png" alt="ZNT" class="logo-empresa">
+        <!-- Ícone simulando um menu hambúrguer de navegação -->
+        <div class="menu-icon">☰</div>
     </header>
 
-    <!-- HERO SECTION (COM VÍDEO DE FUNDO) -->
-    <section class="hero" id="home">
-        <video class="video-bg" autoplay loop muted playsinline>
-            <source src="VideoDeFundo.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-
-        <div class="hero-content">
-            <p id="hero-tag" class="tag-destaque"></p>
-            <h1 id="hero-titulo">Carregando...</h1>
-            <h2 id="hero-titulo-destaque" style="font-size: 32px; margin-bottom: 20px; font-weight: 300;"></h2>
-            <p id="hero-descricao"></p>
-            
-            <div class="search-bar">
-                <input type="text" placeholder="Busque um serviço...">
-            </div>
+    <section class="hero">
+        <div class="hero-tag">
+            <span>•</span> EXCELÊNCIA EM TECNOLOGIA
+        </div>
+        <h1>
+            Hardware & Software <br>
+            <span class="highlight">de alto desempenho</span>
+        </h1>
+        <p>
+            Somos especialistas em manutenção avançada, otimização térmica, recuperação de dados e setups de alta performance. Profissionais prontos para entregar a melhor solução para sua necessidade.
+        </p>
+        <div class="hero-botoes">
+            <button class="btn-primario">Solicitar proposta</button>
+            <button class="btn-secundario">Falar com especialista</button>
         </div>
     </section>
 
-    <!-- FILTROS -->
-    <section class="filtros">
-        <div class="container">
-            <h2>Filtrar por Categoria</h2>
-            <div class="botoes-filtro">
-                <button class="btn btn-ativo" onclick="filtrarServicos('todos', this)">Todos</button>
-                <button class="btn" onclick="filtrarServicos('suporte', this)">Suporte</button>
-                <button class="btn" onclick="filtrarServicos('software', this)">Software</button>
-                <button class="btn" onclick="filtrarServicos('hardware', this)">Hardware</button>
-                <button class="btn" onclick="filtrarServicos('redes', this)">Redes</button>
-                <button class="btn" onclick="filtrarServicos('deslocamento', this)">Deslocamento</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- GRID DE SERVIÇOS -->
-    <section class="servicos" id="servicos">
-        <div class="container">
-            <h2>Nossos Serviços</h2>
-            <div class="servicos-grid">
-                <!-- Serviços serão injetados aqui via JS -->
-            </div>
-        </div>
-    </section>
-
-    <!-- MODAL DE DETALHES -->
-    <div class="modal-detalhes" style="display: none;">
-        <div class="modal-content"></div>
+    <div class="filtros">
+        <button class="btn-filtro ativo" onclick="filtrar('todos')">Todos os Serviços</button>
+        <button class="btn-filtro" onclick="filtrar('hardware')">Hardware</button>
+        <button class="btn-filtro" onclick="filtrar('software')">Software</button>
+        <button class="btn-filtro" onclick="filtrar('dados')">Rede & Dados</button>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="footer" id="contato">
-        <div class="container">
-            <p id="footer-texto">&copy; 2026 Zenith TI. Todos os direitos reservados.</p>
-        </div>
-    </footer>
+    <div class="container">
+        <main class="catalogo">
+            
+            <!-- SERVIÇO 1 -->
+            <div class="cartao" data-categoria="software">
+                <div class="tags">
+                    <span class="tag tag-categoria">Software</span>
+                    <span class="tag tag-sla">SLA: 4H</span>
+                </div>
+                <h3>Instalação Limpa + BIOS</h3>
+                <p class="desc-curta">Formatação de baixo nível, instalação de sistema operacional e atualização segura de firmware.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Backup preventivo de até 50GB</li>
+                        <li>Update seguro de BIOS/UEFI</li>
+                        <li>Instalação de Drivers WHQL</li>
+                    </ul>
+                </div>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 120</span>
+                    <button class="btn-acao" onclick="abrirModal('Instalação Limpa + BIOS')">Solicitar</button>
+                </div>
+            </div>
 
-    <!-- SCRIPTS -->
-    <script src="carregador-dinamico.js"></script>
+            <!-- SERVIÇO 2 -->
+            <div class="cartao" data-categoria="hardware">
+                <div class="tags">
+                    <span class="tag tag-categoria">Hardware</span>
+                    <span class="tag tag-sla">SLA: 2H</span>
+                    <span class="tag tag-garantia">90D Garantia</span>
+                </div>
+                <h3>Limpeza e Refrigeração</h3>
+                <p class="desc-curta">Higienização interna completa e substituição de interface térmica para redução de temperatura.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Banho químico com Álcool Isopropílico</li>
+                        <li>Pasta Térmica de Prata de alta condutividade</li>
+                        <li>Troca de Thermal Pads</li>
+                    </ul>
+                </div>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 150</span>
+                    <button class="btn-acao" onclick="abrirModal('Limpeza e Refrigeração')">Solicitar</button>
+                </div>
+            </div>
+
+            <!-- SERVIÇO 3 -->
+            <div class="cartao" data-categoria="software">
+                <div class="tags">
+                    <span class="tag tag-categoria">Software</span>
+                    <span class="tag tag-sla">SLA: 6H</span>
+                </div>
+                <h3>Protocolo Anti-Malware</h3>
+                <p class="desc-curta">Remoção de ameaças persistentes, rootkits, ransomwares e reparo de registro do sistema.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Análise heurística profunda</li>
+                        <li>Remoção de Rootkits e Keyloggers</li>
+                        <li>Implementação de Firewall configurado</li>
+                    </ul>
+                </div>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 180</span>
+                    <button class="btn-acao" onclick="abrirModal('Protocolo Anti-Malware')">Solicitar</button>
+                </div>
+            </div>
+
+            <!-- SERVIÇO 4 -->
+            <div class="cartao" data-categoria="hardware">
+                <div class="tags">
+                    <span class="tag tag-categoria">Hardware</span>
+                    <span class="tag tag-garantia">180D Garantia</span>
+                </div>
+                <h3>Reparo de Placa-Mãe</h3>
+                <p class="desc-curta">Análise microscópica e soldagem de componentes na placa de circuito impresso (PCB).</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Mapeamento de curto-circuito</li>
+                        <li>Troca de capacitores e CIs</li>
+                        <li>Ressolda de conectores danificados</li>
+                    </ul>
+                </div>
+                <div class="rodape-cartao">
+                    <span class="preco">Sob Análise</span>
+                    <button class="btn-acao" onclick="abrirModal('Reparo de Placa-Mãe')">Solicitar</button>
+                </div>
+            </div>
+
+            <!-- SERVIÇO 5 -->
+            <div class="cartao" data-categoria="hardware">
+                <div class="tags">
+                    <span class="tag tag-categoria">Hardware</span>
+                    <span class="tag tag-sla">SLA: 3H</span>
+                </div>
+                <h3>Upgrade NVMe e RAM</h3>
+                <p class="desc-curta">Substituição de armazenamento mecânico por estado sólido e expansão de memória.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Clonagem de sistema operacional intacto</li>
+                        <li>Instalação física de SSD NVMe</li>
+                        <li>Configuração de RAM em Dual Channel</li>
+                    </ul>
+                </div>
+                <div class="rodape-cartao">
+                    <span class="preco">R$ 90 + Peça</span>
+                    <button class="btn-acao" onclick="abrirModal('Upgrade NVMe e RAM')">Solicitar</button>
+                </div>
+            </div>
+
+            <!-- SERVIÇO 6 -->
+            <div class="cartao" data-categoria="dados">
+                <div class="tags">
+                    <span class="tag tag-categoria">Rede & Dados</span>
+                    <span class="tag tag-sla">SLA: 48H</span>
+                </div>
+                <h3>Recuperação de Dados</h3>
+                <p class="desc-curta">Recuperação em discos particionados acidentalmente, corrompidos ou com setores defeituosos.</p>
+                <div class="detalhes-tecnicos">
+                    <ul>
+                        <li>Extração em modo RAW de leitura</li>
+                        <li>Recuperação de tabela MBR/GPT</li>
+                        <li>Entrega dos dados criptografados</li>
+                    </ul>
+                </div>
+                <div class="rodape-cartao">
+                    <span class="preco">A partir R$ 350</span>
+                    <button class="btn-acao" onclick="abrirModal('Recuperação de Dados')">Solicitar</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- MODAL MODERNO -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box">
+            <div class="icone-sucesso">✓</div>
+            <h2>Excelente escolha!</h2>
+            <p>Você selecionou o serviço de <br><strong id="nomeServicoSelecionado">Serviço</strong>.</p>
+            <p style="font-size: 0.9rem;">Para garantir um atendimento rápido e personalizado, finalizaremos os detalhes e dúvidas diretamente com você.</p>
+            <button class="btn-modal">Avançar para o WhatsApp</button>
+            <button class="btn-fechar-modal" onclick="fecharModal()">Cancelar e voltar ao catálogo</button>
+        </div>
+    </div>
+
+    <script>
+        function filtrar(categoria) {
+            const cartoes = document.querySelectorAll('.cartao');
+            const botoes = document.querySelectorAll('.btn-filtro');
+            
+            botoes.forEach(btn => btn.classList.remove('ativo'));
+            event.target.classList.add('ativo');
+
+            cartoes.forEach(cartao => {
+                if (categoria === 'todos' || cartao.getAttribute('data-categoria') === categoria) {
+                    cartao.style.display = 'flex';
+                    cartao.style.animation = 'fadein 0.5s ease forwards';
+                } else {
+                    cartao.style.display = 'none';
+                }
+            });
+        }
+
+        const modal = document.getElementById('modalOverlay');
+        const spanServico = document.getElementById('nomeServicoSelecionado');
+
+        function abrirModal(nomeServico) {
+            spanServico.textContent = nomeServico;
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('ativo');
+            }, 10);
+        }
+
+        function fecharModal() {
+            modal.classList.remove('ativo');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        modal.addEventListener('click', function(e) {
+            if(e.target === this) {
+                fecharModal();
+            }
+        });
+    </script>
 </body>
 </html>
