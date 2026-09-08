@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Restauração estrita da paleta de cores original (--bg-dark, --blue-mid, --orange-neon, --white-ice). Aplicação do azul médio (--blue-mid) no cabeçalho para gerar contraste com a logo escura. Manutenção do layout de alta conversão (Hero Section) inspirado na referência.
-DATA E HORA: 08 de Setembro de 2026, 14:58
-VERSÃO: 10.0
+ÚLTIMA MUDANÇA: Correção do link do favicon (ícone da aba do navegador e app) para utilizar a imagem "Logo-Cabecalho-Site.png" existente no repositório, evitando quebra de imagem. Estrutura mantida em arquivo único (HTML + CSS + JS) para contornar bloqueios de CORS.
+DATA E HORA: 08 de Setembro de 2026, 19:11
+VERSÃO: 10.1
 =========================================================
 -->
 <!DOCTYPE html>
@@ -14,8 +14,8 @@ VERSÃO: 10.0
     <title>ZNT - Catálogo de Serviços</title>
     
     <!-- Ícones para Navegador e Mobile (App) -->
-    <link rel="icon" type="image/jpeg" href="3 - Logo Simples (Losango) 2 - 10-07-26.jpg">
-    <link rel="apple-touch-icon" href="3 - Logo Simples (Losango) 2 - 10-07-26.jpg">
+    <link rel="icon" type="image/png" href="Logo-Cabecalho-Site.png">
+    <link rel="apple-touch-icon" href="Logo-Cabecalho-Site.png">
     <meta name="apple-mobile-web-app-title" content="ZNT">
 
     <style>
@@ -66,7 +66,7 @@ VERSÃO: 10.0
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 25, 53, 0.85); /* Fundo escuro com base no --bg-dark */
+            background: rgba(0, 25, 53, 0.85);
             z-index: -1;
         }
 
@@ -78,8 +78,8 @@ VERSÃO: 10.0
             justify-content: space-between;
             align-items: center;
             padding: 15px 5%;
-            background-color: var(--blue-mid); /* Fundo azul claro para destacar a logo escura */
-            border-bottom: 3px solid var(--orange-neon); /* Linha de destaque */
+            background-color: var(--blue-mid);
+            border-bottom: 3px solid var(--orange-neon);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             position: relative;
             z-index: 10;
@@ -88,7 +88,6 @@ VERSÃO: 10.0
         .logo-empresa {
             max-width: 180px;
             height: auto;
-            /* Filtro de sombra para criar profundidade e separar a logo do fundo */
             filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.5));
         }
 
@@ -117,7 +116,7 @@ VERSÃO: 10.0
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(30, 89, 156, 0.15); /* Fundo translúcido --blue-mid */
+            background: rgba(30, 89, 156, 0.15);
             border: 1px solid rgba(30, 89, 156, 0.4);
             padding: 6px 16px;
             border-radius: 30px;
@@ -148,7 +147,7 @@ VERSÃO: 10.0
 
         .hero p {
             font-size: 1.1rem;
-            color: rgba(244, 247, 250, 0.8); /* --white-ice com opacidade */
+            color: rgba(244, 247, 250, 0.8);
             line-height: 1.6;
             max-width: 700px;
             margin-bottom: 35px;
@@ -227,7 +226,7 @@ VERSÃO: 10.0
         }
 
         /* =========================================
-           GRID DE CATÁLOGO (Glassmorphism)
+           GRID DE CATÁLOGO
            ========================================= */
         .container {
             max-width: 1300px;
@@ -370,7 +369,7 @@ VERSÃO: 10.0
         }
 
         /* =========================================
-           MODAL MODERNO
+           MODAL
            ========================================= */
         .modal-overlay {
             display: none;
@@ -482,7 +481,6 @@ VERSÃO: 10.0
 
     <header>
         <img src="Logo-Cabecalho-Site.png" alt="ZNT" class="logo-empresa">
-        <!-- Ícone simulando um menu hambúrguer de navegação -->
         <div class="menu-icon">☰</div>
     </header>
 
@@ -513,7 +511,6 @@ VERSÃO: 10.0
     <div class="container">
         <main class="catalogo">
             
-            <!-- SERVIÇO 1 -->
             <div class="cartao" data-categoria="software">
                 <div class="tags">
                     <span class="tag tag-categoria">Software</span>
@@ -534,7 +531,6 @@ VERSÃO: 10.0
                 </div>
             </div>
 
-            <!-- SERVIÇO 2 -->
             <div class="cartao" data-categoria="hardware">
                 <div class="tags">
                     <span class="tag tag-categoria">Hardware</span>
@@ -556,7 +552,6 @@ VERSÃO: 10.0
                 </div>
             </div>
 
-            <!-- SERVIÇO 3 -->
             <div class="cartao" data-categoria="software">
                 <div class="tags">
                     <span class="tag tag-categoria">Software</span>
@@ -577,7 +572,6 @@ VERSÃO: 10.0
                 </div>
             </div>
 
-            <!-- SERVIÇO 4 -->
             <div class="cartao" data-categoria="hardware">
                 <div class="tags">
                     <span class="tag tag-categoria">Hardware</span>
@@ -598,7 +592,6 @@ VERSÃO: 10.0
                 </div>
             </div>
 
-            <!-- SERVIÇO 5 -->
             <div class="cartao" data-categoria="hardware">
                 <div class="tags">
                     <span class="tag tag-categoria">Hardware</span>
@@ -619,7 +612,6 @@ VERSÃO: 10.0
                 </div>
             </div>
 
-            <!-- SERVIÇO 6 -->
             <div class="cartao" data-categoria="dados">
                 <div class="tags">
                     <span class="tag tag-categoria">Rede & Dados</span>
@@ -643,7 +635,7 @@ VERSÃO: 10.0
         </main>
     </div>
 
-    <!-- MODAL MODERNO -->
+    <!-- MODAL -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
             <div class="icone-sucesso">✓</div>
