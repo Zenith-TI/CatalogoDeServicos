@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Arquitetura reestruturada para utilizar arquivos externos de configuração (textos-do-site.js e servicos.js). Remoção do botão "Falar com especialista" e dos valores/preços dos serviços. O site agora é montado dinamicamente via JavaScript, garantindo edição facilitada pelo usuário sem necessidade de alterar o código-fonte HTML.
-DATA E HORA: 08 de Setembro de 2026, 19:30
-VERSÃO: 11.0
+ÚLTIMA MUDANÇA: Inclusão de suporte a edição de tamanho de fontes (font-size) diretamente pelo arquivo externo textos-do-site.js. O script de carregamento foi adaptado para aplicar estilos inline dinamicamente caso um tamanho seja definido no arquivo de configuração, dando controle total de design ao usuário sem tocar no CSS.
+DATA E HORA: 08 de Setembro de 2026, 19:35
+VERSÃO: 11.1
 =========================================================
 -->
 <!DOCTYPE html>
@@ -83,7 +83,6 @@ VERSÃO: 11.0
             color: var(--white-ice);
             text-decoration: none;
             font-weight: 600;
-            font-size: 1rem;
             transition: color 0.3s ease;
         }
 
@@ -104,7 +103,6 @@ VERSÃO: 11.0
             border: 1px solid rgba(30, 89, 156, 0.4);
             padding: 6px 16px;
             border-radius: 30px;
-            font-size: 0.75rem;
             font-weight: 700;
             color: var(--white-ice);
             letter-spacing: 1px;
@@ -118,7 +116,6 @@ VERSÃO: 11.0
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 25px;
@@ -128,7 +125,6 @@ VERSÃO: 11.0
         .hero h1 .highlight { color: var(--orange-neon); }
 
         .hero p {
-            font-size: 1.1rem;
             color: rgba(244, 247, 250, 0.8);
             line-height: 1.6;
             max-width: 700px;
@@ -142,7 +138,6 @@ VERSÃO: 11.0
             padding: 15px 30px;
             border-radius: 8px;
             font-weight: bold;
-            font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -287,7 +282,7 @@ VERSÃO: 11.0
 
         .rodape-cartao {
             display: flex;
-            justify-content: flex-end; /* Alterado para empurrar botão para direita sem preço */
+            justify-content: flex-end;
             align-items: center;
             margin-top: auto;
         }
@@ -296,7 +291,7 @@ VERSÃO: 11.0
             background: var(--orange-neon);
             color: var(--white-ice);
             border: none;
-            padding: 10px 25px; /* Botão ligeiramente mais largo */
+            padding: 10px 25px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
@@ -352,7 +347,7 @@ VERSÃO: 11.0
         }
 
         .modal-box h2 {
-            font-size: 1.5rem; margin-bottom: 10px; color: var(--white-ice);
+            margin-bottom: 10px; color: var(--white-ice);
         }
 
         .modal-box p {
@@ -368,7 +363,6 @@ VERSÃO: 11.0
             padding: 15px 30px;
             border-radius: 30px;
             font-weight: bold;
-            font-size: 1rem;
             cursor: pointer;
             width: 100%;
             transition: background 0.3s ease;
@@ -382,7 +376,6 @@ VERSÃO: 11.0
             color: rgba(244, 247, 250, 0.5);
             border: none;
             cursor: pointer;
-            font-size: 0.9rem;
             transition: color 0.3s ease;
         }
 
@@ -446,42 +439,50 @@ VERSÃO: 11.0
             <div class="icone-sucesso">✓</div>
             <h2 id="txt_modal_titulo"></h2>
             <p><span id="txt_modal_subtitulo"></span> <br><strong id="nomeServicoSelecionado"></strong>.</p>
-            <p style="font-size: 0.9rem;" id="txt_modal_aviso"></p>
+            <p id="txt_modal_aviso"></p>
             <button class="btn-modal" id="txt_modal_btn_avancar"></button>
             <button class="btn-fechar-modal" onclick="fecharModal()" id="txt_modal_btn_cancelar"></button>
         </div>
     </div>
 
     <script>
-        // Função para preencher os textos do site
-        function carregarTextos() {
-            document.getElementById('txt_nav_sobre').textContent = TEXTOS.nav_sobre;
-            document.getElementById('txt_nav_contatos').textContent = TEXTOS.nav_contatos;
-            document.getElementById('txt_hero_tag').textContent = TEXTOS.hero_tag;
-            document.getElementById('txt_hero_titulo').textContent = TEXTOS.hero_titulo;
-            document.getElementById('txt_hero_destaque').textContent = TEXTOS.hero_destaque;
-            document.getElementById('txt_hero_descricao').textContent = TEXTOS.hero_descricao;
-            document.getElementById('txt_btn_proposta').textContent = TEXTOS.btn_proposta;
-            
-            document.getElementById('txt_filtro_todos').textContent = TEXTOS.filtro_todos;
-            document.getElementById('txt_filtro_hardware').textContent = TEXTOS.filtro_hardware;
-            document.getElementById('txt_filtro_software').textContent = TEXTOS.filtro_software;
-            document.getElementById('txt_filtro_dados').textContent = TEXTOS.filtro_dados;
-
-            document.getElementById('txt_modal_titulo').textContent = TEXTOS.modal_titulo;
-            document.getElementById('txt_modal_subtitulo').textContent = TEXTOS.modal_subtitulo;
-            document.getElementById('txt_modal_aviso').textContent = TEXTOS.modal_aviso;
-            document.getElementById('txt_modal_btn_avancar').textContent = TEXTOS.modal_btn_avancar;
-            document.getElementById('txt_modal_btn_cancelar').textContent = TEXTOS.modal_btn_cancelar;
+        // Função auxiliar para aplicar texto e tamanho de fonte dinamicamente
+        function aplicarConteudo(idElemento, configTexto) {
+            const elemento = document.getElementById(idElemento);
+            if (elemento && configTexto) {
+                elemento.textContent = configTexto.texto;
+                if (configTexto.tamanho && configTexto.tamanho !== "") {
+                    elemento.style.fontSize = configTexto.tamanho;
+                }
+            }
         }
 
-        // Função para gerar os cartões de serviço
+        function carregarTextos() {
+            aplicarConteudo('txt_nav_sobre', TEXTOS.nav_sobre);
+            aplicarConteudo('txt_nav_contatos', TEXTOS.nav_contatos);
+            aplicarConteudo('txt_hero_tag', TEXTOS.hero_tag);
+            aplicarConteudo('txt_hero_titulo', TEXTOS.hero_titulo);
+            aplicarConteudo('txt_hero_destaque', TEXTOS.hero_destaque);
+            aplicarConteudo('txt_hero_descricao', TEXTOS.hero_descricao);
+            aplicarConteudo('txt_btn_proposta', TEXTOS.btn_proposta);
+            
+            aplicarConteudo('txt_filtro_todos', TEXTOS.filtro_todos);
+            aplicarConteudo('txt_filtro_hardware', TEXTOS.filtro_hardware);
+            aplicarConteudo('txt_filtro_software', TEXTOS.filtro_software);
+            aplicarConteudo('txt_filtro_dados', TEXTOS.filtro_dados);
+
+            aplicarConteudo('txt_modal_titulo', TEXTOS.modal_titulo);
+            aplicarConteudo('txt_modal_subtitulo', TEXTOS.modal_subtitulo);
+            aplicarConteudo('txt_modal_aviso', TEXTOS.modal_aviso);
+            aplicarConteudo('txt_modal_btn_avancar', TEXTOS.modal_btn_avancar);
+            aplicarConteudo('txt_modal_btn_cancelar', TEXTOS.modal_btn_cancelar);
+        }
+
         function carregarServicos() {
             const grid = document.getElementById('catalogo-grid');
             grid.innerHTML = '';
 
             SERVICOS.forEach(servico => {
-                // Gera a estrutura das Tags (a 1ª tag recebe a cor azul, garantias ficam laranjas, as outras cinzas)
                 const tagsHTML = servico.tags.map((tag, index) => {
                     let classeTag = 'tag-sla';
                     if (index === 0) classeTag = 'tag-categoria';
@@ -489,10 +490,8 @@ VERSÃO: 11.0
                     return `<span class="tag ${classeTag}">${tag}</span>`;
                 }).join('');
 
-                // Gera a estrutura da lista de detalhes
                 const detalhesHTML = servico.detalhes.map(detalhe => `<li>${detalhe}</li>`).join('');
 
-                // Constrói o HTML do cartão sem o preço
                 const cartao = `
                     <div class="cartao" data-categoria="${servico.categoria}">
                         <div class="tags">
@@ -514,7 +513,6 @@ VERSÃO: 11.0
             });
         }
 
-        // Lógica de Filtros
         function filtrar(categoria) {
             const cartoes = document.querySelectorAll('.cartao');
             const botoes = document.querySelectorAll('.btn-filtro');
@@ -532,7 +530,6 @@ VERSÃO: 11.0
             });
         }
 
-        // Lógica do Modal
         const modal = document.getElementById('modalOverlay');
         const spanServico = document.getElementById('nomeServicoSelecionado');
 
@@ -551,7 +548,6 @@ VERSÃO: 11.0
             if(e.target === this) fecharModal();
         });
 
-        // Inicialização quando a página carrega
         document.addEventListener('DOMContentLoaded', () => {
             carregarTextos();
             carregarServicos();
