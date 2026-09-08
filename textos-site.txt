@@ -5,7 +5,7 @@ NAV_CONTATO: Contatos
 
 [HERO]
 TAG: EXCELÊNCIA EM TECNOLOGIA
-TITULO: Hardware & Software
+TITULO: Conectando você à solução!
 TITULO_DESTAQUE: de alto desempenho
 DESCRICAO: Somos especialistas em suporte técnico, manutenção preventiva, instalações e upgrades de componentes. Profissionais prontos para entregar a melhor solução para sua empresa ou computador pessoal.
 BOTAO_PRIMARIO: Solicitar proposta
