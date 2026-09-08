@@ -1,2 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Serviços - ZNT</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <div class="logo-section">
+                <span class="logo-icon">⚙️</span>
+                <h1 class="logo-titulo">Zenith TI - Catálogo de Serviços</h1>
+            </div>
+            <nav class="navbar">
+                <a href="#home">Início</a>
+                <a href="#servicos">Serviços</a>
+                <a href="#contato">Contato</a>
+            </nav>
+        </div>
+    </header>
 
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Serviços de Tecnologia & Desenvolvimento</h1>
+            <p>Soluções completas para sua empresa digital</p>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Busque um serviço...">
+                <button>🔍</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FILTROS -->
+    <section class="filtros">
+        <div class="container">
+            <h2>Filtrar por Categoria</h2>
+            <div class="botoes-filtro">
+                <button class="btn btn-ativo" onclick="filtrarServicos('todos')">Todos</button>
+                <button class="btn" onclick="filtrarServicos('desenvolvimento')">Desenvolvimento</button>
+                <button class="btn" onclick="filtrarServicos('design')">Design</button>
+                <button class="btn" onclick="filtrarServicos('consultoria')">Consultoria</button>
+                <button class="btn" onclick="filtrarServicos('infraestrutura')">Infraestrutura</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- GRID DE SERVIÇOS -->
+    <section class="servicos" id="servicos">
+        <div class="container">
+            <h2>Nossos Serviços</h2>
+            <div class="servicos-grid">
+                <!-- Serviços serão carregados dinamicamente aqui -->
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL DE DETALHES -->
+    <div class="modal-detalhes" style="display: none;">
+        <div class="modal-content"></div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Zenith TI. Todos os direitos reservados.</p>
+            <div class="social-links">
+                <a href="#">LinkedIn</a>
+                <a href="#">GitHub</a>
+                <a href="#">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
     <script src="./carregador-dinamico.js"></script>
+</body>
+</html>
