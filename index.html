@@ -1,12 +1,11 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Correção do botão do WhatsApp no modal (agora funcional
-com número + mensagem pré-preenchida por serviço). Adição de meta tags
-de SEO/Open Graph. Acessibilidade: aria-pressed nos filtros e "event"
-passado explicitamente. Poster de fallback comentado no vídeo de fundo.
-DATA E HORA: 08 de Setembro de 2026, 12:14 (revisão de correções)
-VERSÃO: 8.1
+ÚLTIMA MUDANÇA: Cabeçalho redesenhado no estilo de referência
+(logo + nome da marca lado a lado, sem "chip" com moldura laranja;
+menu hambúrguer para mobile que abre um painel com os links).
+DATA E HORA: 08 de Setembro de 2026, 12:14 (repaginação v10.0)
+VERSÃO: 10.0
 =========================================================
 -->
 <!DOCTYPE html>
@@ -33,7 +32,7 @@ VERSÃO: 8.1
 
     <style>
         /* =========================================
-           PALETA DE CORES
+           PALETA DE CORES OFICIAL (enviada pelo cliente)
            ========================================= */
         :root {
             --bg-dark: #001935;
@@ -53,8 +52,8 @@ VERSÃO: 8.1
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--white-ice);
+            background-color: var(--white-ice);
+            color: var(--bg-dark);
             overflow-x: hidden;
             min-height: 100vh;
             position: relative;
@@ -74,7 +73,6 @@ VERSÃO: 8.1
             opacity: 0.25;
         }
 
-        /* Camada escura por cima do vídeo para manter o contraste do texto */
         .overlay-video {
             position: fixed;
             top: 0;
@@ -86,7 +84,9 @@ VERSÃO: 8.1
         }
 
         /* =========================================
-           CABEÇALHO FIXO (sticky): LOGO + NAVEGAÇÃO
+           CABEÇALHO — ESTILO REFERÊNCIA
+           Logo + nome da marca lado a lado, links à direita
+           em telas grandes, e menu hambúrguer em mobile.
            ========================================= */
         header {
             position: sticky;
@@ -95,30 +95,41 @@ VERSÃO: 8.1
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
-            padding: 14px 30px;
-            background: rgba(0, 25, 53, 0.92);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 107, 0, 0.2);
+            gap: 16px;
+            padding: 16px 24px;
+            background: var(--bg-dark);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Logo + nome da marca, sem moldura — igual à referência */
+        .logo-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .logo-empresa {
-            max-width: 150px;
-            width: 100%;
-            height: auto;
+            height: 40px;
+            width: auto;
             display: block;
-            /* Remove o quadrado preto da imagem preservando as cores originais */
-            mix-blend-mode: lighten;
-            /* Brilho laranja pra logo ter bastante contraste no cabeçalho */
-            filter: drop-shadow(0 0 16px rgba(255, 107, 0, 0.45));
         }
 
+        .logo-texto {
+            color: var(--white-ice);
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-texto span {
+            color: var(--orange-neon);
+        }
+
+        /* Navegação (links) — visível em telas grandes */
         .header-nav {
             display: flex;
             align-items: center;
-            gap: 28px;
+            gap: 24px;
         }
 
         .header-nav a {
@@ -145,9 +156,88 @@ VERSÃO: 8.1
             color: var(--white-ice);
         }
 
+        /* Botão hambúrguer — só aparece em mobile */
+        .btn-menu-mobile {
+            display: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            color: var(--white-ice);
+        }
+
+        .btn-menu-mobile svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+        }
+
+        @media (max-width: 720px) {
+            .btn-menu-mobile {
+                display: block;
+            }
+
+            .header-nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-dark);
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            }
+
+            .header-nav.aberto {
+                max-height: 220px;
+            }
+
+            .header-nav a {
+                padding: 16px 24px;
+                border-top: 1px solid rgba(255, 255, 255, 0.06);
+            }
+
+            .header-nav a.destaque {
+                margin: 12px 24px;
+                text-align: center;
+                border-radius: 8px;
+            }
+        }
+
         /* =========================================
-           FILTROS (faixa separada, logo abaixo do
-           cabeçalho — rola normalmente, sem sticky)
+           FAIXA DE TÍTULO / SOBRE
+           ========================================= */
+        .faixa-titulo {
+            text-align: center;
+            padding: 50px 20px 30px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .faixa-titulo h1 {
+            font-size: 2.2rem;
+            color: var(--bg-dark);
+            margin-bottom: 12px;
+        }
+
+        .faixa-titulo h1 span {
+            color: var(--orange-neon);
+        }
+
+        .faixa-titulo p {
+            max-width: 600px;
+            margin: 0 auto;
+            color: rgba(0, 25, 53, 0.65);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* =========================================
+           FILTROS
            ========================================= */
         .filtros {
             text-align: center;
@@ -157,14 +247,15 @@ VERSÃO: 8.1
             gap: 10px;
             flex-wrap: wrap;
             padding: 0 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .btn-filtro {
-            background: rgba(244, 247, 250, 0.1);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(244, 247, 250, 0.2);
-            color: var(--white-ice);
-            padding: 10px 25px;
+            background: var(--white-ice);
+            border: 2px solid rgba(0, 25, 53, 0.15);
+            color: var(--bg-dark);
+            padding: 9px 24px;
             border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -172,18 +263,21 @@ VERSÃO: 8.1
         }
 
         .btn-filtro:hover, .btn-filtro.ativo {
-            background: var(--blue-mid);
-            border-color: var(--blue-mid);
-            box-shadow: 0 4px 15px rgba(30, 89, 156, 0.4);
+            background: var(--orange-neon);
+            border-color: var(--orange-neon);
+            color: var(--white-ice);
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
         }
 
         /* =========================================
-           GRID DE CATÁLOGO (Glassmorphism)
+           GRID DE CATÁLOGO — CARDS SÓLIDOS E CLAROS
            ========================================= */
         .container {
             max-width: 1300px;
             margin: 0 auto 60px auto;
             padding: 0 20px;
+            position: relative;
+            z-index: 1;
         }
 
         .catalogo {
@@ -193,74 +287,85 @@ VERSÃO: 8.1
         }
 
         .cartao {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--white-ice);
+            color: var(--bg-dark);
             border-radius: 16px;
-            padding: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            overflow: hidden;
+            border: 1px solid rgba(0, 25, 53, 0.08);
+            box-shadow: 0 10px 25px rgba(0, 25, 53, 0.1);
             display: flex;
             flex-direction: column;
-            position: relative;
-            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .cartao:hover {
             transform: translateY(-8px);
-            border-color: rgba(255, 107, 0, 0.5);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 16px 34px rgba(0, 25, 53, 0.16);
         }
 
-        .cartao::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 4px;
-            background: var(--orange-neon);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s ease;
+        /* Faixa colorida no topo do card — a cor identifica a categoria,
+           usando só as 3 cores de destaque da paleta oficial */
+        .cartao-topo {
+            padding: 20px 24px;
         }
 
-        .cartao:hover::before {
-            transform: scaleX(1);
-        }
+        .cartao[data-categoria="hardware"] .cartao-topo { background: var(--blue-mid); }
+        .cartao[data-categoria="software"] .cartao-topo { background: var(--orange-neon); }
+        .cartao[data-categoria="dados"] .cartao-topo { background: var(--bg-dark); }
 
-        .tags {
+        .cartao-topo .tags {
             display: flex;
             gap: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
         }
 
-        .tag {
+        .cartao-topo .tag-sla {
             font-size: 0.75rem;
             padding: 4px 10px;
             border-radius: 20px;
             font-weight: bold;
             letter-spacing: 0.5px;
+            background: rgba(244, 247, 250, 0.25);
+            color: var(--white-ice);
+            border: 1px solid rgba(244, 247, 250, 0.4);
         }
 
-        .tag-categoria { background: var(--blue-mid); color: var(--white-ice); }
-        .tag-sla { background: rgba(244, 247, 250, 0.1); color: var(--white-ice); border: 1px solid rgba(244, 247, 250, 0.2); }
-        .tag-garantia { background: rgba(255, 107, 0, 0.1); color: var(--orange-neon); border: 1px solid var(--orange-neon); }
-
-        .cartao h3 {
-            font-size: 1.6rem;
-            margin-bottom: 12px;
+        .cartao-topo h3 {
+            font-size: 1.5rem;
             color: var(--white-ice);
+        }
+
+        .cartao-corpo {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .tag-garantia {
+            display: inline-block;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            background: rgba(255, 107, 0, 0.08);
+            color: var(--orange-neon);
+            border: 1px solid var(--orange-neon);
+            margin-bottom: 16px;
+            align-self: flex-start;
         }
 
         .desc-curta {
             font-size: 0.95rem;
-            color: rgba(244, 247, 250, 0.7);
+            color: rgba(0, 25, 53, 0.7);
             margin-bottom: 20px;
             line-height: 1.5;
-            flex-grow: 1;
         }
 
         .detalhes-tecnicos {
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 25, 53, 0.05);
             padding: 15px 20px;
             border-radius: 10px;
             margin-bottom: 25px;
@@ -275,7 +380,7 @@ VERSÃO: 8.1
             margin-bottom: 8px;
             display: flex;
             align-items: flex-start;
-            color: rgba(244, 247, 250, 0.9);
+            color: rgba(0, 25, 53, 0.85);
         }
 
         .detalhes-tecnicos li::before {
@@ -290,32 +395,63 @@ VERSÃO: 8.1
         }
 
         .rodape-cartao {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
             margin-top: auto;
-        }
-
-        .btn-acao {
-            width: 100%;
         }
 
         .btn-acao {
             background: var(--orange-neon);
             color: var(--white-ice);
             border: none;
-            padding: 12px 20px;
+            padding: 13px 20px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            width: 100%;
             transition: all 0.2s ease;
         }
 
         .btn-acao:hover {
             background: #e56000;
-            transform: scale(1.05);
+            transform: scale(1.02);
             box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+        }
+
+        /* =========================================
+           FAIXA FINAL DE CONTATO
+           ========================================= */
+        .faixa-contato {
+            background: var(--orange-neon);
+            text-align: center;
+            padding: 50px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .faixa-contato h2 {
+            color: var(--bg-dark);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .faixa-contato p {
+            color: rgba(0, 25, 53, 0.8);
+            margin-bottom: 24px;
+        }
+
+        .btn-contato-final {
+            display: inline-block;
+            background: var(--bg-dark);
+            color: var(--white-ice);
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-contato-final:hover {
+            transform: scale(1.05);
         }
 
         /* =========================================
@@ -424,225 +560,262 @@ VERSÃO: 8.1
 </head>
 <body>
 
-    <!-- Vídeo de Fundo -->
-    <!-- Adicione poster="sua-imagem-fallback.jpg" abaixo para evitar tela vazia enquanto o vídeo carrega -->
+    <!-- Vídeo de Fundo: desativado nesta versão clara, porque a camada escura
+         necessária pra dar legibilidade ao texto tingiria o fundo branco de
+         azulado. Se quiser reativar, descomente as duas linhas abaixo e
+         considere trocar o vídeo por um clipe mais claro. -->
+    <!--
     <video class="video-fundo" autoplay loop muted playsinline>
         <source src="VideoDeFundo.mp4" type="video/mp4">
     </video>
     <div class="overlay-video"></div>
+    -->
 
     <header>
-        <img src="Logo-Cabecalho-Site.png" alt="Zenith TI" class="logo-empresa">
-        <nav class="header-nav">
+        <div class="logo-chip">
+            <img src="Logo-Cabecalho-Site.png" alt="Zenith TI" class="logo-empresa">
+            <span class="logo-texto">ZN<span>T</span></span>
+        </div>
+
+        <nav class="header-nav" id="headerNav">
             <a href="#sobre">Sobre Nós</a>
             <a href="#contato" class="destaque">Contato</a>
         </nav>
+
+        <button class="btn-menu-mobile" id="btnMenuMobile" onclick="toggleMenu()" aria-label="Abrir menu" aria-expanded="false">
+            <svg id="iconeMenu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
     </header>
 
+    <section class="faixa-titulo" id="sobre">
+        <h1>Catálogo de <span>Serviços</span></h1>
+        <!-- Texto opcional: edite à vontade -->
+        <p>Manutenção especializada em hardware, software e redes/dados, com prazos claros e garantia em cada serviço.</p>
+    </section>
+
+    <div class="filtros" role="group" aria-label="Filtrar serviços por categoria">
+        <button class="btn-filtro ativo" aria-pressed="true" onclick="filtrar('todos', event)">Todos os Serviços</button>
+        <button class="btn-filtro" aria-pressed="false" onclick="filtrar('hardware', event)">Hardware</button>
+        <button class="btn-filtro" aria-pressed="false" onclick="filtrar('software', event)">Software</button>
+        <button class="btn-filtro" aria-pressed="false" onclick="filtrar('dados', event)">Rede & Dados</button>
+    </div>
+
     <div class="container">
-
-        <div class="filtros" role="group" aria-label="Filtrar serviços por categoria">
-            <button class="btn-filtro ativo" aria-pressed="true" onclick="filtrar('todos', event)">Todos os Serviços</button>
-            <button class="btn-filtro" aria-pressed="false" onclick="filtrar('hardware', event)">Hardware</button>
-            <button class="btn-filtro" aria-pressed="false" onclick="filtrar('software', event)">Software</button>
-            <button class="btn-filtro" aria-pressed="false" onclick="filtrar('dados', event)">Rede & Dados</button>
-        </div>
-
         <main class="catalogo">
 
             <!-- SERVIÇO 1 -->
             <div class="cartao" data-categoria="software">
-                <div class="tags">
-                    <span class="tag tag-categoria">Software</span>
-                    <span class="tag tag-sla">SLA: 4H</span>
+                <div class="cartao-topo">
+                    <div class="tags"><span class="tag-sla">SLA: 4H</span></div>
+                    <h3>Instalação Limpa + BIOS</h3>
                 </div>
-                <h3>Instalação Limpa + BIOS</h3>
-                <p class="desc-curta">Formatação de baixo nível, instalação de sistema operacional e atualização segura de firmware.</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Backup preventivo de até 50GB</li>
-                        <li>Update seguro de BIOS/UEFI</li>
-                        <li>Instalação de Drivers WHQL</li>
-                        <li>Configuração de perfil XMP na RAM</li>
-                    </ul>
-                </div>
-                <div class="rodape-cartao">
-                    <button class="btn-acao" onclick="abrirModal('Instalação Limpa + BIOS')">Solicitar</button>
+                <div class="cartao-corpo">
+                    <p class="desc-curta">Formatação de baixo nível, instalação de sistema operacional e atualização segura de firmware.</p>
+                    <div class="detalhes-tecnicos">
+                        <ul>
+                            <li>Backup preventivo de até 50GB</li>
+                            <li>Update seguro de BIOS/UEFI</li>
+                            <li>Instalação de Drivers WHQL</li>
+                            <li>Configuração de perfil XMP na RAM</li>
+                        </ul>
+                    </div>
+                    <div class="rodape-cartao">
+                        <button class="btn-acao" onclick="abrirModal('Instalação Limpa + BIOS')">Solicitar</button>
+                    </div>
                 </div>
             </div>
 
             <!-- SERVIÇO 2 -->
             <div class="cartao" data-categoria="hardware">
-                <div class="tags">
-                    <span class="tag tag-categoria">Hardware</span>
-                    <span class="tag tag-sla">SLA: 2H</span>
-                    <span class="tag tag-garantia">90D Garantia</span>
+                <div class="cartao-topo">
+                    <div class="tags"><span class="tag-sla">SLA: 2H</span></div>
+                    <h3>Limpeza e Refrigeração</h3>
                 </div>
-                <h3>Limpeza e Refrigeração</h3>
-                <p class="desc-curta">Higienização interna completa e substituição de interface térmica para redução de temperatura.</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Banho químico com Álcool Isopropílico</li>
-                        <li>Pasta Térmica de Prata de alta condutividade</li>
-                        <li>Troca de Thermal Pads (VRMs/VRAM)</li>
-                        <li>Teste de estresse de temperatura</li>
-                    </ul>
-                </div>
-                <div class="rodape-cartao">
-                    <button class="btn-acao" onclick="abrirModal('Limpeza e Refrigeração')">Solicitar</button>
+                <div class="cartao-corpo">
+                    <span class="tag-garantia">90D Garantia</span>
+                    <p class="desc-curta">Higienização interna completa e substituição de interface térmica para redução de temperatura.</p>
+                    <div class="detalhes-tecnicos">
+                        <ul>
+                            <li>Banho químico com Álcool Isopropílico</li>
+                            <li>Pasta Térmica de Prata de alta condutividade</li>
+                            <li>Troca de Thermal Pads (VRMs/VRAM)</li>
+                            <li>Teste de estresse de temperatura</li>
+                        </ul>
+                    </div>
+                    <div class="rodape-cartao">
+                        <button class="btn-acao" onclick="abrirModal('Limpeza e Refrigeração')">Solicitar</button>
+                    </div>
                 </div>
             </div>
 
             <!-- SERVIÇO 3 -->
             <div class="cartao" data-categoria="software">
-                <div class="tags">
-                    <span class="tag tag-categoria">Software</span>
-                    <span class="tag tag-sla">SLA: 6H</span>
+                <div class="cartao-topo">
+                    <div class="tags"><span class="tag-sla">SLA: 6H</span></div>
+                    <h3>Protocolo Anti-Malware</h3>
                 </div>
-                <h3>Protocolo Anti-Malware</h3>
-                <p class="desc-curta">Remoção de ameaças persistentes, rootkits, ransomwares e reparo de registro do sistema.</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Análise heurística profunda</li>
-                        <li>Remoção de Rootkits e Keyloggers</li>
-                        <li>Reconstrução de arquivos corrompidos</li>
-                        <li>Implementação de Firewall configurado</li>
-                    </ul>
-                </div>
-                <div class="rodape-cartao">
-                    <button class="btn-acao" onclick="abrirModal('Protocolo Anti-Malware')">Solicitar</button>
+                <div class="cartao-corpo">
+                    <p class="desc-curta">Remoção de ameaças persistentes, rootkits, ransomwares e reparo de registro do sistema.</p>
+                    <div class="detalhes-tecnicos">
+                        <ul>
+                            <li>Análise heurística profunda</li>
+                            <li>Remoção de Rootkits e Keyloggers</li>
+                            <li>Reconstrução de arquivos corrompidos</li>
+                            <li>Implementação de Firewall configurado</li>
+                        </ul>
+                    </div>
+                    <div class="rodape-cartao">
+                        <button class="btn-acao" onclick="abrirModal('Protocolo Anti-Malware')">Solicitar</button>
+                    </div>
                 </div>
             </div>
 
             <!-- SERVIÇO 4 -->
             <div class="cartao" data-categoria="hardware">
-                <div class="tags">
-                    <span class="tag tag-categoria">Hardware</span>
-                    <span class="tag tag-sla">SLA: 12H</span>
-                    <span class="tag tag-garantia">180D Garantia</span>
+                <div class="cartao-topo">
+                    <div class="tags"><span class="tag-sla">SLA: 12H</span></div>
+                    <h3>Reparo de Placa-Mãe</h3>
                 </div>
-                <h3>Reparo de Placa-Mãe</h3>
-                <p class="desc-curta">Análise microscópica e soldagem de componentes na placa de circuito impresso (PCB).</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Mapeamento de curto-circuito</li>
-                        <li>Troca de capacitores, Mosfets e CIs</li>
-                        <li>Regravação de CI de BIOS</li>
-                        <li>Ressolda de conectores danificados</li>
-                    </ul>
-                </div>
-                <div class="rodape-cartao">
-                    <button class="btn-acao" onclick="abrirModal('Reparo de Placa-Mãe')">Solicitar</button>
+                <div class="cartao-corpo">
+                    <span class="tag-garantia">180D Garantia</span>
+                    <p class="desc-curta">Análise microscópica e soldagem de componentes na placa de circuito impresso (PCB).</p>
+                    <div class="detalhes-tecnicos">
+                        <ul>
+                            <li>Mapeamento de curto-circuito</li>
+                            <li>Troca de capacitores, Mosfets e CIs</li>
+                            <li>Regravação de CI de BIOS</li>
+                            <li>Ressolda de conectores danificados</li>
+                        </ul>
+                    </div>
+                    <div class="rodape-cartao">
+                        <button class="btn-acao" onclick="abrirModal('Reparo de Placa-Mãe')">Solicitar</button>
+                    </div>
                 </div>
             </div>
 
             <!-- SERVIÇO 5 -->
             <div class="cartao" data-categoria="hardware">
-                <div class="tags">
-                    <span class="tag tag-categoria">Hardware</span>
-                    <span class="tag tag-sla">SLA: 3H</span>
+                <div class="cartao-topo">
+                    <div class="tags"><span class="tag-sla">SLA: 3H</span></div>
+                    <h3>Upgrade NVMe e RAM</h3>
                 </div>
-                <h3>Upgrade NVMe e RAM</h3>
-                <p class="desc-curta">Substituição de armazenamento mecânico por estado sólido e expansão de memória.</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Clonagem de sistema operacional intacto</li>
-                        <li>Instalação física de SSD NVMe</li>
-                        <li>Configuração de RAM em Dual Channel</li>
-                        <li>Benchmark de performance</li>
-                    </ul>
-                </div>
-                <div class="rodape-cartao">
-                    <button class="btn-acao" onclick="abrirModal('Upgrade NVMe e RAM')">Solicitar</button>
+                <div class="cartao-corpo">
+                    <p class="desc-curta">Substituição de armazenamento mecânico por estado sólido e expansão de memória.</p>
+                    <div class="detalhes-tecnicos">
+                        <ul>
+                            <li>Clonagem de sistema operacional intacto</li>
+                            <li>Instalação física de SSD NVMe</li>
+                            <li>Configuração de RAM em Dual Channel</li>
+                            <li>Benchmark de performance</li>
+                        </ul>
+                    </div>
+                    <div class="rodape-cartao">
+                        <button class="btn-acao" onclick="abrirModal('Upgrade NVMe e RAM')">Solicitar</button>
+                    </div>
                 </div>
             </div>
 
             <!-- SERVIÇO 6 -->
             <div class="cartao" data-categoria="dados">
-                <div class="tags">
-                    <span class="tag tag-categoria">Rede & Dados</span>
-                    <span class="tag tag-sla">SLA: 48H</span>
+                <div class="cartao-topo">
+                    <div class="tags"><span class="tag-sla">SLA: 48H</span></div>
+                    <h3>Recuperação de Dados</h3>
                 </div>
-                <h3>Recuperação de Dados</h3>
-                <p class="desc-curta">Recuperação em discos particionados acidentalmente, corrompidos ou com setores defeituosos.</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Extração em modo RAW de leitura</li>
-                        <li>Recuperação de tabela MBR/GPT</li>
-                        <li>Análise via software forense</li>
-                        <li>Entrega dos dados criptografados</li>
-                    </ul>
-                </div>
-                <div class="rodape-cartao">
-                    <button class="btn-acao" onclick="abrirModal('Recuperação de Dados')">Solicitar</button>
+                <div class="cartao-corpo">
+                    <p class="desc-curta">Recuperação em discos particionados acidentalmente, corrompidos ou com setores defeituosos.</p>
+                    <div class="detalhes-tecnicos">
+                        <ul>
+                            <li>Extração em modo RAW de leitura</li>
+                            <li>Recuperação de tabela MBR/GPT</li>
+                            <li>Análise via software forense</li>
+                            <li>Entrega dos dados criptografados</li>
+                        </ul>
+                    </div>
+                    <div class="rodape-cartao">
+                        <button class="btn-acao" onclick="abrirModal('Recuperação de Dados')">Solicitar</button>
+                    </div>
                 </div>
             </div>
 
             <!-- SERVIÇO 7 -->
             <div class="cartao" data-categoria="dados">
-                <div class="tags">
-                    <span class="tag tag-categoria">Rede & Dados</span>
-                    <span class="tag tag-sla">SLA: 24H</span>
+                <div class="cartao-topo">
+                    <div class="tags"><span class="tag-sla">SLA: 24H</span></div>
+                    <h3>Setup de Servidor NAS</h3>
                 </div>
-                <h3>Setup de Servidor NAS</h3>
-                <p class="desc-curta">Configuração de nuvem local para armazenamento corporativo e roteamento avançado.</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Configuração de Matrizes RAID</li>
-                        <li>Políticas de Backup Automatizado</li>
-                        <li>Configuração de Roteadores Mesh</li>
-                        <li>Controle de acesso e DNS</li>
-                    </ul>
-                </div>
-                <div class="rodape-cartao">
-                    <button class="btn-acao" onclick="abrirModal('Setup de Servidor NAS')">Solicitar</button>
+                <div class="cartao-corpo">
+                    <p class="desc-curta">Configuração de nuvem local para armazenamento corporativo e roteamento avançado.</p>
+                    <div class="detalhes-tecnicos">
+                        <ul>
+                            <li>Configuração de Matrizes RAID</li>
+                            <li>Políticas de Backup Automatizado</li>
+                            <li>Configuração de Roteadores Mesh</li>
+                            <li>Controle de acesso e DNS</li>
+                        </ul>
+                    </div>
+                    <div class="rodape-cartao">
+                        <button class="btn-acao" onclick="abrirModal('Setup de Servidor NAS')">Solicitar</button>
+                    </div>
                 </div>
             </div>
 
             <!-- SERVIÇO 8 -->
             <div class="cartao" data-categoria="software">
-                <div class="tags">
-                    <span class="tag tag-categoria">Software</span>
-                    <span class="tag tag-sla">SLA: 1H</span>
+                <div class="cartao-topo">
+                    <div class="tags"><span class="tag-sla">SLA: 1H</span></div>
+                    <h3>Otimização e Undervolt</h3>
                 </div>
-                <h3>Otimização e Undervolt</h3>
-                <p class="desc-curta">Ajuste fino de voltagem do processador e placa de vídeo para máxima eficiência térmica e FPS.</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Redução térmica sem perda de clock</li>
-                        <li>Remoção de processos em segundo plano</li>
-                        <li>Ajuste da curva de ventoinhas</li>
-                        <li>Testes de estabilidade (Cinebench)</li>
-                    </ul>
-                </div>
-                <div class="rodape-cartao">
-                    <button class="btn-acao" onclick="abrirModal('Otimização e Undervolt')">Solicitar</button>
+                <div class="cartao-corpo">
+                    <p class="desc-curta">Ajuste fino de voltagem do processador e placa de vídeo para máxima eficiência térmica e FPS.</p>
+                    <div class="detalhes-tecnicos">
+                        <ul>
+                            <li>Redução térmica sem perda de clock</li>
+                            <li>Remoção de processos em segundo plano</li>
+                            <li>Ajuste da curva de ventoinhas</li>
+                            <li>Testes de estabilidade (Cinebench)</li>
+                        </ul>
+                    </div>
+                    <div class="rodape-cartao">
+                        <button class="btn-acao" onclick="abrirModal('Otimização e Undervolt')">Solicitar</button>
+                    </div>
                 </div>
             </div>
 
             <!-- SERVIÇO 9 -->
             <div class="cartao" data-categoria="hardware">
-                <div class="tags">
-                    <span class="tag tag-categoria">Hardware</span>
-                    <span class="tag tag-sla">SLA: 4H</span>
+                <div class="cartao-topo">
+                    <div class="tags"><span class="tag-sla">SLA: 4H</span></div>
+                    <h3>Montagem Premium</h3>
                 </div>
-                <h3>Montagem Premium</h3>
-                <p class="desc-curta">Organização impecável de cabos, montagem de setups complexos e otimização de fluxo de ar.</p>
-                <div class="detalhes-tecnicos">
-                    <ul>
-                        <li>Roteamento oculto de cabos (Cable Management)</li>
-                        <li>Instalação de Water Coolers e AIO</li>
-                        <li>Sincronização de controladoras RGB</li>
-                        <li>Estudo de pressão positiva de ar</li>
-                    </ul>
-                </div>
-                <div class="rodape-cartao">
-                    <button class="btn-acao" onclick="abrirModal('Montagem Premium')">Solicitar</button>
+                <div class="cartao-corpo">
+                    <p class="desc-curta">Organização impecável de cabos, montagem de setups complexos e otimização de fluxo de ar.</p>
+                    <div class="detalhes-tecnicos">
+                        <ul>
+                            <li>Roteamento oculto de cabos (Cable Management)</li>
+                            <li>Instalação de Water Coolers e AIO</li>
+                            <li>Sincronização de controladoras RGB</li>
+                            <li>Estudo de pressão positiva de ar</li>
+                        </ul>
+                    </div>
+                    <div class="rodape-cartao">
+                        <button class="btn-acao" onclick="abrirModal('Montagem Premium')">Solicitar</button>
+                    </div>
                 </div>
             </div>
 
         </main>
     </div>
+
+    <!-- FAIXA FINAL DE CONTATO -->
+    <section class="faixa-contato" id="contato">
+        <h2>Precisa de atendimento agora?</h2>
+        <p>Fale direto com a gente pelo WhatsApp e resolva rápido.</p>
+        <a class="btn-contato-final" href="https://wa.me/5531995896050" target="_blank">Chamar no WhatsApp</a>
+    </section>
 
     <!-- MODAL MODERNO -->
     <div class="modal-overlay" id="modalOverlay">
@@ -658,11 +831,26 @@ VERSÃO: 8.1
 
     <script>
         // =========================================
-        // CONFIGURAÇÃO — TROQUE PELO SEU NÚMERO
+        // CONFIGURAÇÃO — SEU NÚMERO DE WHATSAPP
         // Formato: código do país + DDD + número, sem espaços/símbolos
-        // Exemplo Brasil: 5531999998888
         // =========================================
         const NUMERO_WHATSAPP = "5531995896050";
+
+        // Menu hambúrguer (mobile)
+        function toggleMenu() {
+            const nav = document.getElementById('headerNav');
+            const btn = document.getElementById('btnMenuMobile');
+            const aberto = nav.classList.toggle('aberto');
+            btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+        }
+
+        // Fecha o menu mobile ao clicar em um link
+        document.querySelectorAll('.header-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('headerNav').classList.remove('aberto');
+                document.getElementById('btnMenuMobile').setAttribute('aria-expanded', 'false');
+            });
+        });
 
         // Sistema de Filtros
         function filtrar(categoria, event) {
@@ -708,8 +896,6 @@ VERSÃO: 8.1
             }, 300);
         }
 
-        // Correção principal: o botão do WhatsApp agora abre uma conversa
-        // real com o número configurado e mensagem pré-preenchida.
         btnWhatsapp.addEventListener('click', function() {
             const mensagem = encodeURIComponent(`Olá! Tenho interesse no serviço: ${servicoAtual}`);
             window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${mensagem}`, '_blank');
