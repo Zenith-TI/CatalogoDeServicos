@@ -1,9 +1,9 @@
 <!--
 =========================================================
-TÍTULO: Zenith TI - Catálogo de Serviços Avançados
-ÚLTIMA MUDANÇA: Criação de um cabeçalho escuro sólido com borda inferior para delimitar o topo da página. Remoção do "mix-blend-mode" da imagem para restaurar as cores originais da logo e mesclar seu fundo natural com a nova barra de navegação.
-DATA E HORA: 08 de Setembro de 2026, 00:09
-VERSÃO: 7.0
+TÍTULO: ZNT - Catálogo de Serviços
+ÚLTIMA MUDANÇA: Adição de favicons (ícones de navegador e app) usando o arquivo "3 - Logo Simples (Losango) 2 - 10-07-26.jpg". Alteração do título da página. Redesign do cabeçalho substituindo o fundo preto sólido por um gradiente azul super escuro integrado à paleta, com mix-blend-mode ajustado para a logo principal brilhar sem faixas.
+DATA E HORA: 08 de Setembro de 2026, 12:14
+VERSÃO: 8.0
 =========================================================
 -->
 <!DOCTYPE html>
@@ -11,7 +11,13 @@ VERSÃO: 7.0
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenith TI - Catálogo de Serviços Avançados</title>
+    <title>ZNT - Catálogo de Serviços</title>
+    
+    <!-- Ícones para Navegador e Mobile (App) -->
+    <link rel="icon" type="image/jpeg" href="3 - Logo Simples (Losango) 2 - 10-07-26.jpg">
+    <link rel="apple-touch-icon" href="3 - Logo Simples (Losango) 2 - 10-07-26.jpg">
+    <meta name="apple-mobile-web-app-title" content="ZNT Serviços">
+
     <style>
         /* =========================================
            PALETA DE CORES
@@ -71,20 +77,22 @@ VERSÃO: 7.0
            ========================================= */
         header {
             text-align: center;
-            padding: 15px 20px;
-            background-color: #000000; /* Fundo preto para mesclar com a logo */
-            border-bottom: 2px solid var(--blue-mid); /* Linha de delimitação */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            padding: 40px 20px 20px 20px;
+            /* Gradiente que começa de um azul-marinho super escuro e desce pro azul da paleta */
+            background: linear-gradient(180deg, #00060d 0%, var(--bg-dark) 100%);
+            border-bottom: 1px solid rgba(30, 89, 156, 0.2);
             position: relative;
             z-index: 10;
         }
 
         .logo-empresa {
-            max-width: 260px;
+            max-width: 280px;
             width: 100%;
             height: auto;
             display: block;
             margin: 0 auto;
+            /* Remove o quadrado preto da imagem preservando as cores originais */
+            mix-blend-mode: lighten; 
         }
 
         /* =========================================
