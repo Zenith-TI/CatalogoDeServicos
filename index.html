@@ -1,9 +1,12 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Adição de favicons (ícones de navegador e app) usando o arquivo "3 - Logo Simples (Losango) 2 - 10-07-26.jpg". Alteração do título da página. Redesign do cabeçalho substituindo o fundo preto sólido por um gradiente azul super escuro integrado à paleta, com mix-blend-mode ajustado para a logo principal brilhar sem faixas.
-DATA E HORA: 08 de Setembro de 2026, 12:14
-VERSÃO: 8.0
+ÚLTIMA MUDANÇA: Correção do botão do WhatsApp no modal (agora funcional
+com número + mensagem pré-preenchida por serviço). Adição de meta tags
+de SEO/Open Graph. Acessibilidade: aria-pressed nos filtros e "event"
+passado explicitamente. Poster de fallback comentado no vídeo de fundo.
+DATA E HORA: 08 de Setembro de 2026, 12:14 (revisão de correções)
+VERSÃO: 8.1
 =========================================================
 -->
 <!DOCTYPE html>
@@ -12,9 +15,19 @@ VERSÃO: 8.0
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZNT - Catálogo de Serviços</title>
-    
+
+    <!-- SEO / Compartilhamento -->
+    <meta name="description" content="ZNT (Zenith TI) - Catálogo de serviços de manutenção de hardware, software e redes/dados.">
+    <meta property="og:title" content="ZNT - Catálogo de Serviços">
+    <meta property="og:description" content="Manutenção de hardware, software, redes e recuperação de dados.">
+    <meta property="og:type" content="website">
+    <!-- Se tiver uma imagem de capa (1200x630px), descomente e ajuste o caminho abaixo -->
+    <!-- <meta property="og:image" content="capa-og.jpg"> -->
+
     <!-- Ícones para Navegador e Mobile (App) -->
     <link rel="icon" type="image/jpeg" href="3 - Logo Simples (Losango) 2 - 10-07-26.jpg">
+    <!-- Recomendado: gerar também um favicon.ico (32x32) para máxima compatibilidade -->
+    <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
     <link rel="apple-touch-icon" href="3 - Logo Simples (Losango) 2 - 10-07-26.jpg">
     <meta name="apple-mobile-web-app-title" content="ZNT Serviços">
 
@@ -92,7 +105,7 @@ VERSÃO: 8.0
             display: block;
             margin: 0 auto;
             /* Remove o quadrado preto da imagem preservando as cores originais */
-            mix-blend-mode: lighten; 
+            mix-blend-mode: lighten;
         }
 
         /* =========================================
@@ -189,7 +202,7 @@ VERSÃO: 8.0
             font-weight: bold;
             letter-spacing: 0.5px;
         }
-        
+
         .tag-categoria { background: var(--blue-mid); color: var(--white-ice); }
         .tag-sla { background: rgba(244, 247, 250, 0.1); color: var(--white-ice); border: 1px solid rgba(244, 247, 250, 0.2); }
         .tag-garantia { background: rgba(255, 107, 0, 0.1); color: var(--orange-neon); border: 1px solid var(--orange-neon); }
@@ -240,15 +253,13 @@ VERSÃO: 8.0
 
         .rodape-cartao {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             margin-top: auto;
         }
 
-        .preco {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--white-ice);
+        .btn-acao {
+            width: 100%;
         }
 
         .btn-acao {
@@ -367,15 +378,16 @@ VERSÃO: 8.0
             color: var(--white-ice);
         }
 
-        @keyframes fadein { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
+        @keyframes fadein {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
     <!-- Vídeo de Fundo -->
+    <!-- Adicione poster="sua-imagem-fallback.jpg" abaixo para evitar tela vazia enquanto o vídeo carrega -->
     <video class="video-fundo" autoplay loop muted playsinline>
         <source src="VideoDeFundo.mp4" type="video/mp4">
     </video>
@@ -386,16 +398,16 @@ VERSÃO: 8.0
     </header>
 
     <div class="container">
-        
-        <div class="filtros">
-            <button class="btn-filtro ativo" onclick="filtrar('todos')">Todos os Serviços</button>
-            <button class="btn-filtro" onclick="filtrar('hardware')">Hardware</button>
-            <button class="btn-filtro" onclick="filtrar('software')">Software</button>
-            <button class="btn-filtro" onclick="filtrar('dados')">Rede & Dados</button>
+
+        <div class="filtros" role="group" aria-label="Filtrar serviços por categoria">
+            <button class="btn-filtro ativo" aria-pressed="true" onclick="filtrar('todos', event)">Todos os Serviços</button>
+            <button class="btn-filtro" aria-pressed="false" onclick="filtrar('hardware', event)">Hardware</button>
+            <button class="btn-filtro" aria-pressed="false" onclick="filtrar('software', event)">Software</button>
+            <button class="btn-filtro" aria-pressed="false" onclick="filtrar('dados', event)">Rede & Dados</button>
         </div>
 
         <main class="catalogo">
-            
+
             <!-- SERVIÇO 1 -->
             <div class="cartao" data-categoria="software">
                 <div class="tags">
@@ -413,7 +425,6 @@ VERSÃO: 8.0
                     </ul>
                 </div>
                 <div class="rodape-cartao">
-                    <span class="preco">R$ 120</span>
                     <button class="btn-acao" onclick="abrirModal('Instalação Limpa + BIOS')">Solicitar</button>
                 </div>
             </div>
@@ -436,7 +447,6 @@ VERSÃO: 8.0
                     </ul>
                 </div>
                 <div class="rodape-cartao">
-                    <span class="preco">R$ 150</span>
                     <button class="btn-acao" onclick="abrirModal('Limpeza e Refrigeração')">Solicitar</button>
                 </div>
             </div>
@@ -458,7 +468,6 @@ VERSÃO: 8.0
                     </ul>
                 </div>
                 <div class="rodape-cartao">
-                    <span class="preco">R$ 180</span>
                     <button class="btn-acao" onclick="abrirModal('Protocolo Anti-Malware')">Solicitar</button>
                 </div>
             </div>
@@ -481,7 +490,6 @@ VERSÃO: 8.0
                     </ul>
                 </div>
                 <div class="rodape-cartao">
-                    <span class="preco">Sob Análise</span>
                     <button class="btn-acao" onclick="abrirModal('Reparo de Placa-Mãe')">Solicitar</button>
                 </div>
             </div>
@@ -503,7 +511,6 @@ VERSÃO: 8.0
                     </ul>
                 </div>
                 <div class="rodape-cartao">
-                    <span class="preco">R$ 90 + Peça</span>
                     <button class="btn-acao" onclick="abrirModal('Upgrade NVMe e RAM')">Solicitar</button>
                 </div>
             </div>
@@ -525,7 +532,6 @@ VERSÃO: 8.0
                     </ul>
                 </div>
                 <div class="rodape-cartao">
-                    <span class="preco">A partir R$ 350</span>
                     <button class="btn-acao" onclick="abrirModal('Recuperação de Dados')">Solicitar</button>
                 </div>
             </div>
@@ -547,7 +553,6 @@ VERSÃO: 8.0
                     </ul>
                 </div>
                 <div class="rodape-cartao">
-                    <span class="preco">Sob Projeto</span>
                     <button class="btn-acao" onclick="abrirModal('Setup de Servidor NAS')">Solicitar</button>
                 </div>
             </div>
@@ -569,7 +574,6 @@ VERSÃO: 8.0
                     </ul>
                 </div>
                 <div class="rodape-cartao">
-                    <span class="preco">R$ 130</span>
                     <button class="btn-acao" onclick="abrirModal('Otimização e Undervolt')">Solicitar</button>
                 </div>
             </div>
@@ -591,7 +595,6 @@ VERSÃO: 8.0
                     </ul>
                 </div>
                 <div class="rodape-cartao">
-                    <span class="preco">R$ 200</span>
                     <button class="btn-acao" onclick="abrirModal('Montagem Premium')">Solicitar</button>
                 </div>
             </div>
@@ -606,19 +609,30 @@ VERSÃO: 8.0
             <h2>Excelente escolha!</h2>
             <p>Você selecionou o serviço de <br><strong id="nomeServicoSelecionado">Serviço</strong>.</p>
             <p style="font-size: 0.9rem;">Para garantir um atendimento rápido e personalizado, finalizaremos os detalhes e dúvidas diretamente com você.</p>
-            <button class="btn-modal">Avançar para o WhatsApp</button>
+            <button class="btn-modal" id="btnWhatsapp">Avançar para o WhatsApp</button>
             <button class="btn-fechar-modal" onclick="fecharModal()">Cancelar e voltar ao catálogo</button>
         </div>
     </div>
 
     <script>
+        // =========================================
+        // CONFIGURAÇÃO — TROQUE PELO SEU NÚMERO
+        // Formato: código do país + DDD + número, sem espaços/símbolos
+        // Exemplo Brasil: 5531999998888
+        // =========================================
+        const NUMERO_WHATSAPP = "5531995896050";
+
         // Sistema de Filtros
-        function filtrar(categoria) {
+        function filtrar(categoria, event) {
             const cartoes = document.querySelectorAll('.cartao');
             const botoes = document.querySelectorAll('.btn-filtro');
-            
-            botoes.forEach(btn => btn.classList.remove('ativo'));
+
+            botoes.forEach(btn => {
+                btn.classList.remove('ativo');
+                btn.setAttribute('aria-pressed', 'false');
+            });
             event.target.classList.add('ativo');
+            event.target.setAttribute('aria-pressed', 'true');
 
             cartoes.forEach(cartao => {
                 if (categoria === 'todos' || cartao.getAttribute('data-categoria') === categoria) {
@@ -633,8 +647,11 @@ VERSÃO: 8.0
         // Sistema de Modal
         const modal = document.getElementById('modalOverlay');
         const spanServico = document.getElementById('nomeServicoSelecionado');
+        const btnWhatsapp = document.getElementById('btnWhatsapp');
+        let servicoAtual = '';
 
         function abrirModal(nomeServico) {
+            servicoAtual = nomeServico;
             spanServico.textContent = nomeServico;
             modal.style.display = 'flex';
             setTimeout(() => {
@@ -649,8 +666,16 @@ VERSÃO: 8.0
             }, 300);
         }
 
+        // Correção principal: o botão do WhatsApp agora abre uma conversa
+        // real com o número configurado e mensagem pré-preenchida.
+        btnWhatsapp.addEventListener('click', function() {
+            const mensagem = encodeURIComponent(`Olá! Tenho interesse no serviço: ${servicoAtual}`);
+            window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${mensagem}`, '_blank');
+            fecharModal();
+        });
+
         modal.addEventListener('click', function(e) {
-            if(e.target === this) {
+            if (e.target === this) {
                 fecharModal();
             }
         });
