@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Correção do link do favicon (ícone da aba do navegador e app) para utilizar a imagem "Logo-Cabecalho-Site.png" existente no repositório, evitando quebra de imagem. Estrutura mantida em arquivo único (HTML + CSS + JS) para contornar bloqueios de CORS.
-DATA E HORA: 08 de Setembro de 2026, 19:11
-VERSÃO: 10.1
+ÚLTIMA MUDANÇA: Alteração da cor de fundo do cabeçalho para a cor mais escura da paleta (--bg-dark / #001935). Substituição do ícone de menu (hambúrguer) por uma barra de navegação com os links "Sobre nós" e "Contatos".
+DATA E HORA: 08 de Setembro de 2026, 19:15
+VERSÃO: 10.2
 =========================================================
 -->
 <!DOCTYPE html>
@@ -71,14 +71,14 @@ VERSÃO: 10.1
         }
 
         /* =========================================
-           CABEÇALHO / NAVBAR ESTILO APP
+           CABEÇALHO / NAVBAR
            ========================================= */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 5%;
-            background-color: var(--blue-mid);
+            background-color: var(--bg-dark);
             border-bottom: 3px solid var(--orange-neon);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             position: relative;
@@ -91,14 +91,20 @@ VERSÃO: 10.1
             filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.5));
         }
 
-        .menu-icon {
+        .navbar {
+            display: flex;
+            gap: 25px;
+        }
+
+        .navbar a {
             color: var(--white-ice);
-            font-size: 1.8rem;
-            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
             transition: color 0.3s ease;
         }
 
-        .menu-icon:hover {
+        .navbar a:hover {
             color: var(--orange-neon);
         }
 
@@ -481,7 +487,10 @@ VERSÃO: 10.1
 
     <header>
         <img src="Logo-Cabecalho-Site.png" alt="ZNT" class="logo-empresa">
-        <div class="menu-icon">☰</div>
+        <nav class="navbar">
+            <a href="#sobre">Sobre nós</a>
+            <a href="#contatos">Contatos</a>
+        </nav>
     </header>
 
     <section class="hero">
