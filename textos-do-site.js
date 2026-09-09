@@ -1,9 +1,9 @@
 /*
 =========================================================
-TÍTULO: ZNT - Configuração de Textos do Site
-ÚLTIMA MUDANÇA: Atualização dos botões para "Solicitar Cotação" e "Finalizar Cotações". Inclusão do texto base para a caixa de seleção de dispositivo (modal_select_dispositivo).
-DATA E HORA: 08 de Setembro de 2026, 23:55
-VERSÃO: 14.1
+TÍTULO: Zenith TI - Configuração de Textos do Site
+ÚLTIMA MUDANÇA: Atualização das menções textuais baseadas na marca (ZNT) para Zenith TI garantindo unidade visual e discursiva.
+DATA E HORA: 09 de Setembro de 2026, 16:02
+VERSÃO: 15.0
 =========================================================
 */
 
@@ -40,6 +40,6 @@ const TEXTOS = {
     btn_ver_pedido: { texto: "Finalizar Cotações", tamanho: "16px" },
 
     // Seção de Contatos
-    contato_titulo: { texto: "Fale Conosco", tamanho: "36px" },
+    contato_titulo: { texto: "Fale com a Zenith TI", tamanho: "36px" },
     contato_descricao: { texto: "Estamos prontos para atender você. Escolha o melhor canal abaixo para falar com um especialista.", tamanho: "16px" }
 };
