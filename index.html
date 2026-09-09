@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: Zenith TI - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Atualização do título da página, reformulação moderna da área de contatos (design corporativo), implementação do cabeçalho retrátil (oculta ao fixar os filtros) e retorno dos emojis visuais nativos no envio da mensagem via WhatsApp.
-DATA E HORA: 09 de Setembro de 2026, 16:02
-VERSÃO: 15.0
+ÚLTIMA MUDANÇA: Ajuste fino na formatação da mensagem do WhatsApp. Retorno do uso de Unicode (\uD83D\uDD39 e \uD83D\uDCBB) para blindar contra erros de leitura no PC (WhatsApp Web). Remoção de negritos indesejados (nome da marca, rótulos de contato, mensagem final) e exclusão dos emojis de mão e check verde. Substituição do emoji de carrinho pelo ponto azul em todos os tipos de pedido.
+DATA E HORA: 09 de Setembro de 2026, 16:13
+VERSÃO: 15.1
 =========================================================
 -->
 <!DOCTYPE html>
@@ -36,7 +36,7 @@ VERSÃO: 15.0
             color: var(--white-ice); 
             overflow-x: hidden; 
             min-height: 100vh; 
-            padding-top: 80px; /* Compensa o espaço do header fixo */
+            padding-top: 80px;
         }
 
         .video-fundo { position: fixed; top: 0; left: 0; min-width: 100vw; min-height: 100vh; z-index: -2; object-fit: cover; opacity: 0.25; }
@@ -47,7 +47,7 @@ VERSÃO: 15.0
             background: linear-gradient(180deg, var(--bg-dark) 0%, var(--blue-mid) 100%);
             border-bottom: 3px solid var(--orange-neon); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); 
             position: fixed; width: 100%; top: 0; z-index: 1000;
-            transition: transform 0.4s ease-in-out; /* Transição suave para esconder o cabeçalho */
+            transition: transform 0.4s ease-in-out;
         }
         .logo-empresa { max-width: 180px; height: auto; filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.5)); }
         .navbar { display: flex; gap: 25px; }
@@ -507,37 +507,41 @@ VERSÃO: 15.0
             const telefoneCliente = document.getElementById('inputTelefone').value.trim() || '[Não informado]';
             const dispositivo = document.getElementById('inputDispositivo').value || 'Equipamento não especificado';
             
-            let mensagem = `Olá, *Zenith TI*! 👋\n\n`;
+            // Variáveis seguras (Unicode) para evitar quebra no PC/WhatsApp Web
+            const emojiAzul = '\uD83D\uDD39'; 
+            const emojiPC = '\uD83D\uDCBB';
+            
+            let mensagem = `Olá, Zenith TI.\n\n`;
             
             if (modoGeral) {
                 let problema = document.getElementById('inputProblema').value.trim() || '[Não detalhou o problema]';
                 
                 mensagem += `Gostaria de solicitar uma avaliação do meu *${dispositivo}*.\n\n`;
-                mensagem += `🔹 *Motivo da solicitação:* ${problema}\n\n`;
+                mensagem += `${emojiAzul} *Motivo da solicitação:* ${problema}\n\n`;
             } else {
                 if (carrinho.length === 1) {
                     mensagem += `Gostaria de solicitar um orçamento para o serviço de:\n\n`;
-                    mensagem += `🛒 *${carrinho[0]}*\n\n`;
+                    mensagem += `${emojiAzul} *${carrinho[0]}*\n\n`;
                 } else if (carrinho.length > 1) {
                     mensagem += `Gostaria de solicitar um orçamento para os serviços de:\n\n`;
                     carrinho.forEach(s => {
-                        mensagem += `🛒 *${s}*\n`;
+                        mensagem += `${emojiAzul} *${s}*\n`;
                     });
                     mensagem += `\n`;
                 }
                 
                 if (verificaExigenciaDispositivo()) {
-                    mensagem += `💻 *Dispositivo relacionado:* ${dispositivo}\n\n`;
+                    mensagem += `${emojiPC} *Dispositivo relacionado:* ${dispositivo}\n\n`;
                 }
             }
             
             mensagem += `===============================\n\n`;
             mensagem += `Para agilizar o atendimento, seguem meus dados:\n\n`;
             
-            mensagem += `👤 *Nome:* ${nomeCliente}\n`;
-            mensagem += `📱 *Telefone:* ${telefoneCliente}\n\n`;
+            mensagem += `${emojiAzul} Nome: ${nomeCliente}\n`;
+            mensagem += `${emojiAzul} Telefone: ${telefoneCliente}\n\n`;
             
-            mensagem += `✅ *Fico no aguardo do retorno. Obrigado(a)!*`;
+            mensagem += `Fico no aguardo do retorno. Obrigado(a)!`;
 
             const url = `https://wa.me/5531995896050?text=${encodeURIComponent(mensagem)}`;
             window.open(url, '_blank');
@@ -556,20 +560,17 @@ VERSÃO: 15.0
             carregarServicos();
             document.getElementById('inputTelefone').addEventListener('input', aplicarMascaraTelefone);
 
-            // Logica para ocultar o cabeçalho principal quando encosta nos filtros
             const cabecalho = document.getElementById('cabecalho-principal');
             const filtros = document.getElementById('secao-filtros');
 
             if (cabecalho && filtros) {
-                // Diminuimos 80px do cálculo que é exatamente a altura do cabeçalho que deixamos fixo
                 const posicaoOriginalFiltros = filtros.offsetTop - 80;
 
                 window.addEventListener('scroll', () => {
-                    // Se rolou a página até a barra de filtros...
                     if (window.scrollY >= posicaoOriginalFiltros) {
-                        cabecalho.style.transform = 'translateY(-100%)'; // Esconde para cima
+                        cabecalho.style.transform = 'translateY(-100%)';
                     } else {
-                        cabecalho.style.transform = 'translateY(0)'; // Mostra o cabeçalho
+                        cabecalho.style.transform = 'translateY(0)';
                     }
                 });
             }
