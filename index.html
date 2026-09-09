@@ -1,9 +1,9 @@
 <!--
 =========================================================
-TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Correção de formatação e codificação da mensagem enviada ao WhatsApp. Substituição de emojis visuais por seus respectivos códigos Unicode (\uD83D\uDD39 e \uD83D\uDCBB) para blindar o sistema contra erros de formatação de salvamento (UTF-8). Alinhamento rigoroso do espaçamento, negritos e linhas divisórias da mensagem conforme o gabarito.
-DATA E HORA: 08 de Setembro de 2026, 23:54
-VERSÃO: 14.3
+TÍTULO: Zenith TI - Catálogo de Serviços
+ÚLTIMA MUDANÇA: Atualização do título da página, reformulação moderna da área de contatos (design corporativo), implementação do cabeçalho retrátil (oculta ao fixar os filtros) e retorno dos emojis visuais nativos no envio da mensagem via WhatsApp.
+DATA E HORA: 09 de Setembro de 2026, 16:02
+VERSÃO: 15.0
 =========================================================
 -->
 <!DOCTYPE html>
@@ -11,11 +11,11 @@ VERSÃO: 14.3
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZNT - Catálogo de Serviços</title>
+    <title>Catálogo de Serviços - Zenith TI</title>
     
     <link rel="icon" type="image/svg+xml" href="Logo-Simples.svg">
     <link rel="apple-touch-icon" href="Logo-Simples.svg">
-    <meta name="apple-mobile-web-app-title" content="ZNT">
+    <meta name="apple-mobile-web-app-title" content="Zenith TI">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +31,13 @@ VERSÃO: 14.3
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
 
-        body { background-color: var(--bg-dark); color: var(--white-ice); overflow-x: hidden; min-height: 100vh; }
+        body { 
+            background-color: var(--bg-dark); 
+            color: var(--white-ice); 
+            overflow-x: hidden; 
+            min-height: 100vh; 
+            padding-top: 80px; /* Compensa o espaço do header fixo */
+        }
 
         .video-fundo { position: fixed; top: 0; left: 0; min-width: 100vw; min-height: 100vh; z-index: -2; object-fit: cover; opacity: 0.25; }
         .overlay-video { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 25, 53, 0.85); z-index: -1; }
@@ -39,7 +45,9 @@ VERSÃO: 14.3
         header {
             display: flex; justify-content: space-between; align-items: center; padding: 15px 5%;
             background: linear-gradient(180deg, var(--bg-dark) 0%, var(--blue-mid) 100%);
-            border-bottom: 3px solid var(--orange-neon); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); position: relative; z-index: 10;
+            border-bottom: 3px solid var(--orange-neon); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); 
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            transition: transform 0.4s ease-in-out; /* Transição suave para esconder o cabeçalho */
         }
         .logo-empresa { max-width: 180px; height: auto; filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.5)); }
         .navbar { display: flex; gap: 25px; }
@@ -58,7 +66,7 @@ VERSÃO: 14.3
         .btn-primario:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4); }
 
         .filtros-wrapper {
-            position: sticky; top: 0; z-index: 20; background: rgba(0, 25, 53, 0.95); backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1001; background: rgba(0, 25, 53, 0.95); backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 15px 0; margin-bottom: 40px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
         .filtros { text-align: left; display: flex; gap: 10px; flex-wrap: wrap; padding: 0 5%; max-width: 1300px; margin: 0 auto; }
@@ -94,16 +102,72 @@ VERSÃO: 14.3
         }
         .btn-acao:hover { background: #e56000; transform: scale(1.05); }
 
-        /* SEÇÃO CONTATOS */
-        .secao-contatos { background: rgba(0, 25, 53, 0.9); border-top: 1px solid rgba(255,255,255,0.1); padding: 60px 5%; text-align: center; }
-        .secao-contatos h2 { margin-bottom: 10px; font-size: 2rem; color: var(--white-ice); }
-        .secao-contatos p { margin-bottom: 40px; color: rgba(244, 247, 250, 0.7); max-width: 600px; margin-left: auto; margin-right: auto; }
-        .baloes-contato { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; }
-        .balao-link { display: flex; align-items: center; gap: 10px; padding: 15px 30px; border-radius: 30px; text-decoration: none; color: white; font-weight: bold; font-size: 1rem; transition: transform 0.3s ease; }
-        .balao-link:hover { transform: translateY(-5px); }
-        .btn-wpp { background-color: #25D366; }
-        .btn-insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
-        .btn-email { background-color: var(--blue-mid); }
+        /* SEÇÃO CONTATOS (Layout Moderno) */
+        .contato-moderno {
+            background: rgba(0, 25, 53, 0.95);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 70px 5%;
+            text-align: center;
+        }
+        .contato-container h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--white-ice);
+        }
+        .contato-container p {
+            color: rgba(244, 247, 250, 0.7);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .contato-botoes {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .btn-contato {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .btn-contato.zap {
+            background-color: #25D366;
+            color: #121212;
+        }
+        .btn-contato.zap:hover {
+            background-color: #1ebd5a;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+        }
+        .btn-contato.insta {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: #ffffff;
+            border: none;
+        }
+        .btn-contato.insta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(220, 39, 67, 0.3);
+        }
+        .btn-contato.email {
+            background-color: transparent;
+            color: var(--white-ice);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .btn-contato.email:hover {
+            background-color: rgba(255,255,255,0.05);
+            border-color: var(--white-ice);
+            transform: translateY(-5px);
+        }
 
         /* BOTÃO FLUTUANTE DE CARRINHO */
         .btn-flutuante-carrinho {
@@ -117,7 +181,7 @@ VERSÃO: 14.3
         /* MODAL E FORMULÁRIO */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 25, 53, 0.8);
-            backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; padding: 20px;
+            backdrop-filter: blur(8px); z-index: 2000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; padding: 20px;
         }
         .modal-overlay.ativo { opacity: 1; }
         .modal-box {
@@ -164,8 +228,8 @@ VERSÃO: 14.3
     </video>
     <div class="overlay-video"></div>
 
-    <header>
-        <img src="Logo-Cabecalho-Site.svg" alt="ZNT" class="logo-empresa">
+    <header id="cabecalho-principal">
+        <img src="Logo-Cabecalho-Site.svg" alt="Zenith TI" class="logo-empresa">
         <nav class="navbar">
             <a href="#sobre" id="txt_nav_sobre"></a>
             <a href="#contatos" id="txt_nav_contatos"></a>
@@ -183,7 +247,7 @@ VERSÃO: 14.3
         </div>
     </section>
 
-    <div class="filtros-wrapper">
+    <div class="filtros-wrapper" id="secao-filtros">
         <div class="filtros">
             <button class="btn-filtro ativo" onclick="filtrar('todos')" id="txt_filtro_todos"></button>
             <button class="btn-filtro" onclick="filtrar('hardware')" id="txt_filtro_hardware"></button>
@@ -198,13 +262,22 @@ VERSÃO: 14.3
         </main>
     </div>
 
-    <section class="secao-contatos" id="contatos">
-        <h2 id="txt_contato_titulo">Fale Conosco</h2>
-        <p id="txt_contato_descricao">Estamos prontos para atender você.</p>
-        <div class="baloes-contato">
-            <a href="https://wa.me/5531995896050" target="_blank" class="balao-link btn-wpp">💬 WhatsApp</a>
-            <a href="https://www.instagram.com/zenitth.ti" target="_blank" class="balao-link btn-insta">📸 Instagram</a>
-            <a href="mailto:zenitth.ti@gmail.com" target="_blank" class="balao-link btn-email">✉️ E-mail</a>
+    <section class="contato-moderno" id="contatos">
+        <div class="contato-container">
+            <h2 id="txt_contato_titulo">Fale com a Zenith TI</h2>
+            <p id="txt_contato_descricao">Estamos prontos para atender você. Escolha o melhor canal abaixo.</p>
+            
+            <div class="contato-botoes">
+                <a href="https://wa.me/5531995896050" class="btn-contato zap" target="_blank">
+                    <span class="icone">📱</span> WhatsApp
+                </a>
+                <a href="https://www.instagram.com/zenitth.ti" class="btn-contato insta" target="_blank">
+                    <span class="icone">📸</span> Instagram
+                </a>
+                <a href="mailto:zenitth.ti@gmail.com" class="btn-contato email">
+                    <span class="icone">✉️</span> E-mail
+                </a>
+            </div>
         </div>
     </section>
 
@@ -434,46 +507,37 @@ VERSÃO: 14.3
             const telefoneCliente = document.getElementById('inputTelefone').value.trim() || '[Não informado]';
             const dispositivo = document.getElementById('inputDispositivo').value || 'Equipamento não especificado';
             
-            // Variáveis universais seguras (Evita quebra de encoding)
-            const emojiAzul = '\uD83D\uDD39'; 
-            const emojiPC = '\uD83D\uDCBB';
-            
-            let mensagem = `Olá, Zenith TI.\n\n`;
+            let mensagem = `Olá, *Zenith TI*! 👋\n\n`;
             
             if (modoGeral) {
                 let problema = document.getElementById('inputProblema').value.trim() || '[Não detalhou o problema]';
                 
                 mensagem += `Gostaria de solicitar uma avaliação do meu *${dispositivo}*.\n\n`;
-                mensagem += `${emojiAzul} *Motivo da solicitação:* ${problema}\n\n`;
+                mensagem += `🔹 *Motivo da solicitação:* ${problema}\n\n`;
             } else {
                 if (carrinho.length === 1) {
                     mensagem += `Gostaria de solicitar um orçamento para o serviço de:\n\n`;
-                    mensagem += `${emojiAzul} *${carrinho[0]}*\n\n`;
+                    mensagem += `🛒 *${carrinho[0]}*\n\n`;
                 } else if (carrinho.length > 1) {
                     mensagem += `Gostaria de solicitar um orçamento para os serviços de:\n\n`;
                     carrinho.forEach(s => {
-                        mensagem += `${emojiAzul} *${s}*\n`;
+                        mensagem += `🛒 *${s}*\n`;
                     });
                     mensagem += `\n`;
                 }
                 
                 if (verificaExigenciaDispositivo()) {
-                    mensagem += `${emojiPC} *Dispositivo relacionado:* ${dispositivo}\n\n`;
+                    mensagem += `💻 *Dispositivo relacionado:* ${dispositivo}\n\n`;
                 }
             }
             
-            mensagem += `= = = = = = = = = = = = = = = = = = = = = =\n\n`;
+            mensagem += `===============================\n\n`;
             mensagem += `Para agilizar o atendimento, seguem meus dados:\n\n`;
             
-            if (modoGeral) {
-                mensagem += `${emojiAzul} Nome: ${nomeCliente}\n`;
-                mensagem += `${emojiAzul} Telefone: ${telefoneCliente}\n\n`;
-            } else {
-                mensagem += `${emojiAzul} *Nome:* ${nomeCliente}\n`;
-                mensagem += `${emojiAzul} *Telefone:* ${telefoneCliente}\n\n`;
-            }
+            mensagem += `👤 *Nome:* ${nomeCliente}\n`;
+            mensagem += `📱 *Telefone:* ${telefoneCliente}\n\n`;
             
-            mensagem += `Fico no aguardo do retorno. Obrigado(a)!`;
+            mensagem += `✅ *Fico no aguardo do retorno. Obrigado(a)!*`;
 
             const url = `https://wa.me/5531995896050?text=${encodeURIComponent(mensagem)}`;
             window.open(url, '_blank');
@@ -491,6 +555,24 @@ VERSÃO: 14.3
             carregarTextos();
             carregarServicos();
             document.getElementById('inputTelefone').addEventListener('input', aplicarMascaraTelefone);
+
+            // Logica para ocultar o cabeçalho principal quando encosta nos filtros
+            const cabecalho = document.getElementById('cabecalho-principal');
+            const filtros = document.getElementById('secao-filtros');
+
+            if (cabecalho && filtros) {
+                // Diminuimos 80px do cálculo que é exatamente a altura do cabeçalho que deixamos fixo
+                const posicaoOriginalFiltros = filtros.offsetTop - 80;
+
+                window.addEventListener('scroll', () => {
+                    // Se rolou a página até a barra de filtros...
+                    if (window.scrollY >= posicaoOriginalFiltros) {
+                        cabecalho.style.transform = 'translateY(-100%)'; // Esconde para cima
+                    } else {
+                        cabecalho.style.transform = 'translateY(0)'; // Mostra o cabeçalho
+                    }
+                });
+            }
         });
     </script>
 </body>
