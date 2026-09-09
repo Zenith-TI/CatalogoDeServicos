@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: Zenith TI - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Ajuste fino na formatação da mensagem do WhatsApp. Retorno do uso de Unicode (\uD83D\uDD39 e \uD83D\uDCBB) para blindar contra erros de leitura no PC (WhatsApp Web). Remoção de negritos indesejados (nome da marca, rótulos de contato, mensagem final) e exclusão dos emojis de mão e check verde. Substituição do emoji de carrinho pelo ponto azul em todos os tipos de pedido.
-DATA E HORA: 09 de Setembro de 2026, 16:13
-VERSÃO: 15.1
+ÚLTIMA MUDANÇA: Atualização visual dos botões de contato. O botão de e-mail agora adota a cor azul padrão dos botões de serviço (var(--blue-mid)). Substituição dos emojis nos botões de contato por ícones em vetor (SVG em formato de contorno), dispensando o carregamento de imagens externas e alinhando o tamanho e as cores diretamente com o texto.
+DATA E HORA: 09 de Setembro de 2026, 17:18
+VERSÃO: 15.2
 =========================================================
 -->
 <!DOCTYPE html>
@@ -140,6 +140,14 @@ VERSÃO: 15.1
             font-size: 1rem;
             transition: all 0.3s ease;
         }
+        
+        /* Configuração dos ícones SVG */
+        .icone-svg {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+        }
+
         .btn-contato.zap {
             background-color: #25D366;
             color: #121212;
@@ -159,14 +167,14 @@ VERSÃO: 15.1
             box-shadow: 0 8px 20px rgba(220, 39, 67, 0.3);
         }
         .btn-contato.email {
-            background-color: transparent;
+            background-color: var(--blue-mid);
             color: var(--white-ice);
-            border: 1px solid rgba(255,255,255,0.3);
+            border: none;
         }
         .btn-contato.email:hover {
-            background-color: rgba(255,255,255,0.05);
-            border-color: var(--white-ice);
+            background-color: #164377; /* Tom ligeiramente mais escuro para hover */
             transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(30, 89, 156, 0.3);
         }
 
         /* BOTÃO FLUTUANTE DE CARRINHO */
@@ -269,13 +277,28 @@ VERSÃO: 15.1
             
             <div class="contato-botoes">
                 <a href="https://wa.me/5531995896050" class="btn-contato zap" target="_blank">
-                    <span class="icone">📱</span> WhatsApp
+                    <!-- Ícone SVG WhatsApp -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-svg">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    WhatsApp
                 </a>
                 <a href="https://www.instagram.com/zenitth.ti" class="btn-contato insta" target="_blank">
-                    <span class="icone">📸</span> Instagram
+                    <!-- Ícone SVG Instagram -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-svg">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    Instagram
                 </a>
                 <a href="mailto:zenitth.ti@gmail.com" class="btn-contato email">
-                    <span class="icone">✉️</span> E-mail
+                    <!-- Ícone SVG E-mail -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icone-svg">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    E-mail
                 </a>
             </div>
         </div>
@@ -507,9 +530,8 @@ VERSÃO: 15.1
             const telefoneCliente = document.getElementById('inputTelefone').value.trim() || '[Não informado]';
             const dispositivo = document.getElementById('inputDispositivo').value || 'Equipamento não especificado';
             
-            // Variáveis seguras (Unicode) para evitar quebra no PC/WhatsApp Web
-            const emojiAzul = '•';
-            const emojiPC = '•';
+            const emojiAzul = '\uD83D\uDD39'; 
+            const emojiPC = '\uD83D\uDCBB';
             
             let mensagem = `Olá, Zenith TI.\n\n`;
             
@@ -538,8 +560,8 @@ VERSÃO: 15.1
             mensagem += `===============================\n\n`;
             mensagem += `Para agilizar o atendimento, seguem meus dados:\n\n`;
             
-            mensagem += `${emojiAzul} *Nome:* ${nomeCliente}\n`;
-            mensagem += `${emojiAzul} *Celular:* ${telefoneCliente}\n\n`;
+            mensagem += `${emojiAzul} Nome: ${nomeCliente}\n`;
+            mensagem += `${emojiAzul} Telefone: ${telefoneCliente}\n\n`;
             
             mensagem += `Fico no aguardo do retorno. Obrigado(a)!`;
 
