@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Modal transformado em componente dinâmico. Adição de um campo "textarea" para descrição de problemas (usado no botão principal "Solicitar Proposta"). A função enviarWhatsApp() foi reescrita em JavaScript puro utilizando template strings (``) para capturar os inputs e montar a mensagem perfeitamente formatada conforme a matriz exigida antes de abrir a API do WhatsApp.
-DATA E HORA: 08 de Setembro de 2026, 23:05
-VERSÃO: 13.2
+ÚLTIMA MUDANÇA: 1) Adição de máscara de formatação automática para o campo de telefone padrão (xx) xxxxx-xxxx. 2) Inclusão de formatação em negrito (asteriscos) na variável de serviço dentro do script de envio para o WhatsApp.
+DATA E HORA: 08 de Setembro de 2026, 23:15
+VERSÃO: 13.5
 =========================================================
 -->
 <!DOCTYPE html>
@@ -18,6 +18,11 @@ VERSÃO: 13.2
     <link rel="apple-touch-icon" href="Logo-Simples.svg">
     <meta name="apple-mobile-web-app-title" content="ZNT">
 
+    <!-- Google Fonts: Exo 2 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --bg-dark: #001935;
@@ -30,7 +35,7 @@ VERSÃO: 13.2
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+            font-family: 'Exo 2', sans-serif;
         }
 
         body {
@@ -171,7 +176,6 @@ VERSÃO: 13.2
         </h1>
         <p id="txt_hero_descricao"></p>
         <div class="hero-botoes">
-            <!-- Botão modificado para abrir o modal no modo geral -->
             <button class="btn-primario" onclick="abrirModalGeral()" id="txt_btn_proposta"></button>
         </div>
     </section>
@@ -206,14 +210,12 @@ VERSÃO: 13.2
             <div class="icone-sucesso">✓</div>
             <h2 id="txt_modal_titulo">Excelente escolha!</h2>
             
-            <!-- Subtítulo e nome do serviço que serão alterados dinamicamente via JS -->
             <p><span id="txt_modal_subtitulo"></span> <br><strong id="nomeServicoSelecionado"></strong></p>
             
             <div class="form-grupo">
                 <input type="text" id="inputNome" placeholder="Seu Nome e Sobrenome">
-                <input type="tel" id="inputTelefone" placeholder="Seu Telefone / WhatsApp">
+                <input type="tel" id="inputTelefone" placeholder="Seu Telefone / WhatsApp" maxlength="15">
                 <input type="text" id="inputEndereco" placeholder="Seu Endereço completo">
-                <!-- Nova caixa de texto para a descrição do problema, oculta por padrão -->
                 <textarea id="inputProblema" placeholder="Descrição breve do problema" style="display: none;"></textarea>
             </div>
 
@@ -223,7 +225,6 @@ VERSÃO: 13.2
     </div>
 
     <script>
-        // Variável para identificar se o cliente está fazendo um pedido geral ou específico
         let modoGeral = false;
 
         function aplicarConteudo(idElemento, configTexto) {
@@ -309,7 +310,6 @@ VERSÃO: 13.2
 
         const modal = document.getElementById('modalOverlay');
 
-        // Limpa os dados do formulário sempre que o modal for aberto
         function limparFormulario() {
             document.getElementById('inputNome').value = '';
             document.getElementById('inputTelefone').value = '';
@@ -317,7 +317,6 @@ VERSÃO: 13.2
             document.getElementById('inputProblema').value = '';
         }
 
-        // Função para abrir o modal clicando no botão do CARTÃO (Serviço Específico)
         function abrirModalServico(nomeServico) {
             modoGeral = false;
             limparFormulario();
@@ -332,7 +331,6 @@ VERSÃO: 13.2
             setTimeout(() => { modal.classList.add('ativo'); }, 10);
         }
 
-        // Função para abrir o modal clicando no botão principal "Solicitar proposta" (Geral)
         function abrirModalGeral() {
             modoGeral = true;
             limparFormulario();
@@ -355,15 +353,32 @@ VERSÃO: 13.2
             if(e.target === this) fecharModal();
         });
 
-        /* =========================================================
-           LÓGICA DE CAPTURA E ENVIO PARA O WHATSAPP COM AS VARIÁVEIS EXATAS
-           ========================================================= */
+        // Máscara para o telefone no padrão (xx) xxxxx-xxxx
+        function aplicarMascaraTelefone(evento) {
+            let input = evento.target;
+            let valor = input.value.replace(/\D/g, ''); // Remove tudo que não for número
+
+            if (valor.length > 11) valor = valor.slice(0, 11);
+
+            let formatado = valor;
+            if (valor.length > 10) {
+                formatado = valor.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+            } else if (valor.length > 6) {
+                formatado = valor.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+            } else if (valor.length > 2) {
+                formatado = valor.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+            } else if (valor.length > 0) {
+                formatado = valor.replace(/^(\d*)/, '($1');
+            }
+            
+            input.value = formatado;
+        }
+
         function enviarWhatsApp() {
             const nomeCliente = document.getElementById('inputNome').value.trim() || '[Não informado]';
             const telefoneCliente = document.getElementById('inputTelefone').value.trim() || '[Não informado]';
             const enderecoCliente = document.getElementById('inputEndereco').value.trim() || '[Não informado]';
             
-            // Define o serviço. Se for geral, pega o que o cliente digitou na textarea. Se for específico, pega o nome do card.
             let servicoSolicitado = "";
             if (modoGeral) {
                 servicoSolicitado = document.getElementById('inputProblema').value.trim() || '[Não detalhou o problema]';
@@ -371,9 +386,9 @@ VERSÃO: 13.2
                 servicoSolicitado = document.getElementById('nomeServicoSelecionado').textContent;
             }
             
-            // Estrutura de mensagem em JavaScript montada EXATAMENTE com o seu template
+            // Variável [SERVIÇO_SOLICITADO] em negrito com *asteriscos*
             let mensagem = `Olá, Zenith TI! Meu nome é ${nomeCliente}\n\n`;
-            mensagem += `Gostaria de solicitar um orçamento para o serviço de ${servicoSolicitado}.\n\n`;
+            mensagem += `Gostaria de solicitar um orçamento para o serviço de *${servicoSolicitado}*.\n\n`;
             mensagem += `*Meus Dados para Contato:*\n\n`;
             mensagem += `*Nome:* ${nomeCliente}\n`;
             mensagem += `*Telefone:* ${telefoneCliente}\n`;
@@ -388,6 +403,9 @@ VERSÃO: 13.2
         document.addEventListener('DOMContentLoaded', () => {
             carregarTextos();
             carregarServicos();
+
+            // Anexa o evento de máscara ao input de telefone assim que a página carrega
+            document.getElementById('inputTelefone').addEventListener('input', aplicarMascaraTelefone);
         });
     </script>
 </body>
