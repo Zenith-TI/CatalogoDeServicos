@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Remoção estrutural da tag superior da Hero Section. Implementação de "position: sticky" no container de filtros (filtros-wrapper), criando uma barra de navegação de categorias flutuante ancorada abaixo do cabeçalho durante a rolagem. 
-DATA E HORA: 08 de Setembro de 2026, 22:20
-VERSÃO: 11.5
+ÚLTIMA MUDANÇA: Correção do comportamento do cabeçalho: o "header" principal agora rola com a página, e a barra de filtros (.filtros-wrapper) assume o "position: sticky" travando no topo da tela (top: 0).
+DATA E HORA: 08 de Setembro de 2026, 22:30
+VERSÃO: 12.0
 =========================================================
 -->
 <!DOCTYPE html>
@@ -56,6 +56,7 @@ VERSÃO: 11.5
             z-index: -1;
         }
 
+        /* O Header principal agora rola normalmente com a página */
         header {
             display: flex;
             justify-content: space-between;
@@ -64,8 +65,7 @@ VERSÃO: 11.5
             background-color: var(--bg-dark);
             border-bottom: 3px solid var(--orange-neon);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            position: sticky;
-            top: 0;
+            position: relative; 
             z-index: 10;
         }
 
@@ -128,16 +128,17 @@ VERSÃO: 11.5
             box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
         }
 
-        /* Envoltório da barra de filtros para efeito pegajoso (Sticky) */
+        /* Barra flutuante travada no topo da tela */
         .filtros-wrapper {
             position: sticky;
-            top: 73px; /* Altura aproximada do cabeçalho para travar logo abaixo */
-            z-index: 9;
+            top: 0; /* Trava exatamente no teto do navegador */
+            z-index: 20;
             background: rgba(0, 25, 53, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             padding: 15px 0;
             margin-bottom: 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .filtros {
@@ -378,7 +379,6 @@ VERSÃO: 11.5
 </head>
 <body>
 
-    <!-- Importação dos arquivos externos -->
     <script src="textos-do-site.js"></script>
     <script src="servicos.js"></script>
 
