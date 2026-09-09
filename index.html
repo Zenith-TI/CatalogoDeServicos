@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Inclusão do campo "Dispositivo" (Desktop ou Notebook) na janela modal. Reformulação do script de envio para o WhatsApp, montando os textos com a exata estilização e formatação (emojis e negritos) requerida para orçamentos simples, múltiplos ou descrição geral de problemas.
-DATA E HORA: 08 de Setembro de 2026, 23:55
-VERSÃO: 14.2
+ÚLTIMA MUDANÇA: Correção de formatação e codificação da mensagem enviada ao WhatsApp. Substituição de emojis visuais por seus respectivos códigos Unicode (\uD83D\uDD39 e \uD83D\uDCBB) para blindar o sistema contra erros de formatação de salvamento (UTF-8). Alinhamento rigoroso do espaçamento, negritos e linhas divisórias da mensagem conforme o gabarito.
+DATA E HORA: 08 de Setembro de 2026, 23:54
+VERSÃO: 14.3
 =========================================================
 -->
 <!DOCTYPE html>
@@ -222,7 +222,6 @@ VERSÃO: 14.2
                 <input type="text" id="inputNome" placeholder="Seu Nome e Sobrenome">
                 <input type="tel" id="inputTelefone" placeholder="Seu Telefone / WhatsApp" maxlength="15">
                 
-                <!-- Novo Select Dinâmico para Dispositivo -->
                 <select id="inputDispositivo" style="display: none;">
                     <option value="" disabled selected id="txt_modal_select_dispositivo">Qual o seu dispositivo?</option>
                     <option value="Desktop">Desktop (Computador de Mesa)</option>
@@ -347,7 +346,6 @@ VERSÃO: 14.2
             abrirModalCarrinho();
         }
 
-        // Lógica que checa se no carrinho atual existe algum serviço que exija informar o dispositivo
         function verificaExigenciaDispositivo() {
             let exige = false;
             carrinho.forEach(nomeServico => {
@@ -365,7 +363,6 @@ VERSÃO: 14.2
             document.getElementById('listaServicosSelecionados').style.display = 'block';
             document.getElementById('txt_modal_btn_adicionar').style.display = 'block';
             
-            // Controle dinâmico do campo Dispositivo para orçamentos de serviços
             if (verificaExigenciaDispositivo()) {
                 document.getElementById('inputDispositivo').style.display = 'block';
             } else {
@@ -394,7 +391,6 @@ VERSÃO: 14.2
             document.getElementById('listaServicosSelecionados').style.display = 'none';
             document.getElementById('txt_modal_btn_adicionar').style.display = 'none';
             
-            // Orçamento geral sempre pergunta o dispositivo
             document.getElementById('inputDispositivo').style.display = 'block';
             document.getElementById('inputDispositivo').value = '';
             
@@ -438,46 +434,43 @@ VERSÃO: 14.2
             const telefoneCliente = document.getElementById('inputTelefone').value.trim() || '[Não informado]';
             const dispositivo = document.getElementById('inputDispositivo').value || 'Equipamento não especificado';
             
+            // Variáveis universais seguras (Evita quebra de encoding)
+            const emojiAzul = '\uD83D\uDD39'; 
+            const emojiPC = '\uD83D\uDCBB';
+            
             let mensagem = `Olá, Zenith TI.\n\n`;
             
-            // Modelo 2 - Orçamento Geral com descrição de problema
             if (modoGeral) {
                 let problema = document.getElementById('inputProblema').value.trim() || '[Não detalhou o problema]';
                 
                 mensagem += `Gostaria de solicitar uma avaliação do meu *${dispositivo}*.\n\n`;
-                mensagem += `🔹 *Motivo da solicitação:* ${problema}\n\n`;
-            } 
-            // Modelo 1 - Carrinho de Serviços (Um ou Múltiplos)
-            else {
+                mensagem += `${emojiAzul} *Motivo da solicitação:* ${problema}\n\n`;
+            } else {
                 if (carrinho.length === 1) {
                     mensagem += `Gostaria de solicitar um orçamento para o serviço de:\n\n`;
-                    mensagem += `🔹 *${carrinho[0]}*\n\n`;
+                    mensagem += `${emojiAzul} *${carrinho[0]}*\n\n`;
                 } else if (carrinho.length > 1) {
                     mensagem += `Gostaria de solicitar um orçamento para os serviços de:\n\n`;
                     carrinho.forEach(s => {
-                        mensagem += `🔹 *${s}*\n`;
+                        mensagem += `${emojiAzul} *${s}*\n`;
                     });
-                    mensagem += `\n`; // Quebra de linha para separar o bloco de serviços
+                    mensagem += `\n`;
                 }
                 
-                // Se o orçamento inclui serviços que exigem dispositivo, inclui na mensagem
                 if (verificaExigenciaDispositivo()) {
-                    mensagem += `💻 *Dispositivo relacionado:* ${dispositivo}\n\n`;
+                    mensagem += `${emojiPC} *Dispositivo relacionado:* ${dispositivo}\n\n`;
                 }
             }
             
-            // Assinatura padrão para ambos os cenários
             mensagem += `= = = = = = = = = = = = = = = = = = = = = =\n\n`;
             mensagem += `Para agilizar o atendimento, seguem meus dados:\n\n`;
             
             if (modoGeral) {
-                // Formato sem negrito requisitado pelo usuário para orçamento geral
-                mensagem += `🔹 Nome: ${nomeCliente}\n`;
-                mensagem += `🔹 Telefone: ${telefoneCliente}\n\n`;
+                mensagem += `${emojiAzul} Nome: ${nomeCliente}\n`;
+                mensagem += `${emojiAzul} Telefone: ${telefoneCliente}\n\n`;
             } else {
-                // Formato com negrito requisitado pelo usuário para orçamento de serviços
-                mensagem += `🔹 *Nome:* ${nomeCliente}\n`;
-                mensagem += `🔹 *Telefone:* ${telefoneCliente}\n\n`;
+                mensagem += `${emojiAzul} *Nome:* ${nomeCliente}\n`;
+                mensagem += `${emojiAzul} *Telefone:* ${telefoneCliente}\n\n`;
             }
             
             mensagem += `Fico no aguardo do retorno. Obrigado(a)!`;
@@ -497,7 +490,6 @@ VERSÃO: 14.2
         document.addEventListener('DOMContentLoaded', () => {
             carregarTextos();
             carregarServicos();
-
             document.getElementById('inputTelefone').addEventListener('input', aplicarMascaraTelefone);
         });
     </script>
