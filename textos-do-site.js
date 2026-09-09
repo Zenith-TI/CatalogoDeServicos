@@ -41,5 +41,5 @@ const TEXTOS = {
 
     // Seção de Contatos
     contato_titulo: { texto: "Fale com a Zenith TI", tamanho: "36px" },
-    contato_descricao: { texto: "Estamos prontos para atender você. Escolha o melhor canal abaixo para falar com um especialista.", tamanho: "16px" }
+    contato_descricao: { texto: "Estamos prontos para atender você. Escolha o melhor canal abaixo para entrar em contato.", tamanho: "16px" }
 };
