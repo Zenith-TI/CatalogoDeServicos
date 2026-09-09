@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Substituição da logo do cabeçalho para o formato SVG (Logo-Cabecalho-Site.svg) e atualização do ícone global do site/app (favicon) também para formato SVG (Logo-Simples.svg), garantindo máxima qualidade e escalabilidade vetorial em qualquer tela.
-DATA E HORA: 08 de Setembro de 2026, 22:47
-VERSÃO: 13.1
+ÚLTIMA MUDANÇA: Modal transformado em componente dinâmico. Adição de um campo "textarea" para descrição de problemas (usado no botão principal "Solicitar Proposta"). A função enviarWhatsApp() foi reescrita em JavaScript puro utilizando template strings (``) para capturar os inputs e montar a mensagem perfeitamente formatada conforme a matriz exigida antes de abrir a API do WhatsApp.
+DATA E HORA: 08 de Setembro de 2026, 23:05
+VERSÃO: 13.2
 =========================================================
 -->
 <!DOCTYPE html>
@@ -13,7 +13,7 @@ VERSÃO: 13.1
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZNT - Catálogo de Serviços</title>
     
-    <!-- Ícones para Navegador e Mobile (App) em SVG -->
+    <!-- Ícones SVG -->
     <link rel="icon" type="image/svg+xml" href="Logo-Simples.svg">
     <link rel="apple-touch-icon" href="Logo-Simples.svg">
     <meta name="apple-mobile-web-app-title" content="ZNT">
@@ -41,349 +41,108 @@ VERSÃO: 13.1
         }
 
         .video-fundo {
-            position: fixed;
-            top: 0; left: 0;
-            min-width: 100vw; min-height: 100vh;
-            z-index: -2;
-            object-fit: cover;
-            opacity: 0.25;
+            position: fixed; top: 0; left: 0; min-width: 100vw; min-height: 100vh; z-index: -2; object-fit: cover; opacity: 0.25;
         }
-
         .overlay-video {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(0, 25, 53, 0.85);
-            z-index: -1;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 25, 53, 0.85); z-index: -1;
         }
 
-        /* CABEÇALHO - Com Degradê Suave 50/50 */
+        /* CABEÇALHO - Degradê */
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 5%;
+            display: flex; justify-content: space-between; align-items: center; padding: 15px 5%;
             background: linear-gradient(180deg, var(--bg-dark) 0%, var(--blue-mid) 100%);
-            border-bottom: 3px solid var(--orange-neon);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            position: relative; 
-            z-index: 10;
+            border-bottom: 3px solid var(--orange-neon); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); position: relative; z-index: 10;
         }
-
-        .logo-empresa {
-            max-width: 180px;
-            height: auto;
-            filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.5));
-        }
-
-        .navbar {
-            display: flex;
-            gap: 25px;
-        }
-
-        .navbar a {
-            color: var(--white-ice);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
+        .logo-empresa { max-width: 180px; height: auto; filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.5)); }
+        .navbar { display: flex; gap: 25px; }
+        .navbar a { color: var(--white-ice); text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
         .navbar a:hover { color: var(--orange-neon); }
 
-        .hero {
-            padding: 60px 5% 40px 5%;
-            max-width: 1300px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .hero h1 {
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 25px;
-            color: var(--white-ice);
-        }
-
+        .hero { padding: 60px 5% 40px 5%; max-width: 1300px; margin: 0 auto; position: relative; }
+        .hero h1 { font-weight: 800; line-height: 1.1; margin-bottom: 25px; color: var(--white-ice); }
         .hero h1 .highlight { color: var(--orange-neon); }
-
-        .hero p {
-            color: rgba(244, 247, 250, 0.8);
-            line-height: 1.6;
-            max-width: 700px;
-            margin-bottom: 35px;
-        }
+        .hero p { color: rgba(244, 247, 250, 0.8); line-height: 1.6; max-width: 700px; margin-bottom: 35px; }
 
         .btn-primario {
-            background: var(--orange-neon);
-            color: var(--white-ice);
-            border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            background: var(--orange-neon); color: var(--white-ice); border: none; padding: 15px 30px;
+            border-radius: 8px; font-weight: bold; cursor: pointer; transition: all 0.3s ease;
         }
-
-        .btn-primario:hover { 
-            transform: scale(1.05); 
-            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
-        }
+        .btn-primario:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4); }
 
         .filtros-wrapper {
-            position: sticky;
-            top: 0; 
-            z-index: 20;
-            background: rgba(0, 25, 53, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 15px 0;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            position: sticky; top: 0; z-index: 20; background: rgba(0, 25, 53, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 15px 0; margin-bottom: 40px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-
-        .filtros {
-            text-align: left;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            padding: 0 5%;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
+        .filtros { text-align: left; display: flex; gap: 10px; flex-wrap: wrap; padding: 0 5%; max-width: 1300px; margin: 0 auto; }
         .btn-filtro {
-            background: rgba(244, 247, 250, 0.1);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(244, 247, 250, 0.2);
-            color: var(--white-ice);
-            padding: 10px 25px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
+            background: rgba(244, 247, 250, 0.1); backdrop-filter: blur(5px); border: 1px solid rgba(244, 247, 250, 0.2);
+            color: var(--white-ice); padding: 10px 25px; border-radius: 30px; cursor: pointer; transition: all 0.3s ease; font-weight: 600;
         }
+        .btn-filtro:hover, .btn-filtro.ativo { background: var(--blue-mid); border-color: var(--blue-mid); box-shadow: 0 4px 15px rgba(30, 89, 156, 0.4); }
 
-        .btn-filtro:hover, .btn-filtro.ativo {
-            background: var(--blue-mid);
-            border-color: var(--blue-mid);
-            box-shadow: 0 4px 15px rgba(30, 89, 156, 0.4);
-        }
-
-        .container {
-            max-width: 1300px;
-            margin: 0 auto 60px auto;
-            padding: 0 5%;
-        }
-
-        .catalogo {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
+        .container { max-width: 1300px; margin: 0 auto 60px auto; padding: 0 5%; }
+        .catalogo { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
         .cartao {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 30px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
+            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px; padding: 30px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: all 0.3s ease;
         }
-
-        .cartao:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 107, 0, 0.5);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-        }
-
-        .tags {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-        
+        .cartao:hover { transform: translateY(-8px); border-color: rgba(255, 107, 0, 0.5); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); }
+        .tags { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tag { font-size: 0.75rem; padding: 4px 10px; border-radius: 20px; font-weight: bold; letter-spacing: 0.5px; }
         .tag-categoria { background: var(--blue-mid); color: var(--white-ice); }
-
-        .cartao h3 {
-            font-size: 1.5rem;
-            margin-bottom: 12px;
-            color: var(--white-ice);
-        }
-
-        .desc-curta {
-            font-size: 0.95rem;
-            color: rgba(244, 247, 250, 0.7);
-            margin-bottom: 20px;
-            line-height: 1.5;
-            flex-grow: 1;
-        }
-
-        .detalhes-tecnicos {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-        }
-
+        .cartao h3 { font-size: 1.5rem; margin-bottom: 12px; color: var(--white-ice); }
+        .desc-curta { font-size: 0.95rem; color: rgba(244, 247, 250, 0.7); margin-bottom: 20px; line-height: 1.5; flex-grow: 1; }
+        .detalhes-tecnicos { background: rgba(0, 0, 0, 0.2); padding: 15px 20px; border-radius: 10px; margin-bottom: 25px; }
         .detalhes-tecnicos ul { list-style: none; }
-        .detalhes-tecnicos li {
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: flex-start;
-            color: rgba(244, 247, 250, 0.9);
-        }
-
-        .detalhes-tecnicos li::before {
-            content: '✓'; color: var(--orange-neon); margin-right: 10px; font-weight: bold;
-        }
-        .detalhes-tecnicos li:last-child { margin-bottom: 0; }
-
-        .rodape-cartao {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-top: auto;
-        }
-
+        .detalhes-tecnicos li { font-size: 0.85rem; margin-bottom: 8px; display: flex; align-items: flex-start; color: rgba(244, 247, 250, 0.9); }
+        .detalhes-tecnicos li::before { content: '✓'; color: var(--orange-neon); margin-right: 10px; font-weight: bold; }
+        .rodape-cartao { display: flex; justify-content: flex-end; align-items: center; margin-top: auto; }
         .btn-acao {
-            background: var(--orange-neon);
-            color: var(--white-ice);
-            border: none;
-            padding: 10px 25px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
+            background: var(--orange-neon); color: var(--white-ice); border: none; padding: 10px 25px;
+            border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.9rem; transition: all 0.2s ease;
         }
         .btn-acao:hover { background: #e56000; transform: scale(1.05); }
 
         /* SEÇÃO DE CONTATOS NO RODAPÉ */
-        .secao-contatos {
-            background: rgba(0, 25, 53, 0.9);
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding: 60px 5%;
-            text-align: center;
-        }
-        
+        .secao-contatos { background: rgba(0, 25, 53, 0.9); border-top: 1px solid rgba(255,255,255,0.1); padding: 60px 5%; text-align: center; }
         .secao-contatos h2 { margin-bottom: 10px; font-size: 2rem; color: var(--white-ice); }
         .secao-contatos p { margin-bottom: 40px; color: rgba(244, 247, 250, 0.7); max-width: 600px; margin-left: auto; margin-right: auto; }
-        
-        .baloes-contato {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .balao-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 15px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+        .baloes-contato { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; }
+        .balao-link { display: flex; align-items: center; gap: 10px; padding: 15px 30px; border-radius: 30px; text-decoration: none; color: white; font-weight: bold; font-size: 1rem; transition: transform 0.3s ease; }
         .balao-link:hover { transform: translateY(-5px); }
-        
-        .btn-wpp { background-color: #25D366; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
-        .btn-insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3); }
-        .btn-email { background-color: var(--blue-mid); box-shadow: 0 4px 15px rgba(30, 89, 156, 0.3); }
+        .btn-wpp { background-color: #25D366; }
+        .btn-insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .btn-email { background-color: var(--blue-mid); }
 
         /* MODAL E FORMULÁRIO */
         .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 25, 53, 0.8);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            padding: 20px;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 25, 53, 0.8);
+            backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; padding: 20px;
         }
         .modal-overlay.ativo { opacity: 1; }
-
         .modal-box {
-            background: var(--bg-dark);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            width: 100%; max-width: 450px;
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-            max-height: 90vh;
-            overflow-y: auto;
+            background: var(--bg-dark); border: 1px solid rgba(255, 255, 255, 0.1); width: 100%; max-width: 450px;
+            border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            transform: translateY(20px); transition: transform 0.3s ease; max-height: 90vh; overflow-y: auto;
         }
         .modal-overlay.ativo .modal-box { transform: translateY(0); }
-
+        .icone-sucesso { width: 70px; height: 70px; background: rgba(255, 107, 0, 0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 20px auto; color: var(--orange-neon); font-size: 2rem; }
+        
         .modal-box h2 { margin-bottom: 5px; color: var(--orange-neon); }
         .modal-box p { color: rgba(244, 247, 250, 0.9); margin-bottom: 25px; }
 
-        .form-grupo {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 25px;
-            text-align: left;
+        .form-grupo { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; text-align: left; }
+        .form-grupo input, .form-grupo textarea {
+            width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05); color: white; font-size: 1rem; outline: none;
         }
-        
-        .form-grupo input {
-            width: 100%;
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-            font-size: 1rem;
-            outline: none;
-        }
-        .form-grupo input:focus { border-color: var(--orange-neon); }
-        .form-grupo input::placeholder { color: rgba(255,255,255,0.4); }
+        .form-grupo textarea { resize: vertical; min-height: 80px; }
+        .form-grupo input:focus, .form-grupo textarea:focus { border-color: var(--orange-neon); }
+        .form-grupo input::placeholder, .form-grupo textarea::placeholder { color: rgba(255,255,255,0.4); }
 
-        .btn-modal {
-            background: #25D366;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.3s ease;
-            margin-bottom: 15px;
-        }
+        .btn-modal { background: #25D366; color: white; border: none; padding: 15px 30px; border-radius: 30px; font-weight: bold; cursor: pointer; width: 100%; transition: background 0.3s ease; margin-bottom: 15px; }
         .btn-modal:hover { background: #20b858; }
-
-        .btn-fechar-modal {
-            background: transparent;
-            color: rgba(244, 247, 250, 0.5);
-            border: none;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
+        .btn-fechar-modal { background: transparent; color: rgba(244, 247, 250, 0.5); border: none; cursor: pointer; transition: color 0.3s ease; }
         .btn-fechar-modal:hover { color: var(--white-ice); }
     </style>
 </head>
@@ -398,7 +157,6 @@ VERSÃO: 13.1
     <div class="overlay-video"></div>
 
     <header>
-        <!-- Logo alterada para SVG -->
         <img src="Logo-Cabecalho-Site.svg" alt="ZNT" class="logo-empresa">
         <nav class="navbar">
             <a href="#sobre" id="txt_nav_sobre"></a>
@@ -413,7 +171,8 @@ VERSÃO: 13.1
         </h1>
         <p id="txt_hero_descricao"></p>
         <div class="hero-botoes">
-            <button class="btn-primario" onclick="solicitarOrcamentoGeral()" id="txt_btn_proposta"></button>
+            <!-- Botão modificado para abrir o modal no modo geral -->
+            <button class="btn-primario" onclick="abrirModalGeral()" id="txt_btn_proposta"></button>
         </div>
     </section>
 
@@ -444,13 +203,18 @@ VERSÃO: 13.1
 
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
+            <div class="icone-sucesso">✓</div>
             <h2 id="txt_modal_titulo">Excelente escolha!</h2>
+            
+            <!-- Subtítulo e nome do serviço que serão alterados dinamicamente via JS -->
             <p><span id="txt_modal_subtitulo"></span> <br><strong id="nomeServicoSelecionado"></strong></p>
             
             <div class="form-grupo">
                 <input type="text" id="inputNome" placeholder="Seu Nome e Sobrenome">
                 <input type="tel" id="inputTelefone" placeholder="Seu Telefone / WhatsApp">
                 <input type="text" id="inputEndereco" placeholder="Seu Endereço completo">
+                <!-- Nova caixa de texto para a descrição do problema, oculta por padrão -->
+                <textarea id="inputProblema" placeholder="Descrição breve do problema" style="display: none;"></textarea>
             </div>
 
             <button class="btn-modal" onclick="enviarWhatsApp()" id="txt_modal_btn_avancar">Solicitar no WhatsApp</button>
@@ -459,12 +223,18 @@ VERSÃO: 13.1
     </div>
 
     <script>
+        // Variável para identificar se o cliente está fazendo um pedido geral ou específico
+        let modoGeral = false;
+
         function aplicarConteudo(idElemento, configTexto) {
             const elemento = document.getElementById(idElemento);
             if (elemento && configTexto) {
                 if (configTexto.texto !== undefined) {
-                    if (elemento.tagName === 'INPUT') elemento.placeholder = configTexto.texto;
-                    else elemento.textContent = configTexto.texto;
+                    if (elemento.tagName === 'INPUT' || elemento.tagName === 'TEXTAREA') {
+                        elemento.placeholder = configTexto.texto;
+                    } else {
+                        elemento.textContent = configTexto.texto;
+                    }
                 }
                 if (configTexto.tamanho && configTexto.tamanho !== "") {
                     elemento.style.fontSize = configTexto.tamanho;
@@ -489,10 +259,10 @@ VERSÃO: 13.1
             aplicarConteudo('txt_contato_descricao', TEXTOS.contato_descricao);
 
             aplicarConteudo('txt_modal_titulo', TEXTOS.modal_titulo);
-            aplicarConteudo('txt_modal_subtitulo', TEXTOS.modal_subtitulo);
             aplicarConteudo('inputNome', TEXTOS.modal_input_nome);
             aplicarConteudo('inputTelefone', TEXTOS.modal_input_telefone);
             aplicarConteudo('inputEndereco', TEXTOS.modal_input_endereco);
+            aplicarConteudo('inputProblema', TEXTOS.modal_input_problema);
             aplicarConteudo('txt_modal_btn_avancar', TEXTOS.modal_btn_avancar);
             aplicarConteudo('txt_modal_btn_cancelar', TEXTOS.modal_btn_cancelar);
         }
@@ -512,7 +282,7 @@ VERSÃO: 13.1
                         <p class="desc-curta">${servico.desc_curta}</p>
                         <div class="detalhes-tecnicos"><ul>${detalhesHTML}</ul></div>
                         <div class="rodape-cartao">
-                            <button class="btn-acao" onclick="abrirModal('${servico.titulo}')">Solicitar</button>
+                            <button class="btn-acao" onclick="abrirModalServico('${servico.titulo}')">Solicitar</button>
                         </div>
                     </div>
                 `;
@@ -538,13 +308,39 @@ VERSÃO: 13.1
         }
 
         const modal = document.getElementById('modalOverlay');
-        const spanServico = document.getElementById('nomeServicoSelecionado');
 
-        function abrirModal(nomeServico) {
-            spanServico.textContent = nomeServico;
+        // Limpa os dados do formulário sempre que o modal for aberto
+        function limparFormulario() {
             document.getElementById('inputNome').value = '';
             document.getElementById('inputTelefone').value = '';
             document.getElementById('inputEndereco').value = '';
+            document.getElementById('inputProblema').value = '';
+        }
+
+        // Função para abrir o modal clicando no botão do CARTÃO (Serviço Específico)
+        function abrirModalServico(nomeServico) {
+            modoGeral = false;
+            limparFormulario();
+            
+            aplicarConteudo('txt_modal_subtitulo', TEXTOS.modal_subtitulo);
+            document.getElementById('nomeServicoSelecionado').textContent = nomeServico;
+            document.getElementById('nomeServicoSelecionado').style.display = 'inline';
+            
+            document.getElementById('inputProblema').style.display = 'none';
+            
+            modal.style.display = 'flex';
+            setTimeout(() => { modal.classList.add('ativo'); }, 10);
+        }
+
+        // Função para abrir o modal clicando no botão principal "Solicitar proposta" (Geral)
+        function abrirModalGeral() {
+            modoGeral = true;
+            limparFormulario();
+            
+            aplicarConteudo('txt_modal_subtitulo', TEXTOS.modal_subtitulo_geral);
+            document.getElementById('nomeServicoSelecionado').style.display = 'none';
+            
+            document.getElementById('inputProblema').style.display = 'block';
             
             modal.style.display = 'flex';
             setTimeout(() => { modal.classList.add('ativo'); }, 10);
@@ -559,30 +355,34 @@ VERSÃO: 13.1
             if(e.target === this) fecharModal();
         });
 
+        /* =========================================================
+           LÓGICA DE CAPTURA E ENVIO PARA O WHATSAPP COM AS VARIÁVEIS EXATAS
+           ========================================================= */
         function enviarWhatsApp() {
-            const servico = document.getElementById('nomeServicoSelecionado').textContent;
-            const nome = document.getElementById('inputNome').value.trim() || '[Não informado]';
-            const telefone = document.getElementById('inputTelefone').value.trim() || '[Não informado]';
-            const endereco = document.getElementById('inputEndereco').value.trim() || '[Não informado]';
+            const nomeCliente = document.getElementById('inputNome').value.trim() || '[Não informado]';
+            const telefoneCliente = document.getElementById('inputTelefone').value.trim() || '[Não informado]';
+            const enderecoCliente = document.getElementById('inputEndereco').value.trim() || '[Não informado]';
             
-            let mensagem = `Olá, equipe Zenith TI! 👋\n`;
-            mensagem += `Gostaria de solicitar um orçamento para o serviço de *${servico}*.\n\n`;
-            mensagem += `📋 *Meus Dados para Contato:*\n`;
-            mensagem += `👤 *Nome:* ${nome}\n`;
-            mensagem += `📞 *Telefone:* ${telefone}\n`;
-            mensagem += `📍 *Endereço:* ${endereco}\n\n`;
-            mensagem += `Aguardo o retorno de um especialista. Obrigado(a)!`;
+            // Define o serviço. Se for geral, pega o que o cliente digitou na textarea. Se for específico, pega o nome do card.
+            let servicoSolicitado = "";
+            if (modoGeral) {
+                servicoSolicitado = document.getElementById('inputProblema').value.trim() || '[Não detalhou o problema]';
+            } else {
+                servicoSolicitado = document.getElementById('nomeServicoSelecionado').textContent;
+            }
+            
+            // Estrutura de mensagem em JavaScript montada EXATAMENTE com o seu template
+            let mensagem = `Olá, Zenith TI! Meu nome é ${nomeCliente}\n\n`;
+            mensagem += `Gostaria de solicitar um orçamento para o serviço de ${servicoSolicitado}.\n\n`;
+            mensagem += `*Meus Dados para Contato:*\n\n`;
+            mensagem += `*Nome:* ${nomeCliente}\n`;
+            mensagem += `*Telefone:* ${telefoneCliente}\n`;
+            mensagem += `*Endereço:* ${enderecoCliente}\n\n`;
+            mensagem += `Aguardo o retorno. Obrigado(a)!`;
 
             const url = `https://wa.me/5531995896050?text=${encodeURIComponent(mensagem)}`;
             window.open(url, '_blank');
             fecharModal();
-        }
-
-        function solicitarOrcamentoGeral() {
-            let mensagem = `Olá, equipe Zenith TI! 👋\n`;
-            mensagem += `Gostaria de solicitar uma proposta/orçamento geral. Podem me ajudar?`;
-            const url = `https://wa.me/5531995896050?text=${encodeURIComponent(mensagem)}`;
-            window.open(url, '_blank');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
