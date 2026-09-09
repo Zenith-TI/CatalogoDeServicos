@@ -1,9 +1,9 @@
 /*
 =========================================================
 TÍTULO: ZNT - Configuração de Textos do Site
-ÚLTIMA MUDANÇA: Remoção do campo de endereço. Inclusão dos textos para o novo sistema de carrinho ('modal_btn_adicionar' e 'btn_ver_pedido').
-DATA E HORA: 08 de Setembro de 2026, 23:45
-VERSÃO: 13.7
+ÚLTIMA MUDANÇA: Atualização dos botões para "Solicitar Cotação" e "Finalizar Cotações". Inclusão do texto base para a caixa de seleção de dispositivo (modal_select_dispositivo).
+DATA E HORA: 08 de Setembro de 2026, 23:55
+VERSÃO: 14.1
 =========================================================
 */
 
@@ -16,7 +16,7 @@ const TEXTOS = {
     hero_titulo: { texto: "Zenith TI", tamanho: "64px" },
     hero_destaque: { texto: "Conectando você à solução!", tamanho: "34px" },
     hero_descricao: { texto: "Nascida com o propósito de simplificar a tecnologia e trazer soluções eficientes, rápidas e confiáveis para o seu dia a dia. Seja para otimizar o desempenho do seu computador de trabalho, garantir a segurança dos seus dados ou resolver aquele problema na rede que tanto te incomoda.", tamanho: "18px" },
-    btn_proposta: { texto: "Solicitar proposta", tamanho: "16px" },
+    btn_proposta: { texto: "Solicitar Cotação", tamanho: "16px" },
 
     // Nomes dos Filtros
     filtro_todos: { texto: "Todos os Serviços", tamanho: "16px" },
@@ -31,12 +31,13 @@ const TEXTOS = {
     modal_input_nome: { texto: "Seu Nome e Sobrenome", tamanho: "" },
     modal_input_telefone: { texto: "Seu Telefone / WhatsApp", tamanho: "" },
     modal_input_problema: { texto: "Descrição breve do problema", tamanho: "" },
+    modal_select_dispositivo: { texto: "Qual o seu dispositivo?", tamanho: "" },
     
     // Botões do Modal e Carrinho
     modal_btn_avancar: { texto: "Solicitar no WhatsApp", tamanho: "16px" },
     modal_btn_adicionar: { texto: "Adicionar mais serviços", tamanho: "16px" },
     modal_btn_cancelar: { texto: "Cancelar", tamanho: "14px" },
-    btn_ver_pedido: { texto: "Finalizar Pedido", tamanho: "16px" },
+    btn_ver_pedido: { texto: "Finalizar Cotações", tamanho: "16px" },
 
     // Seção de Contatos
     contato_titulo: { texto: "Fale Conosco", tamanho: "36px" },
