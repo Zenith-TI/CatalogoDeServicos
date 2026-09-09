@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Inclusão de suporte a edição de tamanho de fontes (font-size) diretamente pelo arquivo externo textos-do-site.js. O script de carregamento foi adaptado para aplicar estilos inline dinamicamente caso um tamanho seja definido no arquivo de configuração, dando controle total de design ao usuário sem tocar no CSS.
-DATA E HORA: 08 de Setembro de 2026, 19:35
-VERSÃO: 11.1
+ÚLTIMA MUDANÇA: Remoção estrutural da tag superior da Hero Section. Implementação de "position: sticky" no container de filtros (filtros-wrapper), criando uma barra de navegação de categorias flutuante ancorada abaixo do cabeçalho durante a rolagem. 
+DATA E HORA: 08 de Setembro de 2026, 22:20
+VERSÃO: 11.5
 =========================================================
 -->
 <!DOCTYPE html>
@@ -64,7 +64,8 @@ VERSÃO: 11.1
             background-color: var(--bg-dark);
             border-bottom: 3px solid var(--orange-neon);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            position: relative;
+            position: sticky;
+            top: 0;
             z-index: 10;
         }
 
@@ -93,26 +94,6 @@ VERSÃO: 11.1
             max-width: 1300px;
             margin: 0 auto;
             position: relative;
-        }
-
-        .hero-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(30, 89, 156, 0.15);
-            border: 1px solid rgba(30, 89, 156, 0.4);
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-weight: 700;
-            color: var(--white-ice);
-            letter-spacing: 1px;
-            margin-bottom: 25px;
-        }
-
-        .hero-tag span {
-            color: var(--orange-neon);
-            font-size: 1.2rem;
-            line-height: 0;
         }
 
         .hero h1 {
@@ -147,16 +128,26 @@ VERSÃO: 11.1
             box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
         }
 
+        /* Envoltório da barra de filtros para efeito pegajoso (Sticky) */
+        .filtros-wrapper {
+            position: sticky;
+            top: 73px; /* Altura aproximada do cabeçalho para travar logo abaixo */
+            z-index: 9;
+            background: rgba(0, 25, 53, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px 0;
+            margin-bottom: 40px;
+        }
+
         .filtros {
             text-align: left;
-            margin: 20px 0 40px 0;
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
             padding: 0 5%;
             max-width: 1300px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto;
         }
 
         .btn-filtro {
@@ -237,8 +228,6 @@ VERSÃO: 11.1
         }
         
         .tag-categoria { background: var(--blue-mid); color: var(--white-ice); }
-        .tag-sla { background: rgba(244, 247, 250, 0.1); color: var(--white-ice); border: 1px solid rgba(244, 247, 250, 0.2); }
-        .tag-garantia { background: rgba(255, 107, 0, 0.1); color: var(--orange-neon); border: 1px solid var(--orange-neon); }
 
         .cartao h3 {
             font-size: 1.5rem;
@@ -407,9 +396,6 @@ VERSÃO: 11.1
     </header>
 
     <section class="hero">
-        <div class="hero-tag">
-            <span>•</span> <span id="txt_hero_tag"></span>
-        </div>
         <h1>
             <span id="txt_hero_titulo"></span> <br>
             <span class="highlight" id="txt_hero_destaque"></span>
@@ -420,11 +406,14 @@ VERSÃO: 11.1
         </div>
     </section>
 
-    <div class="filtros">
-        <button class="btn-filtro ativo" onclick="filtrar('todos')" id="txt_filtro_todos"></button>
-        <button class="btn-filtro" onclick="filtrar('hardware')" id="txt_filtro_hardware"></button>
-        <button class="btn-filtro" onclick="filtrar('software')" id="txt_filtro_software"></button>
-        <button class="btn-filtro" onclick="filtrar('dados')" id="txt_filtro_dados"></button>
+    <!-- Envoltório com position sticky para travar os botões ao rolar -->
+    <div class="filtros-wrapper">
+        <div class="filtros">
+            <button class="btn-filtro ativo" onclick="filtrar('todos')" id="txt_filtro_todos"></button>
+            <button class="btn-filtro" onclick="filtrar('hardware')" id="txt_filtro_hardware"></button>
+            <button class="btn-filtro" onclick="filtrar('software')" id="txt_filtro_software"></button>
+            <button class="btn-filtro" onclick="filtrar('dados')" id="txt_filtro_dados"></button>
+        </div>
     </div>
 
     <div class="container">
@@ -439,18 +428,19 @@ VERSÃO: 11.1
             <div class="icone-sucesso">✓</div>
             <h2 id="txt_modal_titulo"></h2>
             <p><span id="txt_modal_subtitulo"></span> <br><strong id="nomeServicoSelecionado"></strong>.</p>
-            <p id="txt_modal_aviso"></p>
+            <p style="font-size: 0.9rem;" id="txt_modal_aviso"></p>
             <button class="btn-modal" id="txt_modal_btn_avancar"></button>
             <button class="btn-fechar-modal" onclick="fecharModal()" id="txt_modal_btn_cancelar"></button>
         </div>
     </div>
 
     <script>
-        // Função auxiliar para aplicar texto e tamanho de fonte dinamicamente
         function aplicarConteudo(idElemento, configTexto) {
             const elemento = document.getElementById(idElemento);
             if (elemento && configTexto) {
-                elemento.textContent = configTexto.texto;
+                if (configTexto.texto !== undefined) {
+                    elemento.textContent = configTexto.texto;
+                }
                 if (configTexto.tamanho && configTexto.tamanho !== "") {
                     elemento.style.fontSize = configTexto.tamanho;
                 }
@@ -460,7 +450,6 @@ VERSÃO: 11.1
         function carregarTextos() {
             aplicarConteudo('txt_nav_sobre', TEXTOS.nav_sobre);
             aplicarConteudo('txt_nav_contatos', TEXTOS.nav_contatos);
-            aplicarConteudo('txt_hero_tag', TEXTOS.hero_tag);
             aplicarConteudo('txt_hero_titulo', TEXTOS.hero_titulo);
             aplicarConteudo('txt_hero_destaque', TEXTOS.hero_destaque);
             aplicarConteudo('txt_hero_descricao', TEXTOS.hero_descricao);
@@ -483,11 +472,8 @@ VERSÃO: 11.1
             grid.innerHTML = '';
 
             SERVICOS.forEach(servico => {
-                const tagsHTML = servico.tags.map((tag, index) => {
-                    let classeTag = 'tag-sla';
-                    if (index === 0) classeTag = 'tag-categoria';
-                    else if (tag.toLowerCase().includes('garantia')) classeTag = 'tag-garantia';
-                    return `<span class="tag ${classeTag}">${tag}</span>`;
+                const tagsHTML = servico.tags.map(tag => {
+                    return `<span class="tag tag-categoria">${tag}</span>`;
                 }).join('');
 
                 const detalhesHTML = servico.detalhes.map(detalhe => `<li>${detalhe}</li>`).join('');
