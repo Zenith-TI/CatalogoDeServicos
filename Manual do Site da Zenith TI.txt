@@ -1,0 +1,50 @@
+# Documentação Oficial: Zenith TI - Catálogo de Serviços
+
+Esta documentação detalha a arquitetura, o funcionamento e o guia de manutenção do site Zenith TI. O projeto foi estruturado para ser uma aplicação de alta performance, de fácil manutenção e voltada para hospedagem em repositórios Git. A melhor prática é salvar este conteúdo no seu repositório GitHub com o nome README.md (ou documentacao.txt).
+
+## 1. Arquitetura e Hospedagem (GitHub Pages)
+O site utiliza uma arquitetura estática conhecida como SPA (Single Page Application), construída inteiramente com HTML5, CSS3 e JavaScript nativos, sem a necessidade de frameworks pesados. 
+
+* Hospedagem no GitHub Pages: O GitHub Pages funciona lendo os arquivos estáticos do seu repositório e servindo-os diretamente em uma URL pública. É um servidor otimizado para velocidade.
+* Ciclo de Atualização: Sempre que você edita um arquivo e salva as alterações (faz um commit) no GitHub, o servidor entra em ação automaticamente. Em cerca de 1 a 3 minutos, a versão mais recente dos seus arquivos é compilada e reflete no ar.
+* Comunicação e Contorno de CORS: Para evitar bloqueios de segurança do navegador (CORS) comuns ao tentar ler arquivos .txt ou .json externos sem um backend, a base de dados foi construída dentro de arquivos JavaScript (.js). Quando o usuário acessa a página, o navegador lê esses scripts como se fossem variáveis globais, montando o site de forma instantânea e segura.
+
+---
+
+## 2. Estrutura de Arquivos e Suas Funções
+O projeto é modular. Os arquivos trabalham em conjunto, separando a "casca visual" (HTML/CSS) dos "dados da empresa" (Textos e Serviços).
+
+### A. index.html (O Motor e a Casca)
+
+* Função: É o alicerce do site. Ele contém todo o design estrutural, a estilização das cores e botões (CSS) e os algoritmos que fazem o site funcionar (JavaScript).
+* Comunicação: No final do código index.html, existem tags que importam o textos-do-site.js e o servicos.js. Após importá-los, o index.html injeta essas informações nas posições corretas da tela (títulos, descrições, cartões de produto).
+* Quando editar: Você só deve abrir este arquivo se precisar alterar a paleta de cores, a estrutura do layout, adicionar novas imagens ou modificar o comportamento lógico do sistema (como mudar o número de telefone de destino do WhatsApp).
+
+### B. textos-do-site.js (Painel de Configuração Geral)
+
+* Função: Atua como o painel de controle do conteúdo redacional do site.
+* O que contém: Um objeto global chamado TEXTOS que guarda as informações de cabeçalho, chamadas principais, textos de botões, mensagens do formulário e o tamanho das fontes.
+* Como funciona a manutenção: Para mudar qualquer frase do site, basta alterar o que está escrito entre as aspas na propriedade "texto". Se quiser alterar o tamanho da fonte, basta colocar o valor em pixels na propriedade "tamanho". O index.html lerá isso e aplicará automaticamente.
+  * Exemplo prático: hero_titulo: { texto: "Zenith TI", tamanho: "64px" }
+
+### C. servicos.js (O Banco de Dados de Produtos)
+
+* Função: Armazena o catálogo da empresa. É aqui que você adiciona, remove ou altera os serviços que oferece.
+* O que contém: Uma lista onde cada bloco { ... } representa um serviço isolado. Cada serviço possui variáveis específicas:
+  * categoria: Palavra-chave ("hardware", "software", "dados") que diz ao filtro do site onde este cartão deve aparecer.
+  * tags: Etiquetas azuis que aparecem no topo do cartão para destacar características.
+  * titulo e desc_curta: O nome e o resumo do serviço.
+  * exige_dispositivo: Uma inteligência lógica (true ou false). Se configurado como true, o site obrigará o modal a exibir a pergunta "Desktop ou Notebook?". Se false, o site oculta essa pergunta, simplificando o preenchimento para serviços genéricos.
+  * detalhes: A lista de diferenciais (tópicos com check) exibida no corpo do cartão.
+* Como funciona a manutenção: Para adicionar um novo serviço, você copia o bloco de um serviço existente, cola logo abaixo inserindo uma vírgula entre eles, e substitui os dados. O index.html fará a leitura e desenhará o novo cartão na tela automaticamente, aplicando o CSS correspondente.
+
+---
+
+## 3. Fluxo de Operação e Conversão (Checkout Inteligente)
+
+O ecossistema do site foi programado para funcionar como um funil de vendas direto para o WhatsApp.
+
+1. Ação do Cliente: O visitante navega pelos filtros e decide clicar em "Solicitar". Em vez de enviar o cliente direto para fora do site, o index.html grava esse serviço no Carrinho e ativa um botão flutuante laranja na tela.
+2. Triagem no Modal: Quando o cliente clica para finalizar o pedido, o site verifica a lista de compras. Ele acessa o servicos.js para analisar se *algum* dos serviços no carrinho possui a variável exige_dispositivo: true. Se houver, a caixa de seleção de dispositivos aparece; caso contrário, ela permanece oculta.
+3. Formatação da Matriz de Mensagem: Ao clicar em "Solicitar no WhatsApp", o algoritmo JavaScript captura os inputs. Ele possui uma lógica de formatação de string (usando crases e variáveis) que injeta o nome do cliente, quebra linhas, insere emojis (🔹), coloca o nome dos serviços em negrito com asteriscos (*) e traça a linha de separação (= = = = =).
+4. Disparo da API: Por fim, o site codifica esse texto longo para o formato de URL e anexa ao link oficial da API do WhatsApp Web/Mobile (wa.me/numero?text=...), abrindo o aplicativo do cliente com a cotação 100% pronta e desenhada para iniciar o atendimento.
