@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: 1) Cabeçalho alterado para um degradê linear suave (background: linear-gradient), misturando 50% de bg-dark com 50% de blue-mid. 2) Inclusão da seção de Contatos no final da página com redirecionamento de links (WhatsApp, Instagram, Email). 3) Modal atualizado com mini-formulário para captar Nome, Contato e Endereço, encaminhando o pedido formatado de forma profissional direto para a API do WhatsApp.
-DATA E HORA: 08 de Setembro de 2026, 22:39
-VERSÃO: 13.0
+ÚLTIMA MUDANÇA: Substituição da logo do cabeçalho para o formato SVG (Logo-Cabecalho-Site.svg) e atualização do ícone global do site/app (favicon) também para formato SVG (Logo-Simples.svg), garantindo máxima qualidade e escalabilidade vetorial em qualquer tela.
+DATA E HORA: 08 de Setembro de 2026, 22:47
+VERSÃO: 13.1
 =========================================================
 -->
 <!DOCTYPE html>
@@ -13,8 +13,9 @@ VERSÃO: 13.0
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZNT - Catálogo de Serviços</title>
     
-    <link rel="icon" type="image/png" href="Logo-Cabecalho-Site.png">
-    <link rel="apple-touch-icon" href="Logo-Cabecalho-Site.png">
+    <!-- Ícones para Navegador e Mobile (App) em SVG -->
+    <link rel="icon" type="image/svg+xml" href="Logo-Simples.svg">
+    <link rel="apple-touch-icon" href="Logo-Simples.svg">
     <meta name="apple-mobile-web-app-title" content="ZNT">
 
     <style>
@@ -62,7 +63,6 @@ VERSÃO: 13.0
             justify-content: space-between;
             align-items: center;
             padding: 15px 5%;
-            /* Transição suave do escuro para o claro */
             background: linear-gradient(180deg, var(--bg-dark) 0%, var(--blue-mid) 100%);
             border-bottom: 3px solid var(--orange-neon);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
@@ -364,7 +364,7 @@ VERSÃO: 13.0
         .form-grupo input::placeholder { color: rgba(255,255,255,0.4); }
 
         .btn-modal {
-            background: #25D366; /* Verde WhatsApp */
+            background: #25D366;
             color: white;
             border: none;
             padding: 15px 30px;
@@ -398,7 +398,8 @@ VERSÃO: 13.0
     <div class="overlay-video"></div>
 
     <header>
-        <img src="Logo-Cabecalho-Site.png" alt="ZNT" class="logo-empresa">
+        <!-- Logo alterada para SVG -->
+        <img src="Logo-Cabecalho-Site.svg" alt="ZNT" class="logo-empresa">
         <nav class="navbar">
             <a href="#sobre" id="txt_nav_sobre"></a>
             <a href="#contatos" id="txt_nav_contatos"></a>
@@ -431,7 +432,6 @@ VERSÃO: 13.0
         </main>
     </div>
 
-    <!-- SEÇÃO DE CONTATOS NO RODAPÉ -->
     <section class="secao-contatos" id="contatos">
         <h2 id="txt_contato_titulo">Fale Conosco</h2>
         <p id="txt_contato_descricao">Estamos prontos para atender você. Escolha o melhor canal abaixo.</p>
@@ -442,7 +442,6 @@ VERSÃO: 13.0
         </div>
     </section>
 
-    <!-- MODAL DE SOLICITAÇÃO COM FORMULÁRIO -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
             <h2 id="txt_modal_titulo">Excelente escolha!</h2>
@@ -560,16 +559,12 @@ VERSÃO: 13.0
             if(e.target === this) fecharModal();
         });
 
-        /* =========================================================
-           LÓGICA DE ENVIO PARA O WHATSAPP COM FORMATAÇÃO PREMIUM
-           ========================================================= */
         function enviarWhatsApp() {
             const servico = document.getElementById('nomeServicoSelecionado').textContent;
             const nome = document.getElementById('inputNome').value.trim() || '[Não informado]';
             const telefone = document.getElementById('inputTelefone').value.trim() || '[Não informado]';
             const endereco = document.getElementById('inputEndereco').value.trim() || '[Não informado]';
             
-            // Construção elegante da mensagem
             let mensagem = `Olá, equipe Zenith TI! 👋\n`;
             mensagem += `Gostaria de solicitar um orçamento para o serviço de *${servico}*.\n\n`;
             mensagem += `📋 *Meus Dados para Contato:*\n`;
