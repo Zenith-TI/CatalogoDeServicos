@@ -1,9 +1,9 @@
 /*
 =========================================================
 TÍTULO: ZNT - Configuração de Textos do Site
-ÚLTIMA MUDANÇA: Inclusão de novos textos para o modal dinâmico: 'modal_subtitulo_geral' (para quando o cliente clica no botão principal sem serviço definido) e 'modal_input_problema' (placeholder do novo campo de texto para descrever o problema).
-DATA E HORA: 08 de Setembro de 2026, 23:05
-VERSÃO: 12.2
+ÚLTIMA MUDANÇA: Remoção do campo de endereço. Inclusão dos textos para o novo sistema de carrinho ('modal_btn_adicionar' e 'btn_ver_pedido').
+DATA E HORA: 08 de Setembro de 2026, 23:45
+VERSÃO: 13.7
 =========================================================
 */
 
@@ -30,10 +30,13 @@ const TEXTOS = {
     modal_subtitulo_geral: { texto: "Preencha os dados abaixo e conte-nos o que precisa:", tamanho: "16px" },
     modal_input_nome: { texto: "Seu Nome e Sobrenome", tamanho: "" },
     modal_input_telefone: { texto: "Seu Telefone / WhatsApp", tamanho: "" },
-    modal_input_endereco: { texto: "Seu Endereço completo", tamanho: "" },
     modal_input_problema: { texto: "Descrição breve do problema", tamanho: "" },
+    
+    // Botões do Modal e Carrinho
     modal_btn_avancar: { texto: "Solicitar no WhatsApp", tamanho: "16px" },
+    modal_btn_adicionar: { texto: "Adicionar mais serviços", tamanho: "16px" },
     modal_btn_cancelar: { texto: "Cancelar", tamanho: "14px" },
+    btn_ver_pedido: { texto: "Finalizar Pedido", tamanho: "16px" },
 
     // Seção de Contatos
     contato_titulo: { texto: "Fale Conosco", tamanho: "36px" },
