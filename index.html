@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: 1) Adição de máscara de formatação automática para o campo de telefone padrão (xx) xxxxx-xxxx. 2) Inclusão de formatação em negrito (asteriscos) na variável de serviço dentro do script de envio para o WhatsApp.
-DATA E HORA: 08 de Setembro de 2026, 23:15
-VERSÃO: 13.5
+ÚLTIMA MUDANÇA: Substituição da fonte global de 'Exo 2' para 'Inter' via Google Fonts, garantindo um design mais sério, limpo, de alta legibilidade e focado no segmento corporativo/tecnológico.
+DATA E HORA: 08 de Setembro de 2026, 23:20
+VERSÃO: 13.6
 =========================================================
 -->
 <!DOCTYPE html>
@@ -18,10 +18,10 @@ VERSÃO: 13.5
     <link rel="apple-touch-icon" href="Logo-Simples.svg">
     <meta name="apple-mobile-web-app-title" content="ZNT">
 
-    <!-- Google Fonts: Exo 2 -->
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -35,7 +35,8 @@ VERSÃO: 13.5
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Exo 2', sans-serif;
+            /* Nova Fonte Inter aplicada em tudo */
+            font-family: 'Inter', sans-serif;
         }
 
         body {
@@ -353,10 +354,10 @@ VERSÃO: 13.5
             if(e.target === this) fecharModal();
         });
 
-        // Máscara para o telefone no padrão (xx) xxxxx-xxxx
+        // Máscara para o telefone
         function aplicarMascaraTelefone(evento) {
             let input = evento.target;
-            let valor = input.value.replace(/\D/g, ''); // Remove tudo que não for número
+            let valor = input.value.replace(/\D/g, ''); 
 
             if (valor.length > 11) valor = valor.slice(0, 11);
 
@@ -386,7 +387,6 @@ VERSÃO: 13.5
                 servicoSolicitado = document.getElementById('nomeServicoSelecionado').textContent;
             }
             
-            // Variável [SERVIÇO_SOLICITADO] em negrito com *asteriscos*
             let mensagem = `Olá, Zenith TI! Meu nome é ${nomeCliente}\n\n`;
             mensagem += `Gostaria de solicitar um orçamento para o serviço de *${servicoSolicitado}*.\n\n`;
             mensagem += `*Meus Dados para Contato:*\n\n`;
@@ -404,7 +404,6 @@ VERSÃO: 13.5
             carregarTextos();
             carregarServicos();
 
-            // Anexa o evento de máscara ao input de telefone assim que a página carrega
             document.getElementById('inputTelefone').addEventListener('input', aplicarMascaraTelefone);
         });
     </script>
