@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: ZNT - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Implementação do sistema de carrinho (múltiplos serviços). Remoção do campo "Endereço". Inclusão do botão laranja "Adicionar mais serviços" e do botão flutuante de checkout. Refatoração da função enviarWhatsApp() para lidar com loops de múltiplos serviços e formatá-los com quebra de linha dupla e negrito por asteriscos (*).
-DATA E HORA: 08 de Setembro de 2026, 23:45
-VERSÃO: 14.0
+ÚLTIMA MUDANÇA: Inclusão do campo "Dispositivo" (Desktop ou Notebook) na janela modal. Reformulação do script de envio para o WhatsApp, montando os textos com a exata estilização e formatação (emojis e negritos) requerida para orçamentos simples, múltiplos ou descrição geral de problemas.
+DATA E HORA: 08 de Setembro de 2026, 23:55
+VERSÃO: 14.2
 =========================================================
 -->
 <!DOCTYPE html>
@@ -131,21 +131,17 @@ VERSÃO: 14.0
         .modal-box h2 { margin-bottom: 5px; color: var(--orange-neon); }
         .modal-box p { color: rgba(244, 247, 250, 0.9); margin-bottom: 25px; }
 
-        /* Lista de serviços dentro do modal */
-        #listaServicosSelecionados {
-            list-style: none; padding: 0; margin-bottom: 25px; text-align: center;
-        }
-        #listaServicosSelecionados li {
-            color: var(--orange-neon); font-weight: bold; margin-bottom: 5px; font-size: 1.1rem;
-        }
+        #listaServicosSelecionados { list-style: none; padding: 0; margin-bottom: 25px; text-align: center; }
+        #listaServicosSelecionados li { color: var(--orange-neon); font-weight: bold; margin-bottom: 5px; font-size: 1.1rem; }
 
         .form-grupo { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; text-align: left; }
-        .form-grupo input, .form-grupo textarea {
+        .form-grupo input, .form-grupo textarea, .form-grupo select {
             width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2);
             background: rgba(255, 255, 255, 0.05); color: white; font-size: 1rem; outline: none;
         }
+        .form-grupo select option { background: var(--bg-dark); color: white; }
         .form-grupo textarea { resize: vertical; min-height: 80px; }
-        .form-grupo input:focus, .form-grupo textarea:focus { border-color: var(--orange-neon); }
+        .form-grupo input:focus, .form-grupo textarea:focus, .form-grupo select:focus { border-color: var(--orange-neon); }
         .form-grupo input::placeholder, .form-grupo textarea::placeholder { color: rgba(255,255,255,0.4); }
 
         .btn-modal { color: white; border: none; padding: 15px 30px; border-radius: 30px; font-weight: bold; cursor: pointer; width: 100%; transition: background 0.3s ease; margin-bottom: 10px; }
@@ -212,7 +208,6 @@ VERSÃO: 14.0
         </div>
     </section>
 
-    <!-- Botão Flutuante de Carrinho -->
     <button id="btnFlutuanteCarrinho" class="btn-flutuante-carrinho" onclick="abrirModalCarrinho()"></button>
 
     <div class="modal-overlay" id="modalOverlay">
@@ -226,11 +221,18 @@ VERSÃO: 14.0
             <div class="form-grupo">
                 <input type="text" id="inputNome" placeholder="Seu Nome e Sobrenome">
                 <input type="tel" id="inputTelefone" placeholder="Seu Telefone / WhatsApp" maxlength="15">
+                
+                <!-- Novo Select Dinâmico para Dispositivo -->
+                <select id="inputDispositivo" style="display: none;">
+                    <option value="" disabled selected id="txt_modal_select_dispositivo">Qual o seu dispositivo?</option>
+                    <option value="Desktop">Desktop (Computador de Mesa)</option>
+                    <option value="Notebook">Notebook</option>
+                </select>
+                
                 <textarea id="inputProblema" placeholder="Descrição breve do problema" style="display: none;"></textarea>
             </div>
 
             <button class="btn-modal btn-verde" onclick="enviarWhatsApp()" id="txt_modal_btn_avancar">Solicitar no WhatsApp</button>
-            <!-- Novo Botão Laranja de Adicionar Mais -->
             <button class="btn-modal btn-laranja" onclick="fecharModal()" id="txt_modal_btn_adicionar" style="display: none;">Adicionar mais serviços</button>
             <button class="btn-fechar-modal" onclick="fecharModal()" id="txt_modal_btn_cancelar">Cancelar</button>
         </div>
@@ -238,7 +240,7 @@ VERSÃO: 14.0
 
     <script>
         let modoGeral = false;
-        let carrinho = []; // Array que guarda os serviços do cliente
+        let carrinho = [];
 
         function aplicarConteudo(idElemento, configTexto) {
             const elemento = document.getElementById(idElemento);
@@ -276,6 +278,8 @@ VERSÃO: 14.0
             aplicarConteudo('inputNome', TEXTOS.modal_input_nome);
             aplicarConteudo('inputTelefone', TEXTOS.modal_input_telefone);
             aplicarConteudo('inputProblema', TEXTOS.modal_input_problema);
+            aplicarConteudo('txt_modal_select_dispositivo', TEXTOS.modal_select_dispositivo);
+            
             aplicarConteudo('txt_modal_btn_avancar', TEXTOS.modal_btn_avancar);
             aplicarConteudo('txt_modal_btn_adicionar', TEXTOS.modal_btn_adicionar);
             aplicarConteudo('txt_modal_btn_cancelar', TEXTOS.modal_btn_cancelar);
@@ -327,7 +331,7 @@ VERSÃO: 14.0
             const btn = document.getElementById('btnFlutuanteCarrinho');
             if (carrinho.length > 0) {
                 btn.style.display = 'flex';
-                const textoBtn = TEXTOS.btn_ver_pedido ? TEXTOS.btn_ver_pedido.texto : "Finalizar Pedido";
+                const textoBtn = TEXTOS.btn_ver_pedido ? TEXTOS.btn_ver_pedido.texto : "Finalizar Cotações";
                 btn.innerHTML = `🛒 ${textoBtn} (${carrinho.length})`;
             } else {
                 btn.style.display = 'none';
@@ -336,12 +340,23 @@ VERSÃO: 14.0
 
         function adicionarAoCarrinho(nomeServico) {
             modoGeral = false;
-            // Se o serviço não estiver na lista, adiciona
             if (!carrinho.includes(nomeServico)) {
                 carrinho.push(nomeServico);
             }
             atualizarBotaoFlutuante();
             abrirModalCarrinho();
+        }
+
+        // Lógica que checa se no carrinho atual existe algum serviço que exija informar o dispositivo
+        function verificaExigenciaDispositivo() {
+            let exige = false;
+            carrinho.forEach(nomeServico => {
+                const servicoEncontrado = SERVICOS.find(s => s.titulo === nomeServico);
+                if (servicoEncontrado && servicoEncontrado.exige_dispositivo) {
+                    exige = true;
+                }
+            });
+            return exige;
         }
 
         function abrirModalCarrinho() {
@@ -350,7 +365,13 @@ VERSÃO: 14.0
             document.getElementById('listaServicosSelecionados').style.display = 'block';
             document.getElementById('txt_modal_btn_adicionar').style.display = 'block';
             
-            // Se tiver mais de 1, ajustamos o texto "serviço" para "serviços"
+            // Controle dinâmico do campo Dispositivo para orçamentos de serviços
+            if (verificaExigenciaDispositivo()) {
+                document.getElementById('inputDispositivo').style.display = 'block';
+            } else {
+                document.getElementById('inputDispositivo').style.display = 'none';
+            }
+            
             if (carrinho.length > 1) {
                 document.getElementById('txt_modal_subtitulo').textContent = "Você selecionou os serviços:";
             } else {
@@ -373,6 +394,10 @@ VERSÃO: 14.0
             document.getElementById('listaServicosSelecionados').style.display = 'none';
             document.getElementById('txt_modal_btn_adicionar').style.display = 'none';
             
+            // Orçamento geral sempre pergunta o dispositivo
+            document.getElementById('inputDispositivo').style.display = 'block';
+            document.getElementById('inputDispositivo').value = '';
+            
             aplicarConteudo('txt_modal_subtitulo', TEXTOS.modal_subtitulo_geral);
             
             modal.style.display = 'flex';
@@ -388,7 +413,6 @@ VERSÃO: 14.0
             if(e.target === this) fecharModal();
         });
 
-        // Máscara para o telefone (xx) xxxxx-xxxx
         function aplicarMascaraTelefone(evento) {
             let input = evento.target;
             let valor = input.value.replace(/\D/g, ''); 
@@ -412,39 +436,60 @@ VERSÃO: 14.0
         function enviarWhatsApp() {
             const nomeCliente = document.getElementById('inputNome').value.trim() || '[Não informado]';
             const telefoneCliente = document.getElementById('inputTelefone').value.trim() || '[Não informado]';
+            const dispositivo = document.getElementById('inputDispositivo').value || 'Equipamento não especificado';
             
-            let mensagem = `Olá, Zenith TI! Meu nome é ${nomeCliente}\n\n`;
+            let mensagem = `Olá, Zenith TI.\n\n`;
             
+            // Modelo 2 - Orçamento Geral com descrição de problema
             if (modoGeral) {
                 let problema = document.getElementById('inputProblema').value.trim() || '[Não detalhou o problema]';
-                mensagem += `Gostaria de solicitar um orçamento para o serviço de *${problema}*.\n\n`;
-            } else {
+                
+                mensagem += `Gostaria de solicitar uma avaliação do meu *${dispositivo}*.\n\n`;
+                mensagem += `🔹 *Motivo da solicitação:* ${problema}\n\n`;
+            } 
+            // Modelo 1 - Carrinho de Serviços (Um ou Múltiplos)
+            else {
                 if (carrinho.length === 1) {
-                    mensagem += `Gostaria de solicitar um orçamento para o serviço de *${carrinho[0]}*.\n\n`;
+                    mensagem += `Gostaria de solicitar um orçamento para o serviço de:\n\n`;
+                    mensagem += `🔹 *${carrinho[0]}*\n\n`;
                 } else if (carrinho.length > 1) {
-                    // Loop com quebra de linha exigido para múltiplos serviços
-                    mensagem += `Gostaria de solicitar um orçamento para os serviços:\n\n`;
+                    mensagem += `Gostaria de solicitar um orçamento para os serviços de:\n\n`;
                     carrinho.forEach(s => {
-                        mensagem += `* *${s}*\n\n`;
+                        mensagem += `🔹 *${s}*\n`;
                     });
-                } else {
-                    mensagem += `Gostaria de solicitar um orçamento geral.\n\n`;
+                    mensagem += `\n`; // Quebra de linha para separar o bloco de serviços
+                }
+                
+                // Se o orçamento inclui serviços que exigem dispositivo, inclui na mensagem
+                if (verificaExigenciaDispositivo()) {
+                    mensagem += `💻 *Dispositivo relacionado:* ${dispositivo}\n\n`;
                 }
             }
             
-            mensagem += `*Meus Dados para Contato:*\n\n`;
-            mensagem += `*Nome:* ${nomeCliente}\n`;
-            mensagem += `*Telefone:* ${telefoneCliente}\n\n`;
-            mensagem += `Aguardo o retorno. Obrigado(a)!`;
+            // Assinatura padrão para ambos os cenários
+            mensagem += `= = = = = = = = = = = = = = = = = = = = = =\n\n`;
+            mensagem += `Para agilizar o atendimento, seguem meus dados:\n\n`;
+            
+            if (modoGeral) {
+                // Formato sem negrito requisitado pelo usuário para orçamento geral
+                mensagem += `🔹 Nome: ${nomeCliente}\n`;
+                mensagem += `🔹 Telefone: ${telefoneCliente}\n\n`;
+            } else {
+                // Formato com negrito requisitado pelo usuário para orçamento de serviços
+                mensagem += `🔹 *Nome:* ${nomeCliente}\n`;
+                mensagem += `🔹 *Telefone:* ${telefoneCliente}\n\n`;
+            }
+            
+            mensagem += `Fico no aguardo do retorno. Obrigado(a)!`;
 
             const url = `https://wa.me/5531995896050?text=${encodeURIComponent(mensagem)}`;
             window.open(url, '_blank');
             
-            // Opcional: Esvaziar carrinho após enviar
             carrinho = [];
             document.getElementById('inputNome').value = '';
             document.getElementById('inputTelefone').value = '';
             document.getElementById('inputProblema').value = '';
+            document.getElementById('inputDispositivo').value = '';
             atualizarBotaoFlutuante();
             fecharModal();
         }
