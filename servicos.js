@@ -1,9 +1,9 @@
 /*
 =========================================================
-TÍTULO: ZNT - Configuração de Serviços
-ÚLTIMA MUDANÇA: Inclusão do parâmetro "exige_dispositivo" para cada serviço, permitindo que o formulário oculte ou mostre a seleção de Desktop/Notebook de forma inteligente dependendo do que o cliente está cotando.
-DATA E HORA: 08 de Setembro de 2026, 23:55
-VERSÃO: 12.1
+TÍTULO: Zenith TI - Configuração de Serviços
+ÚLTIMA MUDANÇA: Atualização da marca para Zenith TI. Manutenção dos parâmetros de exigência de dispositivo para o sistema inteligente do catálogo.
+DATA E HORA: 09 de Setembro de 2026, 16:02
+VERSÃO: 13.0
 =========================================================
 */
 
