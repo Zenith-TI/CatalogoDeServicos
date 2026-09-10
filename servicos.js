@@ -8,7 +8,7 @@ VERSÃO: 14.0
 */
 
 // Variável de controle: 1 para mostrar os detalhes de todos os serviços, 0 para ocultar
-const EXIBIR_DETALHES = 0;
+const EXIBIR_DETALHES = 1;
 
 const SERVICOS = [
     {
