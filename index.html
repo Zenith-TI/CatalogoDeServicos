@@ -1,9 +1,9 @@
 <!--
 =========================================================
 TÍTULO: Zenith TI - Catálogo de Serviços
-ÚLTIMA MUDANÇA: Ajuste fino na formatação da mensagem do WhatsApp. Retorno do uso de Unicode (\uD83D\uDD39 e \uD83D\uDCBB) para blindar contra erros de leitura no PC (WhatsApp Web). Remoção de negritos indesejados (nome da marca, rótulos de contato, mensagem final) e exclusão dos emojis de mão e check verde. Substituição do emoji de carrinho pelo ponto azul em todos os tipos de pedido.
-DATA E HORA: 09 de Setembro de 2026, 16:13
-VERSÃO: 15.1
+ÚLTIMA MUDANÇA: Implementação da renderização condicional dos detalhes de serviço (leitura da variável global EXIBIR_DETALHES).
+DATA E HORA: 09 de Setembro de 2026, 22:50
+VERSÃO: 15.2
 =========================================================
 -->
 <!DOCTYPE html>
@@ -364,16 +364,26 @@ VERSÃO: 15.1
             const grid = document.getElementById('catalogo-grid');
             grid.innerHTML = '';
 
+            // Verifica a variável global que criamos no arquivo servicos.js
+            // Se por algum motivo o arquivo não carregar a tempo, o padrão (1) mantém o site visível.
+            const mostrarDetalhes = typeof EXIBIR_DETALHES !== 'undefined' ? EXIBIR_DETALHES : 1;
+
             SERVICOS.forEach(servico => {
                 const tagsHTML = servico.tags.map(tag => `<span class="tag tag-categoria">${tag}</span>`).join('');
-                const detalhesHTML = servico.detalhes.map(detalhe => `<li>${detalhe}</li>`).join('');
+                
+                // Mágica acontece aqui: Os detalhes só são gerados se a flag for igual a 1
+                let detalhesTecnicosHTML = '';
+                if (mostrarDetalhes === 1 && servico.detalhes && servico.detalhes.length > 0) {
+                    const listaHTML = servico.detalhes.map(detalhe => `<li>${detalhe}</li>`).join('');
+                    detalhesTecnicosHTML = `<div class="detalhes-tecnicos"><ul>${listaHTML}</ul></div>`;
+                }
 
                 const cartao = `
                     <div class="cartao" data-categoria="${servico.categoria}">
                         <div class="tags">${tagsHTML}</div>
                         <h3>${servico.titulo}</h3>
                         <p class="desc-curta">${servico.desc_curta}</p>
-                        <div class="detalhes-tecnicos"><ul>${detalhesHTML}</ul></div>
+                        ${detalhesTecnicosHTML}
                         <div class="rodape-cartao">
                             <button class="btn-acao" onclick="adicionarAoCarrinho('${servico.titulo}')">Solicitar</button>
                         </div>
